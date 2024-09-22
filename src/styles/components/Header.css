@@ -1,0 +1,31 @@
+/* Header.css */
+.header {
+  background-color: #023E73;
+  color: #F2F2F2;
+  z-index: 1200; /* pour les barres de navigation */
+}
+
+.header .MuiToolbar-root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.header-actions .MuiAvatar-root {
+  margin-left: 16px;
+}
+
+/* Bouton de retour */
+.MuiIconButton-root {
+  margin-right: 8px;
+}

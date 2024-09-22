@@ -1,0 +1,21 @@
+/* Sidebar.css */
+.sidebar {
+  width: 240px;
+  background-color: #023E73; /* Couleur de fond de la sidebar */
+  color: #F2F2F2; /* Couleur du texte */
+}
+
+.sidebar .MuiListItemIcon-root {
+  color: #F2F2F2; /* Couleur des icônes */
+}
+
+.sidebar .MuiListItemText-primary {
+  color: #F2F2F2; /* Couleur du texte des éléments de la liste */
+}
+/* Sidebar.css */
+.MuiDrawer-paper {
+  background-color: #023E73; /* Couleur de fond de la Sidebar */
+  color: #F2F2F2; /* Couleur du texte de la Sidebar */
+}
+
+/* Autres styles pour la Sidebar si nécessaire */

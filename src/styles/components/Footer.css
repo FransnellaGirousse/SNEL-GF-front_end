@@ -1,0 +1,67 @@
+/* Footer.css */
+.footer-container {
+  background-color: #023E73; /* Couleur de fond du pied de page */
+  color: #F2F2F2; /* Couleur du texte */
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #F2F2F2; /* Ligne de séparation en haut du footer */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin: 0;
+}
+
+.footer-links a {
+  color: #F2F2F2; /* Couleur des liens */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #BF0426; /* Couleur des liens au survol */
+}
+
+/* Ajout d'une section pour les icônes de réseaux sociaux */
+.footer-social {
+  display: flex;
+  gap: 15px;
+  margin-left: auto; /* Positionner les icônes à droite */
+}
+
+.footer-social a {
+  color: #F2F2F2; /* Couleur des icônes */
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: #BF0426; /* Couleur des icônes au survol */
+}
