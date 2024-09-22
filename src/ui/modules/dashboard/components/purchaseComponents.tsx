@@ -1,0 +1,35 @@
+import {Typography} from "@/ui/design-system/typography/typography";
+
+export const PurchaseComponents = () => {
+    return(
+        <div className="space-y-5 mb-10">
+            <Typography
+                variant="h5"
+                theme="white"
+                tag="h5"
+            >
+                Achat
+            </Typography>
+            <table className="table-fixed w-full">
+                <thead className="text-left text-white border-b border-t border-midnight-700">
+                <tr>
+                    <th className="py-5">Date</th>
+                    <th>Nom du missionnaire</th>
+                    <th>Etat</th>
+                    <th>Etape</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody className="text-left text-midnight-700 border-b border-t border-midnight-700">
+                <tr>
+                    <td className="py-3">28/04/24</td>
+                    <td>Norman</td>
+                    <td>En Cours</td>
+                    <td>Oui</td>
+                    <td>Modifier</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    )
+}
