@@ -43,7 +43,7 @@ export const Sidebar = ({show}: Props) => {
                    <ActiveLink href="/contact">
                        <FcApproval />Approbation
                    </ActiveLink>
-                   <ActiveLink href="/contact">
+                   <ActiveLink href="/mission_report">
                        <MdReportGmailerrorred />Rapport de mission
                    </ActiveLink>
                    <hr/>
