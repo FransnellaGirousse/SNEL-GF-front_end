@@ -49,3 +49,28 @@ export interface requestAdvanceFormFieldsType {
     additional_costs: string,
     signature: string
 }
+
+export interface MissionReportFormFieldsType {
+    date: Date,
+    object: string,
+    mission_location: string,
+    name_of_missionary: string,
+    mission_objectives: string,
+    progress_of_activities: string,
+    point_to_improve: string,
+    strong_points: string,
+    recommendations: string,
+    next_steps: string
+}
+
+export interface PurchaseRequestFormFieldsType {
+    item: string,
+    quantity: string,
+    unit_type: string,
+    description: string,
+    estimated_unit_price: string,
+    estimated_total: string,
+    notes: string,
+    project_code: string,
+    geo_code: string
+}

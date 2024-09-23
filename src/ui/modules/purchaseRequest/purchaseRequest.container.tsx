@@ -15,7 +15,6 @@ export const PurchaseRequestContainer = () => {
     } = useForm<PurchaseRequestFormFieldsType>()
     const onSubmit: SubmitHandler<PurchaseRequestFormFieldsType> = async (formData) => {
         setIsLoading(true)
-        console.log("formData", formData)
     }
     return(
         <PurchaseRequestView form={{handleSubmit, errors, register, onSubmit, isLoading}} />

@@ -14,7 +14,18 @@ export const AssignmentContainer = () => {
     } = useForm<AssignmentFormFieldsType>()
     const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (formData) => {
         setIsLoading(true)
-        console.log("formData", formData)
+        const {mission_objectives, planned_activities, necessary_resources} = formData
+        try {
+            await fetch ("http://localhost:8000/api/missions", {
+                method: "POST",
+                body: JSON.stringify({mission_objectives, planned_activities, necessary_resources}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+        } catch (e) {
+            console.error(e)
+        }
     }
     return (
         <>

@@ -31,7 +31,7 @@ export const Sidebar = ({show}: Props) => {
                    <ActiveLink href="/assignment">
                        <MdAssignment />Mission
                    </ActiveLink>
-                   <ActiveLink href="/formations">
+                   <ActiveLink href="/purchase_request">
                        <PiShoppingCartSimpleLight />Demande d'achat
                    </ActiveLink>
                    <ActiveLink href="/request_in_advance">
