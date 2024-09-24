@@ -12,7 +12,7 @@ export const Select = ({
     return (
         <div className="space-y-2">
             <select id="countries"
-                    className="p-4 w-full border border-midnight-600 font-white rounded focus:outline-none focus:ring-1 bg-midnight-700 text-white">
+                    className="p-4 w-full font-white rounded focus:outline-none focus:ring-1 bg-gray-500 text-gray">
                 <option selected>Choisir votre rôle</option>
                 <option value="user">Utilisateur</option>
                 <option value="Ges">Gestionnaire</option>

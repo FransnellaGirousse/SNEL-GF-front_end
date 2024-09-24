@@ -46,7 +46,7 @@ export const Button = ({
             variantStyles = "bg-primary-200 hover:bg-primary-300/50 text-primary rounded"
             break
         case "outline":
-            variantStyles = "border border-midnight-700 text-white rounded"
+            variantStyles = "border border-gray text-gray rounded"
             break
         case "disabled":
             variantStyles = "bg-gray-400 border border-gray-500 text-gray-600 rounded cursor-not-allowed"

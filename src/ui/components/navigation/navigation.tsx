@@ -9,6 +9,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import {useState} from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import {Sidebar} from "@/ui/components/navigation/sidebar";
+import clsx from "clsx";
 
 interface Props {
 }
@@ -20,13 +21,13 @@ export const Navigation = ({}: Props) => {
     }
     return (
         <section>
-            <div className="border-b-2 border-midnight-700">
+            <div className="border-b-2 border-gray-400">
                 <Container className="flex items-center justify-between py-1.5 gap-7">
-                    <div className="flex items-center gap-5">
+                    <div className="flex items-center gap-5 relative">
                         <div className="z-20">
                             <button
                                 type="button"
-                                className="border-2 border-white text-white rounded flex items-center justify-center w-[40px] h-[40px]"
+                                className={clsx(show && "fixed top-[16.4px]","border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px]")}
                                 onClick={handleClick}
                             >
                                 {show ?  <IoCloseSharp/> : <RxHamburgerMenu />}
@@ -36,7 +37,7 @@ export const Navigation = ({}: Props) => {
                             <div className="flex items-center gap-2.5">
                                 <Logo size="small"/>
                                 <div className="flex flex-col">
-                                    <div className="text-white font-extrabold text-[24px]">
+                                    <div className="text-gray font-extrabold text-[24px]">
                                         Gestion Financières
                                     </div>
                                     <Typography
@@ -44,7 +45,6 @@ export const Navigation = ({}: Props) => {
                                         tag="span"
                                         theme="gray"
                                     >
-                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
                                         Votre solution financière !
                                     </Typography>
                                 </div>

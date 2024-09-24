@@ -10,7 +10,7 @@ export default function CreateTdrAssignement () {
                 <Typography
                     variant="h5"
                     tag="h1"
-                    theme="white"
+                    theme="black"
                 >
                     Création d'une nouvelle mission (TDR)
                 </Typography>

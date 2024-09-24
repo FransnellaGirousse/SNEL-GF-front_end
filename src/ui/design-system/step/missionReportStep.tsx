@@ -11,7 +11,7 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
     return(
         <>
             <div
-                className={clsx(currentStepIndex >= 1 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 1 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -22,12 +22,13 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Informations de la Mission
                 </Typography>
             </div>
             <div
-                className={clsx(currentStepIndex >= 2 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 2 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -38,12 +39,13 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Objectifs de la mission
                 </Typography>
             </div>
             <div
-                className={clsx(currentStepIndex >= 3 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 3 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -54,12 +56,13 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Déroulements des activités
                 </Typography>
             </div>
             <div
-                className={clsx(currentStepIndex >= 4 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 4 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -70,12 +73,13 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Résultats
                 </Typography>
             </div>
             <div
-                className={clsx(currentStepIndex >= 5 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 5 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -86,12 +90,13 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Récommendations
                 </Typography>
             </div>
             <div
-                className={clsx(currentStepIndex >= 6 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+                className={clsx(currentStepIndex >= 6 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -102,6 +107,7 @@ export const MissionReportStep = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Prochaines étapes
                 </Typography>

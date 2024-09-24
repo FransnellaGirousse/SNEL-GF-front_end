@@ -32,6 +32,7 @@ export const LoginView = ({form}: Props) => {
                         <Typography
                             variant="h5"
                             tag="h1"
+                            theme="black"
                         >
                             Connexion
                         </Typography>
@@ -39,7 +40,7 @@ export const LoginView = ({form}: Props) => {
                             <Typography
                                 variant="caption4"
                                 tag="h2"
-                                theme="white"
+                                theme="black"
                             >
                                 Tu n'as pas de compte ?
                             </Typography>
@@ -48,7 +49,7 @@ export const LoginView = ({form}: Props) => {
                                 tag="span"
                                 theme="primary"
                             >
-                                <Link href="/inscription">S'Inscrire</Link>
+                                <Link href="/inscription" className="hover:text-primary-600 transition-all hover:underline">S'Inscrire</Link>
                             </Typography>
                         </div>
                     </div>
@@ -56,6 +57,7 @@ export const LoginView = ({form}: Props) => {
                     <Typography
                         variant="caption2"
                         tag="h4"
+                        theme="black"
                     >
                         Continuer avec :
                     </Typography>

@@ -19,6 +19,7 @@ export const RegisterView = ({form}: Props) => {
                         <Typography
                             variant="h5"
                             tag="h1"
+                            theme="black"
                         >
                             Inscription
                         </Typography>
@@ -26,7 +27,7 @@ export const RegisterView = ({form}: Props) => {
                             <Typography
                                 variant="caption4"
                                 tag="h2"
-                                theme="gray"
+                                theme="black"
                             >
                                 Tu as déjà un compte ?
                             </Typography>
@@ -35,7 +36,7 @@ export const RegisterView = ({form}: Props) => {
                                 tag="span"
                                 theme="primary"
                             >
-                                <Link href="/connexion">Connexion</Link>
+                                <Link href="/connexion" className="hover:underline transition-all">Connexion</Link>
                             </Typography>
                         </div>
                     </div>

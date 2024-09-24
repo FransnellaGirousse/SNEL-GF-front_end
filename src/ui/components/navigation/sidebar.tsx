@@ -16,12 +16,13 @@ interface Props {
 
 export const Sidebar = ({show}: Props) => {
     return(
-        <aside className={clsx("absolute top-0 bg-midnight shadow-2xl h-full z-10 transition-all", show ? "left-0" : "-left-96")}>
+        <aside className={clsx("top-0 fixed bg-white shadow-2xl h-full z-10 transition-all", show ? "left-0" : "-left-96")}>
            <div className="p-20">
                <Typography
                    variant="caption3"
                    tag="div"
                    className="flex flex-col"
+                   theme="black"
                >
                    <ActiveLink
                        href="/"

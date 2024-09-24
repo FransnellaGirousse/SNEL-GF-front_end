@@ -28,8 +28,8 @@ export const Textarea = ({
                 placeholder={placeholder}
                 className={clsx(
                     isLoading && "cursor-not-allowed",
-                    errors[id] ? "placeholder-alert-danger text-alert-danger focus:ring-alert-danger" : "placeholder-gray-600 focus:ring-primary",
-                    "p-4 h-32 w-full border border-midnight-600 font-white rounded focus:outline-none focus:ring-1 bg-midnight-700 text-white resize-none"
+                    errors[id] ? "placeholder-alert-danger text-alert-danger focus:ring-alert-danger" : "placeholder-gray-600 focus:ring-gray-400",
+                    "p-4 h-32 w-full font-white rounded focus:outline-none focus:ring-2 bg-gray-500 text-gray resize-none"
                 )}
                 disabled={isLoading}
                 {...register(id, {

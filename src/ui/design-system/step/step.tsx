@@ -10,7 +10,7 @@ interface Props {
 export const Step = ({currentStepIndex}: Props) => {
     return(
         <>
-            <div className={clsx(currentStepIndex >= 1 ? "border-primary" : "border-midnight-700" , "space-y-3 border-t-2 py-3")}>
+            <div className={clsx(currentStepIndex >= 1 ? "border-primary" : "border-gray-400" , "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -21,11 +21,12 @@ export const Step = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Informations de la demande
                 </Typography>
             </div>
-            <div className={clsx(currentStepIndex >= 2 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+            <div className={clsx(currentStepIndex >= 2 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -36,11 +37,12 @@ export const Step = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Montant
                 </Typography>
             </div>
-            <div className={clsx(currentStepIndex >= 3 ? "border-primary" : "border-midnight-700", "space-y-3 border-t-2 py-3")}>
+            <div className={clsx(currentStepIndex >= 3 ? "border-primary" : "border-gray-400", "space-y-3 border-t-2 py-3")}>
                 <Typography
                     variant="caption2"
                     tag="p"
@@ -51,6 +53,7 @@ export const Step = ({currentStepIndex}: Props) => {
                 <Typography
                     variant="caption3"
                     tag="p"
+                    theme="black"
                 >
                     Signature
                 </Typography>

@@ -5,13 +5,13 @@ export const AdvanceComponents = () => {
         <div className="space-y-5 mb-10">
             <Typography
                 variant="h5"
-                theme="white"
+                theme="black"
                 tag="h5"
             >
                 Avance
             </Typography>
             <table className="table-fixed w-full">
-                <thead className="text-left text-white border-b border-t border-midnight-700">
+                <thead className="text-left text-gray border-b border-t border-gray-500">
                 <tr>
                     <th className="py-5">Date</th>
                     <th>Nom du missionnaire</th>
@@ -20,7 +20,7 @@ export const AdvanceComponents = () => {
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody className="text-left text-midnight-700 border-b border-t border-midnight-700">
+                <tbody className="text-left text-midnight-700 border-b border-t border-gray-500">
                 <tr>
                     <td className="py-3">28/04/24</td>
                     <td>Norman</td>

@@ -13,7 +13,7 @@ export const MissionLayout = ({children}: PropsWithChildren) => {
                 <div className="space-y-2">
                     <input
                         type="text"
-                        className="p-3 w-full border border-midnight-600 font-white rounded focus:outline-none focus:ring-1 bg-midnight-700 text-white"
+                        className="p-3 w-full font-white rounded focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-500 text-gray-800"
                         placeholder="Rechercher par destination"
                     />
                     <select id="countries"
@@ -28,6 +28,7 @@ export const MissionLayout = ({children}: PropsWithChildren) => {
                     variant="caption3"
                     tag="div"
                     className="flex flex-col"
+                    theme="black"
                 >
                     <ActiveLink href="/assignment">
                         <MdAssignment />Tableau de bord des missions

@@ -43,7 +43,7 @@ export const LoginForm = ({form}: Props) => {
                         tag="span"
                         theme="primary"
                     >
-                        <Link href="/forget-password">Mot de passe oublié ?</Link>
+                        <Link href="/forget-password" className="hover:text-primary-600 transition-all hover:underline">Mot de passe oublié ?</Link>
                     </Typography>
                     <Button
                         isLoading={isLoading}
