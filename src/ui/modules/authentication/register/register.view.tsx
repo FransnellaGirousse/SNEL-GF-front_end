@@ -1,5 +1,4 @@
 import {Container} from "@/ui/components/container/container"
-import Image from "next/image"
 import {Box} from "@/ui/design-system/box/box";
 import {Typography} from "@/ui/design-system/typography/typography";
 import Link from "next/link";
@@ -15,7 +14,7 @@ export const RegisterView = ({form}: Props) => {
         <Container className="flex items-center justify-center mt-10 mb-32">
             <div>
                 <Box padding_y="py-5">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-10">
                         <Typography
                             variant="h5"
                             tag="h1"

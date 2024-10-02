@@ -15,6 +15,8 @@ export const RecommandationsMissionReport = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="recommendations"
+                required={true}
+                minLength={10}
             />
         </>
     )

@@ -8,7 +8,7 @@ export default function Purchase_Request () {
         <Layout>
             <Container className="mt-10">
                 <div className="flex justify-center">
-                    <div className="border-2 border-gray-400 flex-none w-[800px] rounded p-10 relative">
+                    <div className="border-2 border-gray-400 flex-none max-lg:w-[600px] w-[800px] max-sm:w-full rounded p-10 relative">
                         <Typography
                             variant="h5"
                             theme="black"

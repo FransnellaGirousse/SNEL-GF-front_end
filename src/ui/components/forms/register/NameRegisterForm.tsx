@@ -1,34 +1,33 @@
-import {FormsType} from "@/types/forms";
-import {Textarea} from "@/ui/design-system/forms/textarea";
 import {Input} from "@/ui/design-system/forms/input";
+import {FormsType} from "@/types/forms";
 
 interface Props {
     form: FormsType
 }
 
-export const ResultMissionReport = ({form}: Props) => {
+export const NameRegisterForm = ({form}: Props) => {
     const {isLoading, register, errors} = form
     return(
         <>
             <Input
                 isLoading={isLoading}
-                placeholder="Point à améliorer"
+                placeholder="Nom"
                 type="text"
                 register={register}
                 errors={errors}
-                id="point_to_improve"
-                required={true}
-                minLength={5}
+                id="firstname"
+                minLength={3}
+                maxLength={255}
             />
             <Input
                 isLoading={isLoading}
-                placeholder="Point forts"
+                placeholder="Prénom"
                 type="text"
                 register={register}
                 errors={errors}
-                id="strong_points"
-                required={true}
-                minLength={5}
+                id="lastname"
+                minLength={3}
+                maxLength={255}
             />
         </>
     )

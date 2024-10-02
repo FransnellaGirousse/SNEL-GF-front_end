@@ -10,7 +10,13 @@ interface Props {
     errorMessage?: string,
     required?: boolean,
     isAutoCompleted?: boolean,
-    isLoading?: boolean
+    isLoading?: boolean,
+    minLength?: number,
+    maxLength?: number,
+    pattern?: any,
+    messagePattern?: string,
+    passRegex?: RegExp[]
+    pwd?: string
 }
 
 export const Input = ({
@@ -22,7 +28,13 @@ export const Input = ({
                           id,
                           errorMessage = "Tu dois renseigner ce champ",
                           required = true,
-                          isAutoCompleted = false
+                          isAutoCompleted = false,
+                          minLength,
+                          maxLength,
+                          pattern,
+                          messagePattern,
+                          passRegex,
+                          pwd
                       }: Props) => {
     return (
         <div className="space-y-2">
@@ -32,13 +44,35 @@ export const Input = ({
                 className={clsx(
                     isLoading && "cursor-not-allowed",
                     errors[id] ? "placeholder-alert-danger text-alert-danger focus:ring-alert-danger" : "placeholder-gray-600 focus:ring-gray-400",
-                    "p-4 w-full font-white rounded focus:outline-none focus:ring-2 bg-gray-500 text-gray-800"
+                    "p-4 max-sm:text-caption4 w-full font-white rounded focus:outline-none focus:ring-2 bg-gray-500 text-gray-800"
                 )}
                 disabled={isLoading}
                 {...register(id, {
                     required: {
                         value: required,
                         message: errorMessage
+                    },
+                    minLength: {
+                        value: minLength,
+                        message: `Ce champ doit avoir au moins ${minLength} caractères`
+                    },
+                    maxLength: {
+                        value: maxLength,
+                        message: `Ce champ ne doit pas dépasser ${maxLength} caractères`
+                    },
+                    pattern: {
+                        value: pattern,
+                        message: messagePattern
+                    },
+                    validate: (value: string) => {
+                        if (pwd) {
+                            if (value !== pwd) {
+                                return "Password doesn't match"
+                            }
+                        }
+                        return(
+                            passRegex?.every((pattern) => pattern.test(value)) || passRegex && "must include lower, upper, specialchars, number "
+                        )
                     }
                 })}
                 autoComplete={isAutoCompleted ? "on" : "off"}

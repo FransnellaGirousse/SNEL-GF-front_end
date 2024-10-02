@@ -26,7 +26,7 @@ export const PurchaseRequestForm = ({form}: Props) => {
                     errors={errors}
                     id="item"
                 />
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
                     <Input
                         type="text"
                         isLoading={isLoading}
@@ -44,7 +44,7 @@ export const PurchaseRequestForm = ({form}: Props) => {
                         id="unit_type"
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
                     <Input
                         type="text"
                         isLoading={isLoading}
@@ -62,7 +62,7 @@ export const PurchaseRequestForm = ({form}: Props) => {
                         id="estimated_unit_price"
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
                     <Input
                         type="text"
                         isLoading={isLoading}
@@ -80,7 +80,7 @@ export const PurchaseRequestForm = ({form}: Props) => {
                         id="notes"
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
                     <Input
                         type="text"
                         isLoading={isLoading}

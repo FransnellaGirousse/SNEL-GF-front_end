@@ -15,6 +15,8 @@ export const ObjectivesMissionReport = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="mission_objectives"
+                required={true}
+                minLength={10}
             />
         </>
     )

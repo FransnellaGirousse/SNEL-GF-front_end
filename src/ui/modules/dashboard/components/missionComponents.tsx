@@ -4,7 +4,7 @@ import { LiaExchangeAltSolid } from "react-icons/lia";
 
 export const MissionComponents = () => {
     return(
-        <div className="space-y-5 mb-10">
+        <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
             <Typography
                 variant="h5"
                 theme="black"

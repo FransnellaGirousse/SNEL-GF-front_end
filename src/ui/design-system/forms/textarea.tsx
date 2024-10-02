@@ -9,7 +9,8 @@ interface Props {
     errorMessage?: string,
     required?: boolean,
     isAutoCompleted?: boolean,
-    isLoading?: boolean
+    isLoading?: boolean,
+    minLength?: number
 }
 
 export const Textarea = ({
@@ -19,7 +20,7 @@ export const Textarea = ({
                           errors,
                           id,
                           errorMessage = "Tu dois renseigner ce champ",
-                          required = true,
+                          required = true, minLength,
                           isAutoCompleted = false
                       }: Props) => {
     return (
@@ -29,13 +30,17 @@ export const Textarea = ({
                 className={clsx(
                     isLoading && "cursor-not-allowed",
                     errors[id] ? "placeholder-alert-danger text-alert-danger focus:ring-alert-danger" : "placeholder-gray-600 focus:ring-gray-400",
-                    "p-4 h-32 w-full font-white rounded focus:outline-none focus:ring-2 bg-gray-500 text-gray resize-none"
+                    "p-4 h-32 w-full max-sm:text-caption4 font-white rounded focus:outline-none focus:ring-2 bg-gray-500 text-gray resize-none"
                 )}
                 disabled={isLoading}
                 {...register(id, {
                     required: {
                         value: required,
                         message: errorMessage
+                    },
+                    minLength: {
+                        value: minLength,
+                        message: `Ce champ doit avoir au moins ${minLength} caractères`
                     }
                 })}
                 autoComplete={isAutoCompleted ? "on" : "off"}

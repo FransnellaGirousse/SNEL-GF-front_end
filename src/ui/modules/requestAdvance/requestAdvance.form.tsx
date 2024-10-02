@@ -8,7 +8,9 @@ import {InformationsAdvanceForm} from "@/ui/components/forms/InformationsAdvance
 import {CoefficientAdvanceForm} from "@/ui/components/forms/CoefficientAdvanceForm";
 import {SignatureAdvanceForm} from "@/ui/components/forms/SignatureAdvanceForm";
 import { VscGitPullRequest } from "react-icons/vsc";
-import {Step} from "@/ui/design-system/step/step";
+import {Steps, StepTypography} from "@/ui/design-system/step/steps";
+import {Step} from "@/types/step";
+import {v4 as uuidv4} from "uuid";
 
 interface Props {
     form: FormsType
@@ -21,11 +23,18 @@ export const RequestAdvanceForm = ({form}: Props) => {
         isLoading,
         onSubmit
     } = form;
+    const stepsItems: Step[] = [
+        {name: "Informations de la demande", number: 1},
+        {name: "Montant", number: 2},
+        {name: "Signature", number: 3}
+    ]
     return(
         <>
-            <div
-                className="grid grid-cols-3 gap-2">
-                <Step currentStepIndex={currentStepIndex + 1} />
+            <div className="lg:hidden">
+                <StepTypography name={stepsItems[currentStepIndex].name} number={stepsItems[currentStepIndex].number}/>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+                <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
                 {step}

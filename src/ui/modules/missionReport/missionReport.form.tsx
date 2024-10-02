@@ -1,4 +1,4 @@
-import {FormsType} from "@/types/forms";
+import {FormsType, RegisterFormFieldsType} from "@/types/forms";
 import {useMultiStepForm} from "@/hooks/useMultiStepForm";
 import {InformationMissionReport} from "@/ui/components/forms/InformationMissionReport";
 import {ObjectivesMissionReport} from "@/ui/components/forms/ObjectivesMissionReport";
@@ -9,7 +9,9 @@ import {NextStepMissionReport} from "@/ui/components/forms/NextStepMissionReport
 import {GrFormNextLink, GrFormPreviousLink} from "react-icons/gr";
 import {Button} from "@/ui/design-system/button/button";
 import {VscGitPullRequest} from "react-icons/vsc";
-import {MissionReportStep} from "@/ui/design-system/step/missionReportStep";
+import {Steps, StepTypography} from "@/ui/design-system/step/steps";
+import {Step} from "@/types/step";
+import {SubmitHandler} from "react-hook-form";
 
 interface Props {
     form: FormsType
@@ -22,11 +24,24 @@ export const MissionReportForm = ({form}: Props) => {
         onSubmit,
         isLoading
     } = form;
+    const stepsItems: Step[] = [
+        {name: "Informations de la Mission", number: 1},
+        {name: "Objectifs de la mission", number: 2},
+        {name: "Déroulements des activités", number: 3},
+        {name: "Résultats", number: 4},
+        {name: "Récommendations", number: 5},
+        {name: "Prochaines étapes", number: 6}
+    ]
+    const verifyError: SubmitHandler<RegisterFormFieldsType> = async (formData) => {
+        next()
+    }
     return (
         <>
-            <div
-                className="grid grid-cols-6 gap-2">
-                <MissionReportStep currentStepIndex={currentStepIndex + 1}/>
+            <div className="lg:hidden">
+                <StepTypography name={stepsItems[currentStepIndex].name} number={stepsItems[currentStepIndex].number}/>
+            </div>
+            <div className="grid grid-cols-6 gap-2">
+                <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems}/>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
                 {step}
@@ -45,7 +60,7 @@ export const MissionReportForm = ({form}: Props) => {
                         <button
                             type="button"
                             className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
-                            onClick={next}
+                            onClick={handleSubmit(verifyError)}
                             disabled={isLoading}
                         >
                             <GrFormNextLink/>

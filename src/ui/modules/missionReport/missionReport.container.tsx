@@ -14,7 +14,18 @@ export const MissionReportContainer = () => {
     } = useForm<MissionReportFormFieldsType>()
     const onSubmit: SubmitHandler<MissionReportFormFieldsType> = async (formData) => {
         setIsLoading(true)
-        console.log("formData", formData)
+        const {date, object, mission_objectives, mission_location, next_steps, point_to_improve, strong_points, recommendations, progress_of_activities, name_of_missionary} = formData
+        try {
+            await fetch("", {
+                method: "POST",
+                body: JSON.stringify({date, object, mission_objectives, mission_location, next_steps, point_to_improve, strong_points, recommendations, progress_of_activities, name_of_missionary}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+        } catch (e) {
+            console.error(e)
+        }
     }
     return (
         <>

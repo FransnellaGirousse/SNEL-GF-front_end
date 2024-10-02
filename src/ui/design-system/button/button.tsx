@@ -71,14 +71,14 @@ export const Button = ({
     }
     switch (size) {
         case "small":
-            sizeStyles = `text-caption3 font-medium ${
-                variant === "ico" ? "flex items-center justify-center w-[40px] h-[40px]" : "px-[14px] py-[12px]"
+            sizeStyles = `text-caption3 max-sm:text-caption4 font-medium ${
+                variant === "ico" ? "flex items-center justify-center w-[40px] h-[40px]" : "px-[14px] py-[12px] max-sm:px-[12px] max-sm:py-[10px]"
             }`
             icoSize = 18
             break
         case "medium": // Default
-            sizeStyles = `text-caption2 font-medium ${
-                variant === "ico" ? "flex items-center justify-center w-[50px] h-[50px]" : "px-[18px] py-[15px]"
+            sizeStyles = `text-caption2 font-medium max-sm:text-caption3 ${
+                variant === "ico" ? "flex items-center justify-center w-[50px] h-[50px] max-sm:w-[40px] max-sm:h-[40px]" : "px-[18px] py-[15px] max-sm:px-[14px] max-sm:py-[12px]"
             }`
             icoSize = 20
             break

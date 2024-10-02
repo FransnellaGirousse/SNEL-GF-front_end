@@ -15,6 +15,8 @@ export const ProgressOfActivitiesMissionReport = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="progress_of_activities"
+                required={true}
+                minLength={10}
             />
         </>
     )

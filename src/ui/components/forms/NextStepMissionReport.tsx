@@ -15,6 +15,8 @@ export const NextStepMissionReport = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="next_steps"
+                required={true}
+                minLength={10}
             />
         </>
     )

@@ -57,7 +57,7 @@ export const Typography = ({
             variantStyles = "text-4xl"
             break
         case "h5":
-            variantStyles = "text-3xl"
+            variantStyles = "text-3xl max-sm:text-2xl"
             break
         case "lead":
             variantStyles = "text-2xl"
@@ -72,7 +72,7 @@ export const Typography = ({
             variantStyles = "text-caption1"
             break
         case "caption2":
-            variantStyles = "text-caption2"
+            variantStyles = "text-caption2 max-sm:text-caption3"
             break
         case "caption3":
             variantStyles = "text-caption3"
