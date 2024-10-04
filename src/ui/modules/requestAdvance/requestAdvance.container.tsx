@@ -8,15 +8,17 @@ import {RequestAdvanceView} from "@/ui/modules/requestAdvance/requestAdvance.vie
 export const RequestAdvanceContainer = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const {
+        control,
         handleSubmit,
         formState: {errors},
-        register
+        register,
+        watch
     } = useForm<requestAdvanceFormFieldsType>()
     const onSubmit: SubmitHandler<requestAdvanceFormFieldsType> = async (formData) => {
         setIsLoading(true)
         console.log("formData", formData)
     }
     return(
-        <RequestAdvanceView form={{handleSubmit, errors, register, onSubmit, isLoading}} />
+        <RequestAdvanceView form={{handleSubmit, errors, control, register, onSubmit, isLoading, watch}} />
     )
 }

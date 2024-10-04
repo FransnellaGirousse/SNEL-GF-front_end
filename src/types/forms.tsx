@@ -46,8 +46,19 @@ export interface AssignmentOMFormFieldsType {
 }
 
 export interface requestAdvanceFormFieldsType {
-    informations: string,
-    date: Date,
+    social_security_number: number,
+    nationality: string,
+    address: string,
+    special_mailing_instruction: string,
+    amount_requested: number,
+    bank: string,
+    branch: string,
+    account_number: number,
+    date_requested: Date,
+    date_need_by: Date,
+    purpose_of_travel: string,
+    destination: string,
+    location: string,
     per_diem_rate: string,
     daily_rating_coefficient: string,
     percentage_of_advance_required: string,

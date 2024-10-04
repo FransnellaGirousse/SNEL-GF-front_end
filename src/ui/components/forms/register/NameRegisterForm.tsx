@@ -16,7 +16,7 @@ export const NameRegisterForm = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="firstname"
-                minLength={3}
+                minLength={2}
                 maxLength={255}
             />
             <Input
@@ -26,7 +26,7 @@ export const NameRegisterForm = ({form}: Props) => {
                 register={register}
                 errors={errors}
                 id="lastname"
-                minLength={3}
+                minLength={2}
                 maxLength={255}
             />
         </>

@@ -1,32 +1,35 @@
 "use client"
 
-import {FormsType} from "@/types/forms";
+import {FormsType, requestAdvanceFormFieldsType} from "@/types/forms";
 import {Button} from "@/ui/design-system/button/button";
 import {GrFormNextLink, GrFormPreviousLink} from "react-icons/gr";
 import {useMultiStepForm} from "@/hooks/useMultiStepForm";
-import {InformationsAdvanceForm} from "@/ui/components/forms/InformationsAdvanceForm";
-import {CoefficientAdvanceForm} from "@/ui/components/forms/CoefficientAdvanceForm";
-import {SignatureAdvanceForm} from "@/ui/components/forms/SignatureAdvanceForm";
 import { VscGitPullRequest } from "react-icons/vsc";
 import {Steps, StepTypography} from "@/ui/design-system/step/steps";
 import {Step} from "@/types/step";
-import {v4 as uuidv4} from "uuid";
+import {InformationsAdvanceForm} from "@/ui/components/forms/request_in_advance/InformationsAdvanceForm";
+import {SubmitHandler} from "react-hook-form";
+import {PaymentAdvanceForm} from "@/ui/components/forms/request_in_advance/paymentAdvanceForm";
+import {AmountAdvanceForm} from "@/ui/components/forms/request_in_advance/amountAdvanceForm";
 
 interface Props {
     form: FormsType
 }
 
 export const RequestAdvanceForm = ({form}: Props) => {
-    const {step, steps, currentStepIndex, back, next} = useMultiStepForm([<InformationsAdvanceForm form={form} />, <CoefficientAdvanceForm form={form} />, <SignatureAdvanceForm form={form} />])
+    const {step, steps, currentStepIndex, back, next} = useMultiStepForm([<InformationsAdvanceForm form={form}/>, <AmountAdvanceForm form={form}/>, <PaymentAdvanceForm form={form} />])
     const {
         handleSubmit,
         isLoading,
         onSubmit
     } = form;
+    const verifyError: SubmitHandler<requestAdvanceFormFieldsType> = async (formData) => {
+        next()
+    }
     const stepsItems: Step[] = [
         {name: "Informations de la demande", number: 1},
         {name: "Montant", number: 2},
-        {name: "Signature", number: 3}
+        {name: "Virement", number: 3}
     ]
     return(
         <>
@@ -53,7 +56,7 @@ export const RequestAdvanceForm = ({form}: Props) => {
                         <button
                             type="button"
                             className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
-                            onClick={next}
+                            onClick={verifyError}
                             disabled={isLoading}
                         >
                             <GrFormNextLink/>

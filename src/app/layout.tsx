@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
       <SessionWrapper>
-        <html lang="en">
+        <html lang="fr">
         <body
             className={clsx(geistSans.variable, geistMono.variable, "antialiased bg-white")}
         >

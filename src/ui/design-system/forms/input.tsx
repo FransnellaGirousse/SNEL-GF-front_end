@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import {Typography} from "@/ui/design-system/typography/typography";
+import {useState} from "react";
 
 interface Props {
     placeholder?: string,
@@ -16,7 +17,8 @@ interface Props {
     pattern?: any,
     messagePattern?: string,
     passRegex?: RegExp[]
-    pwd?: string
+    pwd?: string,
+    defaultValue?: string
 }
 
 export const Input = ({
@@ -34,13 +36,15 @@ export const Input = ({
                           pattern,
                           messagePattern,
                           passRegex,
-                          pwd
+                          pwd,
+                          defaultValue
                       }: Props) => {
     return (
         <div className="space-y-2">
             <input
                 type={type}
                 placeholder={placeholder}
+                name={id}
                 className={clsx(
                     isLoading && "cursor-not-allowed",
                     errors[id] ? "placeholder-alert-danger text-alert-danger focus:ring-alert-danger" : "placeholder-gray-600 focus:ring-gray-400",
@@ -71,11 +75,12 @@ export const Input = ({
                             }
                         }
                         return(
-                            passRegex?.every((pattern) => pattern.test(value)) || passRegex && "must include lower, upper, specialchars, number "
+                            passRegex?.every((pattern) => pattern.test(value)) || passRegex && "Ce champ doit inclure au moins un caractère inférieur, supérieur, spécial et un nombre"
                         )
                     }
                 })}
                 autoComplete={isAutoCompleted ? "on" : "off"}
+                defaultValue={defaultValue}
             />
             {errors[id] &&
 				<Typography
