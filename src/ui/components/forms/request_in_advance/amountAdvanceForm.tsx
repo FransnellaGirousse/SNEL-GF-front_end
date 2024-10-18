@@ -20,25 +20,31 @@ export const AmountAdvanceForm = ({ form }: Props) => {
   });
 
   const [totalSum, setTotalSum] = useState(0);
+  const [additionalCosts, setAdditionalCosts] = useState(0);
 
-  
   useEffect(() => {
-    const totals = fields.map((_, index) => {
-      const perDiemRate = watch(`rows[${index}].per_diem_rate`) || 0;
-      const percentageOfAdvance = watch(`rows[${index}].percentage_of_advance_required`) || 0;
-      const numberOfDays = watch(`rows[${index}].number_of_days`) || 0;
+    const calculateTotalSum = () => {
+      const totals = fields.map((_, index) => {
+        const perDiemRate = parseFloat(watch(`rows[${index}].per_diem_rate`) || 0);
+        const percentageOfAdvance = parseFloat(watch(`rows[${index}].percentage_of_advance_required`) || 0);
+        const numberOfDays = parseFloat(watch(`rows[${index}].number_of_days`) || 0);
 
-      const total =
-        (parseFloat(perDiemRate) *
-          parseFloat(percentageOfAdvance) *
-          parseFloat(numberOfDays)) /
-        100;
-      return isNaN(total) ? 0 : total;
-    });
+        const total =
+          (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
+        return isNaN(total) ? 0 : total;
+      });
 
-    const sum = totals.reduce((acc, curr) => acc + curr, 0);
-    setTotalSum(sum); 
+      const sum = totals.reduce((acc, curr) => acc + curr, 0);
+      setTotalSum(sum);
+    };
+
+    calculateTotalSum();
   }, [fields, watch]); 
+
+  const handleAdditionalCostsChange = (value: string | undefined) => {
+    const parsedValue = parseFloat(value || "0");
+    setAdditionalCosts(isNaN(parsedValue) ? 0 : parsedValue);
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -65,16 +71,18 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         </thead>
         <tbody>
           {fields.map((item, index) => {
-            const perDiemRate = watch(`rows[${index}].per_diem_rate`) || 0;
-            const percentageOfAdvance =
-              watch(`rows[${index}].percentage_of_advance_required`) || 0;
-            const numberOfDays = watch(`rows[${index}].number_of_days`) || 0;
+            const perDiemRate = parseFloat(
+              watch(`rows[${index}].per_diem_rate`) || 0
+            );
+            const percentageOfAdvance = parseFloat(
+              watch(`rows[${index}].percentage_of_advance_required`) || 0
+            );
+            const numberOfDays = parseFloat(
+              watch(`rows[${index}].number_of_days`) || 0
+            );
 
             const total =
-              (parseFloat(perDiemRate) *
-                parseFloat(percentageOfAdvance) *
-                parseFloat(numberOfDays)) /
-              100;
+              (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
 
             return (
               <tr key={item.id} className="text-sm md:text-base">
@@ -238,6 +246,35 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           Ajouter une ligne
         </button>
       </Button>
+
+      <div className="mt-4 p-2 border border-gray-400">
+        <label htmlFor="additional_costs" className="font-bold">
+          Coûts supplémentaires:
+        </label>
+        <CurrencyInput
+          id="additional_costs"
+          value={additionalCosts}
+          onValueChange={handleAdditionalCostsChange}
+          prefix="Ariary"
+          decimalScale={2}
+          allowNegativeValue={false}
+          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+        />
+      </div>
+
+      <div className="mt-4 p-2 font-bold">
+        <label htmlFor="final_total" className="font-bold">
+          Total final (avec coûts supplémentaires):
+        </label>
+        <CurrencyInput
+          id="final_total"
+          value={totalSum + additionalCosts}
+          prefix="Ariary"
+          decimalScale={2}
+          disabled={true}
+          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+        />
+      </div>
     </div>
   );
 };

@@ -53,6 +53,7 @@ export interface requestAdvanceFormFieldsType {
     amount_requested: number,
     bank: string,
     branch: string,
+    name: string,
     account_number: number,
     date_requested: Date,
     date_need_by: Date,

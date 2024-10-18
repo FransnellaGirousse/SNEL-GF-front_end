@@ -25,7 +25,7 @@ export const Logo = ({size = "medium"}: Props) => {
             <Image
                 width={sizeLogo}
                 height={sizeLogo}
-                src="/assets/images/logo/logo.png"
+                src="/assets/images/logo/logo2.png"
                 alt="Logo"
                 className="object-cover object-left-top rounded-full"
             />

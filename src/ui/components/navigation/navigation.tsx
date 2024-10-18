@@ -22,8 +22,8 @@ interface Props {}
 export const Navigation = ({}: Props) => {
   const [show, setShow] = useState(false);
   const [showingNav, setShowingNav] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // État pour la recherche
-  const { data: session } = useSession(); // Obtenir la session
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const { data: session } = useSession(); 
 
   const handleClick = () => {
     setShow((show) => !show);
@@ -61,7 +61,7 @@ export const Navigation = ({}: Props) => {
                 <Logo size="small" />
                 <div className="flex flex-col max-sm:hidden">
                   <div className="text-gray font-extrabold text-[24px]">
-                    Gestion Financières
+                    Snell
                   </div>
                   <Typography variant="caption4" tag="span" theme="gray">
                     Votre solution financière !
