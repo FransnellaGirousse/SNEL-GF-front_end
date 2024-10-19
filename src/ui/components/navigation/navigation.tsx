@@ -10,6 +10,7 @@ import { useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { RiNotification2Line } from "react-icons/ri";
 import { Sidebar } from "@/ui/components/navigation/sidebar";
 import clsx from "clsx";
 import { signOut, useSession } from "next-auth/react";
@@ -22,8 +23,8 @@ interface Props {}
 export const Navigation = ({}: Props) => {
   const [show, setShow] = useState(false);
   const [showingNav, setShowingNav] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const { data: session } = useSession(); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const { data: session } = useSession();
 
   const handleClick = () => {
     setShow((show) => !show);
@@ -45,16 +46,19 @@ export const Navigation = ({}: Props) => {
         <Container className="flex items-center justify-between py-1.5 gap-7">
           <div className="flex items-center gap-5 relative">
             <div className="z-20">
-              <button
-                type="button"
-                className={clsx(
-                  show && "fixed top-[16.4px]",
-                  "border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px]"
-                )}
-                onClick={handleClick}
-              >
-                {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
-              </button>
+              { session && (
+                <button
+                                type="button"
+                                className={clsx(
+                                  show && "fixed top-[16.4px]",
+                                  "border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px]"
+                                )}
+                                onClick={handleClick}
+                              >
+                                {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
+                              </button>
+              )}
+              
             </div>
             <Link href="/">
               <div className="flex items-center gap-2.5">
@@ -85,49 +89,56 @@ export const Navigation = ({}: Props) => {
               />
               <button
                 type="submit"
-                className="bg-primary-400 hover:bg-gray-300 rounded-r-full py-2 px-4 flex items-center justify-center"
+                className="bg-gray-300 hover:bg-primary-300 rounded-r-full py-3 px-4 flex items-center justify-center"
               >
-                <IoMdSearch className="text-gray-600" />
+                <IoMdSearch />
               </button>
             </form>
           )}
 
           {session ? (
-            <div className="relative">
-              <div className="flex justify-between gap-1 items-center">
-                <Avatar
-                  size="medium"
-                  src={session?.user?.image}
-                  alt={session?.user?.name}
-                />
-                <span className="text-2xl" onClick={showNav}>
-                  <MdOutlineKeyboardArrowDown />
-                </span>
+            <div className="flex items-center gap-5">
+              <div className="relative">
+                <RiNotification2Line />
+                {/* Ajouter ici une logique de notification non lue si nécessaire */}
               </div>
-              <div
-                className={clsx(
-                  "absolute w-[200px] bg-white p-5 right-0 top-10 shadow-2xl rounded",
-                  !showingNav ? "hidden" : "block"
-                )}
-              >
-                <Typography variant="caption3" tag="span" theme="black">
-                  <Link
-                    href="/profile"
-                    className="flex justify-between gap-2
-                    items-center text-gray hover:text-primary transition-all
-                    mb-3"
-                  >
-                    <MdOutlineAccountCircle />
-                    Mon compte
-                  </Link>
-                  <button
-                    onClick={() => signOut()}
-                    className="flex justify-between gap-2 items-center text-gray hover:text-primary transition-all"
-                  >
-                    <IoPowerSharp />
-                    Déconnecter
-                  </button>
-                </Typography>
+
+              <div className="relative">
+                <div className="flex justify-between gap-1 items-center">
+                  <Avatar
+                    size="medium"
+                    src={session?.user?.image}
+                    alt={session?.user?.name}
+                  />
+                  <span className="text-2xl" onClick={showNav}>
+                    <MdOutlineKeyboardArrowDown />
+                  </span>
+                </div>
+                <div
+                  className={clsx(
+                    "absolute w-[200px] bg-white p-5 right-0 top-10 shadow-2xl rounded",
+                    !showingNav ? "hidden" : "block"
+                  )}
+                >
+                  <Typography variant="caption3" tag="span" theme="black">
+                    <Link
+                      href="/profile"
+                      className="flex justify-between gap-2
+                      items-center text-gray hover:text-primary transition-all
+                      mb-3"
+                    >
+                      <MdOutlineAccountCircle />
+                      Mon compte
+                    </Link>
+                    <button
+                      onClick={() => signOut()}
+                      className="flex justify-between gap-2 items-center text-gray hover:text-primary transition-all"
+                    >
+                      <IoPowerSharp />
+                      Déconnecter
+                    </button>
+                  </Typography>
+                </div>
               </div>
             </div>
           ) : (

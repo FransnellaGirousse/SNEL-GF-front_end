@@ -27,9 +27,12 @@ export interface LoginFormFieldsType {
 }
 
 export interface AssignmentFormFieldsType {
+    mission_title: string,
+    introduction: string;
     mission_objectives: string,
     planned_activities: string,
-    necessary_resources: string
+    necessary_resources: string,
+    conclusion: string
 }
 
 export interface AssignmentOMFormFieldsType {
