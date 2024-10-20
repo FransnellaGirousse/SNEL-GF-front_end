@@ -56,7 +56,7 @@ export const Sidebar = ({ show }: Props) => {
             <FaDollarSign />
             Dépense
           </ActiveLink>
-          <ActiveLink href="/contact">
+          <ActiveLink href="/approval">
             <FcApproval />
             Approbation
           </ActiveLink>

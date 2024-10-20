@@ -22,7 +22,7 @@ export const AssignmentOMForm = ({form}: Props) => {
                 <div className="grid grid-cols-2 gap-2">
                     <Input
                         isLoading={isLoading}
-                        placeholder="Voyageur"
+                        placeholder="Missionaire"
                         type="text"
                         register={register}
                         errors={errors}

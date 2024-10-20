@@ -1,3 +1,5 @@
+"use client"
+
 import {AssignmentForm} from "@/ui/modules/assignment/assignment.form";
 import {FormsType} from "@/types/forms";
 
