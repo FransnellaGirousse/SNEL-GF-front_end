@@ -1,144 +1,88 @@
-import {FormsType} from "@/types/forms";
-import {Input} from "@/ui/design-system/forms/input";
-import {Button} from "@/ui/design-system/button/button";
+"use client"
+
+import {AssignmentOMFormFieldsType, FormsType} from "@/types/forms";
+import { Step } from "@/types/step";
+import { Steps, StepTypography } from "@/ui/design-system/step/steps";
+import { useMultiStepForm } from "@/hooks/useMultiStepForm";
+import { HotelForm } from "@/ui/components/forms/assignementOM/HotelForm";
+import { ProposedItineraryForm } from "@/ui/components/forms/assignementOM/ProposedItineraryForm";
+import { LogisticalForm } from "@/ui/components/forms/assignementOM/LogisticalForm";
+import { SubmitHandler } from "react-hook-form";
+import { Button } from "@/ui/design-system/button/button";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import {Typography} from "@/ui/design-system/typography/typography";
+import { TravelForm } from "@/ui/components/forms/assignementOM/TravelForm";
 
 interface Props {
     form: FormsType
 }
 
-export const AssignmentOMForm = ({form}: Props) => {
-    const {
-        handleSubmit,
-        errors,
-        register,
-        onSubmit,
-        isLoading
-    } = form;
+export const  AssignmentOMForm = ({form}: Props) => {
+  const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
+    <TravelForm form={form} />,
+    <ProposedItineraryForm form={form} />,
+    <HotelForm form={form} />,
+    <LogisticalForm form={form} />,
+  ]);
+
+  const { handleSubmit, onSubmit, isLoading } = form;
+  const verifyError: SubmitHandler<AssignmentOMFormFieldsType> = async (
+    formData
+  ) => {
+    next();
+  };
+  const stepsItems: Step[] = [
+    { name: "A propos de la mission", number: 1 },
+    { name: "Proposition d'itineraire", number: 2 },
+    { name: "Objet de la mission", number: 3 },
+    { name: "Moyen de trasport", number: 4 },
+  ];
+
     return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Missionaire"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="traveler"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        type="date"
-                        register={register}
-                        errors={errors}
-                        id="date"
-                    />
-                </div>
-                <Typography
-                    variant="lead"
-                    tag="h5"
-                >
-                    Itinéraire Proposé
-                </Typography>
-
-                <div className="grid grid-cols-2 gap-2">
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Point de départ"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="starting_point"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Destination"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="destination"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        type="date"
-                        register={register}
-                        errors={errors}
-                        id="date_hour"
-                    />
-                </div>
-                <Button
-                    isLoading={isLoading}
-                    type="submit"
-                    icon={{icon: FaRegCircleCheck}}
-                    iconPosition="left"
-                >
-                    Ajouter à l'itinéraire
-                </Button>
-
-                <Input
-                    isLoading={isLoading}
-                    placeholder="Objet de la mission"
-                    type="text"
-                    register={register}
-                    errors={errors}
-                    id="Purpose_of_the_mission"
-                />
-
-                <Typography
-                    variant="lead"
-                    tag="h5"
-                >
-                    Détails de l'Hôtel
-                </Typography>
-
-                <div className="grid grid-cols-2 gap-2">
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Nom de l'Hôtel"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="name_of_the_hotel"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Tarif de la chambre"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="room_rate"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        placeholder="Nombre de confirmation"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        id="confirmation_number"
-                    />
-                    <Input
-                        isLoading={isLoading}
-                        type="date"
-                        register={register}
-                        errors={errors}
-                        id="date_hotel"
-                    />
-                </div>
-                <textarea className="placeholder-gray-600 focus:ring-primary p-4 w-full border border-midnight-600 font-white rounded focus:outline-none focus:ring-1 bg-midnight-700 text-white resize-none" name="" id="" placeholder="Autre details">
-                </textarea>
-
-                <Typography
-                    variant="lead"
-                    tag="h5"
-                >
-                    Autres Exigences Logistiques
-                </Typography>
-
-
-
-            </form>
-        </>
-    )
+      <>
+        <div className="lg:hidden">
+          <StepTypography
+            name={stepsItems[currentStepIndex].name}
+            number={stepsItems[currentStepIndex].number}
+          />
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
+          {step}
+          <div className="flex justify-between">
+            {currentStepIndex !== 0 && (
+              <button
+                type="button"
+                className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
+                onClick={back}
+                disabled={isLoading}
+              >
+                <GrFormPreviousLink />
+              </button>
+            )}
+            {currentStepIndex !== steps.length - 1 ? (
+              <button
+                type="button"
+                className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
+                onClick={verifyError}
+                disabled={isLoading}
+              >
+                <GrFormNextLink />
+              </button>
+            ) : (
+              <Button
+                isLoading={isLoading}
+                type="submit"
+                icon={{ icon: FaRegCircleCheck }}
+                iconPosition="left"
+              >
+                Soumettre la demande
+              </Button>
+            )}
+          </div>
+        </form>
+      </>
+    );
 }

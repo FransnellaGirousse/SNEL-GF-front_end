@@ -36,16 +36,19 @@ export interface AssignmentFormFieldsType {
 }
 
 export interface AssignmentOMFormFieldsType {
-    traveler: string,
-    date: Date,
-    starting_point: string,
-    destination: string,
-    date_hour: Date,
-    Purpose_of_the_mission: string,
-    name_of_the_hotel: string,
-    room_rate: string,
-    confirmation_number: number,
-    date_hotel: Date
+  traveler: string;
+  date: Date;
+  starting_point: string;
+  destination: string;
+  date_hour: Date;
+  Purpose_of_the_mission: string;
+  name_of_the_hotel: string;
+  room_rate: string;
+  confirmation_number: number;
+  date_hotel: Date;
+  authorization_airfare: string,
+  fund_speedkey: string,
+  price: string
 }
 
 export interface requestAdvanceFormFieldsType {
@@ -68,7 +71,9 @@ export interface requestAdvanceFormFieldsType {
     percentage_of_advance_required: string,
     total_amount: string,
     additional_costs: string,
-    signature: string
+    signature: string,
+    other_details_hotel: string,
+    other_logistical_requirments: string
 }
 
 export interface MissionReportFormFieldsType {
