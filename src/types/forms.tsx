@@ -46,34 +46,37 @@ export interface AssignmentOMFormFieldsType {
   room_rate: string;
   confirmation_number: number;
   date_hotel: Date;
-  authorization_airfare: string,
-  fund_speedkey: string,
-  price: string
+  authorization_airfare: string;
+  fund_speedkey: string;
+  price: string;
+  other_details_hotel: string;
+  other_logistical_requirments: string;
 }
 
 export interface requestAdvanceFormFieldsType {
-    social_security_number: number,
-    nationality: string,
-    address: string,
-    special_mailing_instruction: string,
-    amount_requested: number,
-    bank: string,
-    branch: string,
-    name: string,
-    account_number: number,
-    date_requested: Date,
-    date_need_by: Date,
-    purpose_of_travel: string,
-    destination: string,
-    location: string,
-    per_diem_rate: string,
-    daily_rating_coefficient: string,
-    percentage_of_advance_required: string,
-    total_amount: string,
-    additional_costs: string,
-    signature: string,
-    other_details_hotel: string,
-    other_logistical_requirments: string
+  social_security_number: number;
+  nationality: string;
+  address: string;
+  date_requested: Date;
+  date_need_by: Date;
+  special_mailing_instruction: string;
+  purpose_of_travel: string;
+  destination: string;
+  location: string;
+  per_diem_rate: string;
+  daily_rating_coefficient: string;
+  percentage_of_advance_required: string;
+  total_amount: string;
+  additional_costs_motif: string;
+  additional_costs: string;
+  total_sum: string;
+  amount_requested: number;
+  bank: string;
+  branch: string;
+  name: string;
+  account_number: number;
+
+  signature: string;
 }
 
 export interface MissionReportFormFieldsType {

@@ -7,6 +7,8 @@ import CurrencyInput from "react-currency-input-field";
 import { Button } from "@/ui/design-system/button/button";
 import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { Input } from "@/ui/design-system/forms/input";
+
 
 interface Props {
   form: FormsType;
@@ -251,6 +253,14 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         <label htmlFor="additional_costs" className="font-bold">
           Coûts supplémentaires:
         </label>
+        <Input
+          id="additional_costs_motif"
+          placeholder="Autres motants"
+          register={register}
+          errors={errors}
+          required={true}
+          isLoading={isLoading}
+        />
         <CurrencyInput
           id="additional_costs"
           value={additionalCosts}
