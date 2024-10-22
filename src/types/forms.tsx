@@ -80,16 +80,16 @@ export interface requestAdvanceFormFieldsType {
 }
 
 export interface MissionReportFormFieldsType {
-    date: Date,
-    object: string,
-    mission_location: string,
-    name_of_missionary: string,
-    mission_objectives: string,
-    progress_of_activities: string,
-    point_to_improve: string,
-    strong_points: string,
-    recommendations: string,
-    next_steps: string
+  date: Date;
+  name_of_missionary: string;
+  object: string;
+  mission_location: string;
+  mission_objectives: string;
+  progress_of_activities: string;
+  point_to_improve: string;
+  strong_points: string;
+  recommendations: string;
+  next_steps: string;
 }
 
 export interface PurchaseRequestFormFieldsType {

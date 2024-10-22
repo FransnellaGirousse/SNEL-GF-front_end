@@ -253,14 +253,14 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         <label htmlFor="additional_costs" className="font-bold">
           Coûts supplémentaires:
         </label>
-        <Input
+        {/* <Input
           id="additional_costs_motif"
           placeholder="Autres motants"
           register={register}
           errors={errors}
           required={true}
           isLoading={isLoading}
-        />
+        /> */}
         <CurrencyInput
           id="additional_costs"
           value={additionalCosts}
