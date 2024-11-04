@@ -7,8 +7,7 @@ import CurrencyInput from "react-currency-input-field";
 import { Button } from "@/ui/design-system/button/button";
 import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { Input } from "@/ui/design-system/forms/input";
-
+import { Table } from "@/ui/design-system/table/table";
 
 interface Props {
   form: FormsType;
@@ -27,12 +26,17 @@ export const AmountAdvanceForm = ({ form }: Props) => {
   useEffect(() => {
     const calculateTotalSum = () => {
       const totals = fields.map((_, index) => {
-        const perDiemRate = parseFloat(watch(`rows[${index}].per_diem_rate`) || 0);
-        const percentageOfAdvance = parseFloat(watch(`rows[${index}].percentage_of_advance_required`) || 0);
-        const numberOfDays = parseFloat(watch(`rows[${index}].number_of_days`) || 0);
+        const perDiemRate = parseFloat(
+          watch(`rows[${index}].per_diem_rate`) || 0
+        );
+        const percentageOfAdvance = parseFloat(
+          watch(`rows[${index}].percentage_of_advance_required`) || 0
+        );
+        const numberOfDays = parseFloat(
+          watch(`rows[${index}].number_of_days`) || 0
+        );
 
-        const total =
-          (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
+        const total = (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
         return isNaN(total) ? 0 : total;
       });
 
@@ -41,196 +45,142 @@ export const AmountAdvanceForm = ({ form }: Props) => {
     };
 
     calculateTotalSum();
-  }, [fields, watch]); 
+  }, [fields, watch]);
 
   const handleAdditionalCostsChange = (value: string | undefined) => {
     const parsedValue = parseFloat(value || "0");
     setAdditionalCosts(isNaN(parsedValue) ? 0 : parsedValue);
   };
 
+  // Définition des colonnes par le composant table
+  const columns = [
+    { title: "Location", key: "location" },
+    { title: "Taux journalier", key: "per_diem_rate" },
+    {
+      title: "Pourcentage de l'avance nécessaire",
+      key: "percentage_of_advance_required",
+    },
+    { title: "Coefficient d'évaluation journalier", key: "number_of_days" },
+    { title: "Total", key: "total_amount" },
+    { title: "Actions", key: "actions" },
+  ];
+
+  const rows = fields.map((item, index) => ({
+    id: item.id,
+    data: {
+      location: (
+        <AdvanceInput
+          type="text"
+          id={`rows[${index}].location`}
+          placeholder="Date: Location ..."
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      per_diem_rate: (
+        <Controller
+          name={`rows[${index}].per_diem_rate`}
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id={`rows[${index}].per_diem_rate`}
+              decimalScale={2}
+              prefix="Ariary"
+              placeholder="Ariary 100, 000"
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+              allowNegativeValue={false}
+              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+            />
+          )}
+        />
+      ),
+      percentage_of_advance_required: (
+        <Controller
+          name={`rows[${index}].percentage_of_advance_required`}
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id={`rows[${index}].percentage_of_advance_required`}
+              decimalScale={2}
+              suffix="%"
+              placeholder="10 %"
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+              allowNegativeValue={false}
+              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+            />
+          )}
+        />
+      ),
+      number_of_days: (
+        <Controller
+          name={`rows[${index}].number_of_days`}
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id={`rows[${index}].number_of_days`}
+              decimalScale={2}
+              placeholder="0,75"
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+              allowNegativeValue={false}
+              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+            />
+          )}
+        />
+      ),
+      total_amount: (
+        <CurrencyInput
+          id={`rows[${index}].total_amount`}
+          name={`rows[${index}].total_amount`}
+          value={
+            (parseFloat(watch(`rows[${index}].per_diem_rate`) || "0") *
+              parseFloat(
+                watch(`rows[${index}].percentage_of_advance_required`) || "0"
+              ) *
+              parseFloat(watch(`rows[${index}].number_of_days`) || "0")) /
+            100
+          }
+          prefix="Ariary"
+          decimalScale={2}
+          disabled={true}
+          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+        />
+      ),
+      actions: (
+        <button type="button" onClick={() => remove(index)}>
+          <MdDeleteForever className="text-red-500" size={24} />
+        </button>
+      ),
+    },
+  }));
+
+ rows.push({
+   id: "total_general",
+   data: {
+     location: <strong>Total général:</strong>,
+     per_diem_rate: <span></span>, 
+     percentage_of_advance_required: <span></span>, 
+     number_of_days: <span></span>, 
+     total_amount: (
+       <CurrencyInput
+         id="total_general"
+         value={totalSum}
+         prefix="Ariary"
+         decimalScale={2}
+         disabled={true}
+         className="bg-white outline-0 border border-gray-400 p-2 w-full font-bold"
+       />
+     ),
+     actions: <span></span>, 
+   },
+ });
+
   return (
     <div className="overflow-x-auto">
-      <table className="table-auto border-collapse border border-gray-400 w-full">
-        <thead>
-          <tr>
-            <th className="border border-gray-400 p-2 break-words whitespace-normal">
-              Location
-            </th>
-            <th className="border border-gray-400 p-2 break-words whitespace-normal">
-              Taux journalier
-            </th>
-            <th className="border border-gray-400 p-2 break-words whitespace-normal">
-              Pourcentage de l'avance nécessaire
-            </th>
-            <th className="border border-gray-400 p-2 break-words whitespace-normal">
-              Coefficient d'évaluation journalier
-            </th>
-            <th className="border border-gray-400 p-2 break-words whitespace-normal">
-              Total
-            </th>
-            <th className="border border-gray-400 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fields.map((item, index) => {
-            const perDiemRate = parseFloat(
-              watch(`rows[${index}].per_diem_rate`) || 0
-            );
-            const percentageOfAdvance = parseFloat(
-              watch(`rows[${index}].percentage_of_advance_required`) || 0
-            );
-            const numberOfDays = parseFloat(
-              watch(`rows[${index}].number_of_days`) || 0
-            );
-
-            const total =
-              (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
-
-            return (
-              <tr key={item.id} className="text-sm md:text-base">
-                <td className="border border-gray-400 p-2 break-words whitespace-normal">
-                  <AdvanceInput
-                    type="text"
-                    id={`rows[${index}].location`}
-                    placeholder="Date: Location ..."
-                    isLoading={isLoading}
-                    register={register}
-                    errors={errors}
-                  />
-                </td>
-                <td className="border border-gray-400 p-2 w-[200px] break-words whitespace-normal">
-                  <Controller
-                    name={`rows[${index}].per_diem_rate`}
-                    control={control}
-                    rules={{
-                      required: "Ce champ est requis",
-                      min: {
-                        value: 0,
-                        message: "Ce champ doit être supérieur à 0",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <CurrencyInput
-                        id={`rows[${index}].per_diem_rate`}
-                        decimalScale={2}
-                        prefix="Ariary"
-                        placeholder="Ariary 100, 000"
-                        value={field.value}
-                        onValueChange={(value) => field.onChange(value)}
-                        allowNegativeValue={false}
-                        className="bg-white outline-0 border border-gray-400 p-2 w-full"
-                      />
-                    )}
-                  />
-                </td>
-                <td className="border border-gray-400 p-2 w-[100px] break-words whitespace-normal">
-                  <Controller
-                    name={`rows[${index}].percentage_of_advance_required`}
-                    control={control}
-                    rules={{
-                      required: "Ce champ est requis",
-                      min: {
-                        value: 0,
-                        message: "Percentage must be between 0 and 100",
-                      },
-                      max: {
-                        value: 100,
-                        message: "Percentage must be between 0 and 100",
-                      },
-                      pattern: {
-                        value: /^[0-9]*\.?[0-9]{0,2}$/,
-                        message: "Invalid percentage format",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <CurrencyInput
-                        id={`rows[${index}].percentage_of_advance_required`}
-                        decimalScale={2}
-                        suffix="%"
-                        placeholder="10 %"
-                        value={field.value}
-                        onValueChange={(value) => field.onChange(value)}
-                        allowNegativeValue={false}
-                        className="bg-white outline-0 border border-gray-400 p-2 w-full"
-                      />
-                    )}
-                  />
-                </td>
-                <td className="border border-gray-400 p-2 w-[100px] break-words whitespace-normal">
-                  <Controller
-                    name={`rows[${index}].number_of_days`}
-                    control={control}
-                    rules={{
-                      required: "Ce champ est requis",
-                      min: {
-                        value: 0,
-                        message:
-                          "Le nombre de jours doit être supérieur ou égal à 0",
-                      },
-                      max: {
-                        value: 100,
-                        message:
-                          "Le nombre de jours doit être inférieur ou égal à 100",
-                      },
-                      pattern: {
-                        value: /^[0-9]*\.?[0-9]{0,2}$/,
-                        message: "Format invalide",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <CurrencyInput
-                        id={`rows[${index}].number_of_days`}
-                        decimalScale={2}
-                        placeholder="0,75"
-                        value={field.value}
-                        onValueChange={(value) => field.onChange(value)}
-                        allowNegativeValue={false}
-                        className="bg-white outline-0 border border-gray-400 p-2 w-full"
-                      />
-                    )}
-                  />
-                </td>
-                <td className="border border-gray-400 p-2 w-[200px] break-words whitespace-normal">
-                  <CurrencyInput
-                    id={`rows[${index}].total_amount`}
-                    name={`rows[${index}].total_amount`}
-                    value={total}
-                    prefix="Ariary"
-                    decimalScale={2}
-                    disabled={true}
-                    className="bg-white outline-0 border border-gray-400 p-2 w-full"
-                  />
-                </td>
-                <td className="border border-gray-400 p-2 w-[100px]">
-                  <div className="flex space-x-2">
-                    <button type="button" onClick={() => remove(index)}>
-                      <MdDeleteForever className="text-red-500" size={24} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan={4} className="text-right font-bold p-2">
-              Total général:
-            </td>
-            <td className="border border-gray-400 p-2">
-              <CurrencyInput
-                id="total_sum"
-                value={totalSum}
-                prefix="Ariary"
-                decimalScale={2}
-                disabled={true}
-                className="bg-white outline-0 border border-gray-400 p-2 w-full font-bold"
-              />
-            </td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+      <Table columns={columns} rows={rows} />
 
       <Button>
         <button
@@ -253,14 +203,6 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         <label htmlFor="additional_costs" className="font-bold">
           Coûts supplémentaires:
         </label>
-        {/* <Input
-          id="additional_costs_motif"
-          placeholder="Autres motants"
-          register={register}
-          errors={errors}
-          required={true}
-          isLoading={isLoading}
-        /> */}
         <CurrencyInput
           id="additional_costs"
           value={additionalCosts}

@@ -1,24 +1,66 @@
-"use client"
+"use client";
 
-import {AssignmentView} from "@/ui/modules/assignment/assignment.view";
-import {useState} from "react";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {AssignmentFormFieldsType} from "@/types/forms";
+import { AssignmentView } from "@/ui/modules/assignment/assignment.view";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { AssignmentFormFieldsType } from "@/types/forms";
 
 export const AssignmentContainer = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<AssignmentFormFieldsType>();
+
+  const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (
+    formData
+  ) => {
+    setIsLoading(true);
     const {
-        handleSubmit,
-        formState: {errors},
-        register
-    } = useForm<AssignmentFormFieldsType>()
-    const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (formData) => {
-        setIsLoading(true)
-        console.log("formData", formData)
+      mission_title,
+      introduction,
+      mission_objectives,
+      planned_activities,
+      necessary_resources,
+      conclusion,
+    } = formData;
+
+    try {
+      const response = await fetch("http://localhost:8000/api/create-tdr", {
+        method: "POST",
+        body: JSON.stringify({
+          mission_title,
+          introduction,
+          mission_objectives,
+          planned_activities,
+          necessary_resources,
+          conclusion,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Une erreur est survenue");
+      }
+
+      const data = await response.json();
+      console.log(data); // Traite les données de succès si nécessaire
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false); // Assure-toi de réinitialiser l'état de chargement
     }
-    return (
-        <>
-            <AssignmentView form={{handleSubmit, errors, register, onSubmit, isLoading}}/>
-        </>
-    )
-}
+  };
+
+  return (
+    <>
+      <AssignmentView
+        form={{ handleSubmit, errors, register, onSubmit, isLoading }}
+      />
+    </>
+  );
+};
