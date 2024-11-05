@@ -48,11 +48,11 @@ export const AssignmentContainer = () => {
       }
 
       const data = await response.json();
-      console.log(data); // Traite les données de succès si nécessaire
+      console.log(data); 
     } catch (e) {
       console.error(e);
     } finally {
-      setIsLoading(false); // Assure-toi de réinitialiser l'état de chargement
+      setIsLoading(false); 
     }
   };
 

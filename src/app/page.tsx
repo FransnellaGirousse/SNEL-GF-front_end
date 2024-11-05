@@ -3,8 +3,8 @@ import {DashboardContainer} from "@/ui/modules/dashboard/dashboard.container"
 
 export default function Home() {
   return (
-      <Layout>
-          <DashboardContainer/>
-      </Layout>
+    <Layout>
+      <DashboardContainer />
+    </Layout>
   );
 }

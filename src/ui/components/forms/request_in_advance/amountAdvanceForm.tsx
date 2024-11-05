@@ -8,6 +8,7 @@ import { Button } from "@/ui/design-system/button/button";
 import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { Table } from "@/ui/design-system/table/table";
+import { Input } from "@/ui/design-system/forms/input";
 
 interface Props {
   form: FormsType;
@@ -91,7 +92,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
               value={field.value}
               onValueChange={(value) => field.onChange(value)}
               allowNegativeValue={false}
-              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+              className=" border-gray-400 p-2 "
             />
           )}
         />
@@ -109,7 +110,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
               value={field.value}
               onValueChange={(value) => field.onChange(value)}
               allowNegativeValue={false}
-              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+              className=" border-gray-400 p-2 "
             />
           )}
         />
@@ -126,7 +127,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
               value={field.value}
               onValueChange={(value) => field.onChange(value)}
               allowNegativeValue={false}
-              className="bg-white outline-0 border border-gray-400 p-2 w-full"
+              className=" border-gray-400 p-2 "
             />
           )}
         />
@@ -146,12 +147,12 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           prefix="Ariary"
           decimalScale={2}
           disabled={true}
-          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+          className=" border-gray-400 p-2 "
         />
       ),
       actions: (
         <button type="button" onClick={() => remove(index)}>
-          <MdDeleteForever className="text-red-500" size={24} />
+          <MdDeleteForever className="text-red-500" size={20} />
         </button>
       ),
     },
@@ -171,7 +172,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
          prefix="Ariary"
          decimalScale={2}
          disabled={true}
-         className="bg-white outline-0 border border-gray-400 p-2 w-full font-bold"
+         className="  p-2 font-bold"
        />
      ),
      actions: <span></span>, 
@@ -199,10 +200,17 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         </button>
       </Button>
 
-      <div className="mt-4 p-2 border border-gray-400">
-        <label htmlFor="additional_costs" className="font-bold">
-          Coûts supplémentaires:
-        </label>
+      <div className=" mt-4 p-2 border border-gray-400">
+        <label htmlFor="additional_costs">Coûts supplémentaires:</label>
+        <Input
+          id="Coûts supplémentaires"
+          type="text"
+          placeholder="Coûts supplémentaires"
+          register={register}
+          errors={errors}
+          required={true}
+          isLoading={isLoading}
+        />
         <CurrencyInput
           id="additional_costs"
           value={additionalCosts}
@@ -210,7 +218,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           prefix="Ariary"
           decimalScale={2}
           allowNegativeValue={false}
-          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+          className="  p-2 w-full"
         />
       </div>
 
@@ -224,7 +232,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           prefix="Ariary"
           decimalScale={2}
           disabled={true}
-          className="bg-white outline-0 border border-gray-400 p-2 w-full"
+          className=" border-gray-400 p-2 w-full"
         />
       </div>
     </div>
