@@ -3,6 +3,7 @@ import { LuLogIn } from "react-icons/lu";
 import {Input} from "@/ui/design-system/forms/input";
 import {Button} from "@/ui/design-system/button/button";
 import {Typography} from "@/ui/design-system/typography/typography";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface Props {
@@ -17,6 +18,13 @@ export const LoginForm = ({form}: Props) => {
         onSubmit,
         isLoading
     } = form;
+
+    const [clientSideLoading, setClientSideLoading] = useState(false);
+
+    useEffect(() => {
+      setClientSideLoading(isLoading);
+    }, [isLoading]);
+    
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">

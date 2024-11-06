@@ -32,7 +32,7 @@ export const LoginContainer = () => {
             resetField("password")
         } else {
             setIsLoading(false)
-            redirect("/")
+            redirect("/dashboard");
             toast.success("Vous êtes maintenant connectés !")
             reset()
         }

@@ -46,19 +46,19 @@ export const Navigation = ({}: Props) => {
         <Container className="flex items-center justify-between py-1.5 gap-7">
           <div className="flex items-center gap-5 relative">
             <div className="z-20">
-              { session && (
+              {session && (
                 <button
-                                type="button"
-                                className={clsx(
-                                  show && "fixed top-[16.4px]",
-                                  "border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px]"
-                                )}
-                                onClick={handleClick}
-                              >
-                                {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
-                              </button>
+  type="button"
+  onClick={handleClick}
+  className={clsx(
+    "relative z-20 border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px] transition-transform duration-300",
+    show ? "rotate-90" : "rotate-0"
+  )}
+>
+  {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
+</button>
+
               )}
-              
             </div>
             <Link href="/">
               <div className="flex items-center gap-2.5">
@@ -78,18 +78,18 @@ export const Navigation = ({}: Props) => {
           {session && (
             <form
               onSubmit={handleSearch}
-              className="flex items-center w-[40%] max-w-md gap-2"
+              className="flex items-center w-[40%] max-w-md gap-2 transition-all duration-300 hover:w-[50%]"
             >
               <input
                 type="text"
                 placeholder="Rechercher..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="border border-gray-300 rounded-l-full py-2 px-4 w-full outline-none"
+                className="border border-gray-300 rounded-l-full py-2 px-4 w-full outline-none focus:border-primary transition-all duration-300"
               />
               <button
                 type="submit"
-                className="bg-gray-300 hover:bg-primary-300 rounded-r-full py-3 px-4 flex items-center justify-center"
+                className="bg-gray-300 hover:bg-primary-300 rounded-r-full py-3 px-4 flex items-center justify-center transition-colors duration-300"
               >
                 <IoMdSearch />
               </button>
@@ -107,9 +107,10 @@ export const Navigation = ({}: Props) => {
                 <div className="flex justify-between gap-1 items-center">
                   <Avatar
                     size="medium"
-                    src={session?.user?.image}
-                    alt={session?.user?.name}
+                    src={session?.user?.image ?? "/default-avatar.png"}
+                    alt={session?.user?.name ?? "Utilisateur"}
                   />
+
                   <span className="text-2xl" onClick={showNav}>
                     <MdOutlineKeyboardArrowDown />
                   </span>
