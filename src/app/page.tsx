@@ -1,10 +1,10 @@
 import {Layout} from "@/ui/components/layout/layout"
-import {DashboardContainer} from "@/ui/modules/dashboard/dashboard.container"
+import { HomeContainer } from "@/ui/modules/home/home.container";
 
 export default function Home() {
   return (
     <Layout>
-      <DashboardContainer />
+      <HomeContainer />
     </Layout>
   );
 }

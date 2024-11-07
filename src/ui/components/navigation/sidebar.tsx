@@ -36,7 +36,7 @@ export const Sidebar = ({ show }: Props) => {
           className="flex flex-col"
           theme="black"
         >
-          <ActiveLink href="/">
+          <ActiveLink href="/dashboard">
             <MdDashboard />
             Tableau de bord
           </ActiveLink>
