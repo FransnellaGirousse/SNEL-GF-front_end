@@ -4,10 +4,12 @@ import {Typography} from "@/ui/design-system/typography/typography";
 import clsx from "clsx";
 import {v4 as uuidv4} from "uuid";
 import {Step} from "@/types/step";
+import { ReactNode } from "react";
 
 interface Props {
     currentStepIndex: number,
-    steps: Step[]
+    steps: Step[],
+    
 }
 
 export const Steps = ({currentStepIndex, steps}: Props) => {
@@ -16,10 +18,22 @@ export const Steps = ({currentStepIndex, steps}: Props) => {
         <>
             {steps.map((step) => {
                 const stepNumber: number = step.number
-                return <div key={uuidv4()}
-                            className={clsx(currentStepIndex >= stepNumber ? "border-primary" : "border-gray-400", "max-lg:hidden border-t-2 py-3")}>
-                    <StepTypography name={step.name} number={stepNumber}/>
-                </div>
+                return (
+                  <div
+                    key={uuidv4()}
+                    className={clsx(
+                      currentStepIndex >= stepNumber
+                        ? "border-primary"
+                        : "border-gray-400",
+                      "max-lg:hidden border-t-2 py-3"
+                    )}
+                  >
+                    <StepTypography name={step.name} number={stepNumber} />
+                      {step.icon && (
+                        <span className="step-icon mr-2">{step.icon}</span>
+                      )}
+                  </div>
+                );
             })}
         </>
     )

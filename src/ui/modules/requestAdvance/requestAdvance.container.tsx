@@ -72,7 +72,6 @@ export const RequestAdvanceContainer = () => {
          headers: {
            "Content-Type": "application/json",
          },
-         mode: "no-cors",
        });
      } catch (e) {
        console.error(e);

@@ -5,7 +5,7 @@ interface Props {
   form: FormsType;
 }
 
-export const AccoutingExpense = ({ form }: Props) => {
+export const AccountingExpense = ({ form }: Props) => {
   const { isLoading, register, errors } = form;
   return (
     <>
