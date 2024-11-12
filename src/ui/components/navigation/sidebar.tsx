@@ -52,7 +52,7 @@ export const Sidebar = ({ show }: Props) => {
             <MdOutlineRequestPage />
             Demande d'avance
           </ActiveLink>
-          <ActiveLink href="/contact">
+          <ActiveLink href="/expense">
             <FaDollarSign />
             Dépense
           </ActiveLink>

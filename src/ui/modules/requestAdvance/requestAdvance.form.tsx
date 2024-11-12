@@ -1,6 +1,6 @@
 "use client"
 
-import {FormsType, requestAdvanceFormFieldsType} from "@/types/forms";
+import { FormsType, RegisterFormFieldsType } from "@/types/forms";
 import {Button} from "@/ui/design-system/button/button";
 import {GrFormNextLink, GrFormPreviousLink} from "react-icons/gr";
 import {useMultiStepForm} from "@/hooks/useMultiStepForm";
@@ -23,9 +23,11 @@ export const RequestAdvanceForm = ({form}: Props) => {
         isLoading,
         onSubmit
     } = form;
-    const verifyError: SubmitHandler<requestAdvanceFormFieldsType> = async (formData) => {
-        next()
-    }
+    const verifyError: SubmitHandler<RegisterFormFieldsType> = async (
+      formData
+    ) => {
+      next();
+    };
     const stepsItems: Step[] = [
         {name: "Informations de la demande", number: 1},
         {name: "Montant", number: 2},

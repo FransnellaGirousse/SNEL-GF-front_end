@@ -103,3 +103,9 @@ export interface PurchaseRequestFormFieldsType {
     project_code: string,
     geo_code: string
 }
+
+export interface ExpenseFormFieldsType {
+  paid: string,
+  employee_number: number,
+  purpose_of_travel: string,
+}
