@@ -13,7 +13,7 @@ export const InformationExpense = ({ form }: Props) => {
       <div>
         <div>
           <Typography
-            variant="h5"
+            variant="h4"
             theme="black"
             tag="h5"
             className="text-center"
