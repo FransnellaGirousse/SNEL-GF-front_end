@@ -105,7 +105,14 @@ export interface PurchaseRequestFormFieldsType {
 }
 
 export interface ExpenseFormFieldsType {
-  paid: string,
-  employee_number: number,
-  purpose_of_travel: string,
+  paid: string;
+  employee_number: number;
+  purpose_of_travel: string;
+  date: Date;
+  description: string;
+  fund_speedkey: string;
+  ref: string;
+  inMGA: string;
+  exchangeRate: string;
+  totalMGA: string;
 }
