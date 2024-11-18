@@ -6,5 +6,5 @@ interface Props {
 }
 
 export const ExpenseView = ({ form }: Props) => {
-  return <ExpenseForm form={form} />;
+  return (<ExpenseForm form={form} />) ;
 };

@@ -65,7 +65,7 @@ export const Sidebar = ({ show }: Props) => {
             Rapport de mission
           </ActiveLink>
           <hr />
-          <ActiveLink href="/contact">
+          <ActiveLink href="/account">
             <RiAccountPinCircleFill />
             Mon Compte
           </ActiveLink>

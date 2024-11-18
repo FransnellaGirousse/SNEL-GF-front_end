@@ -116,3 +116,7 @@ export interface ExpenseFormFieldsType {
   exchangeRate: string;
   totalMGA: string;
 }
+
+export interface AccountFormFieldsType {
+  name: string,
+}
