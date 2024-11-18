@@ -1,10 +1,7 @@
 import { FormsType, RegisterFormFieldsType } from "@/types/forms";
 import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { InformationMissionReport } from "@/ui/components/forms/InformationMissionReport";
-import { ObjectivesMissionReport } from "@/ui/components/forms/ObjectivesMissionReport";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { Button } from "@/ui/design-system/button/button";
-import { VscGitPullRequest } from "react-icons/vsc";
 import { Steps, StepTypography } from "@/ui/design-system/step/steps";
 import { Step } from "@/types/step";
 import { SubmitHandler } from "react-hook-form";
@@ -12,13 +9,14 @@ import { InformationAccountForm } from "@/ui/components/forms/account/Informatio
 import { UploadAccountForm } from "@/ui/components/forms/account/uploadAccountForm";
 import { GrSave } from "react-icons/gr";
 
+
 interface Props {
   form: FormsType;
 }
 export const AccountForm = ({ form }: Props) => {
   const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
     <InformationAccountForm form={form} />,
-    <UploadAccountForm form={form} />
+    <UploadAccountForm form={form} />,
   ]);
   const { handleSubmit, onSubmit, isLoading } = form;
   const stepsItems: Step[] = [
