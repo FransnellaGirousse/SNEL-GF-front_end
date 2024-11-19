@@ -56,6 +56,13 @@ export const InformationAccountForm = ({ form }: Props) => {
         pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i}
         messagePattern="Votre email est invalide"
       />
+      <PhoneInputNumber
+        control={control}
+        placeholder="Votre numéro de télephone"
+        id="phone_number"
+        isLoading={isLoading}
+        errors={errors}
+      />
     </>
   );
 };

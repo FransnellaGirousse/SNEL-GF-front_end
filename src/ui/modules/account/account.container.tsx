@@ -7,7 +7,7 @@ import { AccountView } from "@/ui/modules/account/account.view";
 
 export const AccounContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const {
+  const {control,
     handleSubmit,
     formState: { errors },
     register,
@@ -20,7 +20,7 @@ export const AccounContainer = () => {
   return (
     <>
       <AccountView
-        form={{ handleSubmit, errors, register, onSubmit, isLoading }}
+        form={{ handleSubmit, errors, register, onSubmit, isLoading, control  }}
       />
     </>
   );
