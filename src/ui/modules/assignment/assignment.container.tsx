@@ -27,7 +27,7 @@ export const AssignmentContainer = () => {
     } = formData;
 
     try {
-      const response = await fetch("http://localhost:8000/api/create-tdr", {
+      await fetch("http://localhost:8000/api/create-tdr", {
         method: "POST",
         body: JSON.stringify({
           mission_title,
@@ -42,18 +42,9 @@ export const AssignmentContainer = () => {
         },
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Une erreur est survenue");
-      }
-
-      const data = await response.json();
-      console.log(data); 
     } catch (e) {
       console.error(e);
-    } finally {
-      setIsLoading(false); 
-    }
+    } 
   };
 
   return (

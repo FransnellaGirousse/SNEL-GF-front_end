@@ -25,28 +25,32 @@ export const InformationAccountForm = ({ form }: Props) => {
         </Typography>
       </div>
 
-      <Input
-        isLoading={isLoading}
-        placeholder="Nom"
-        type="text"
-        register={register}
-        errors={errors}
-        id="firstname"
-        minLength={2}
-        maxLength={255}
-      />
-      <Input
-        isLoading={isLoading}
-        placeholder="Prénom"
-        type="text"
-        register={register}
-        errors={errors}
-        id="lastname"
-        minLength={2}
-        maxLength={255}
-      />
+      <div className="grid grid-cols-2 gap-5 mb-5 items-center">
+        <Input
+          isLoading={isLoading}
+          placeholder="Nom"
+          type="text"
+          register={register}
+          errors={errors}
+          id="firstname"
+          minLength={2}
+          maxLength={255}
+        />
+        <Input
+          isLoading={isLoading}
+          placeholder="Prénom"
+          type="text"
+          register={register}
+          errors={errors}
+          id="lastname"
+          minLength={2}
+          maxLength={255}
+        />
+      </div>
 
-      <Input
+      <div className="grid grid-cols-2 gap-5 mb-5 items-center">
+
+         <Input
         isLoading={isLoading}
         placeholder="youremail@gmail.com"
         type="email"
@@ -63,6 +67,24 @@ export const InformationAccountForm = ({ form }: Props) => {
         isLoading={isLoading}
         errors={errors}
       />
+
+      </div>
+
+     
+      <div className="grid grid-cols-2 gap-5 mb-5 items-center">
+        <Input
+          id="address"
+          type="text"
+          placeholder="Adresse"
+          register={register}
+          errors={errors}
+          required={true}
+          isLoading={isLoading}
+        />
+        <Typography variant="caption2" tag="p" theme="gray">
+          (Exemple: Lot ... Quartier Ville)
+        </Typography>
+      </div>
     </>
   );
 };
