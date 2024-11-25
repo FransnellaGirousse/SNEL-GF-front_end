@@ -8,6 +8,7 @@ import { SubmitHandler } from "react-hook-form";
 import { InformationAccountForm } from "@/ui/components/forms/account/InformationAccountForm";
 import { UploadAccountForm } from "@/ui/components/forms/account/uploadAccountForm";
 import { GrSave } from "react-icons/gr";
+import { RoleAccountForm } from "@/ui/components/forms/account/RoleAccountForm";
 
 
 interface Props {
@@ -15,13 +16,15 @@ interface Props {
 }
 export const AccountForm = ({ form }: Props) => {
   const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
-    <InformationAccountForm form={form} />,
     <UploadAccountForm form={form} />,
+    <InformationAccountForm form={form} />,
+    <RoleAccountForm form={form} />,
   ]);
   const { handleSubmit, onSubmit, isLoading } = form;
   const stepsItems: Step[] = [
     { name: "Renseignements", number: 1 },
-    { name: "Objectifs de la mission", number: 2 },
+    { name: "Rôle", number: 2 },
+    { name: "Objectifs de la mission", number: 3 },
   ];
   const verifyError: SubmitHandler<RegisterFormFieldsType> = async (
     formData
@@ -36,7 +39,7 @@ export const AccountForm = ({ form }: Props) => {
           number={stepsItems[currentStepIndex].number}
         />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
