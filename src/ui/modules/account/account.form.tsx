@@ -22,9 +22,9 @@ export const AccountForm = ({ form }: Props) => {
   ]);
   const { handleSubmit, onSubmit, isLoading } = form;
   const stepsItems: Step[] = [
-    { name: "Renseignements", number: 1 },
-    { name: "Rôle", number: 2 },
-    { name: "Objectifs de la mission", number: 3 },
+    { name: "Profil", number: 1 },
+    { name: "Renseignements", number: 2 },
+    { name: "Rôle", number: 3 },
   ];
   const verifyError: SubmitHandler<RegisterFormFieldsType> = async (
     formData

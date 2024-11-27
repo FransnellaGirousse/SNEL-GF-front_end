@@ -13,9 +13,35 @@ export const AccounContainer = () => {
     register,
   } = useForm<AccountFormFieldsType>();
   const onSubmit: SubmitHandler<AccountFormFieldsType> = async (formData) => {
-    setIsLoading(true);
-    console.log("formData", formData);
-  };
+    setIsLoading(true)
+    const {
+      firstname,
+      lastname,
+      email,
+      role,
+      phone_number,
+      profilePhoto,
+      address,
+    } = formData 
+    try {
+      await fetch("http://localhost:8000/api/accounts", {
+        method: "POST",
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          email,
+          role,
+          phone_number,
+          profilePhoto,
+          address,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }  };
 
   return (
     <>

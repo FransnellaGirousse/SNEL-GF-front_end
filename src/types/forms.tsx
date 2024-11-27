@@ -118,10 +118,11 @@ export interface ExpenseFormFieldsType {
 }
 
 export interface AccountFormFieldsType {
-  firstname: string,
-  lastname: string,
-  email: string,
-  role: string,
-  phone_number: string,
-  photo: string,
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: string;
+  phone_number: string;
+  profilePhoto: string;
+  address: string;
 }
