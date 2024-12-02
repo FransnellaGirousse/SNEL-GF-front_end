@@ -76,7 +76,7 @@ export const TableExpense = ({ form }: Props) => {
       inMGA: (
         <Controller
           name={`rows[${index}].inMGA`}
-          control={form.control} // Utilisation de form.control ici
+          control={form.control} 
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].inMGA`}
@@ -108,7 +108,7 @@ export const TableExpense = ({ form }: Props) => {
       totalMGA: (
         <Controller
           name={`rows[${index}].totalMGA`}
-          control={form.control} // Utilisation de form.control ici
+          control={form.control} 
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].totalMGA`}
@@ -131,9 +131,8 @@ export const TableExpense = ({ form }: Props) => {
   }));
 
   return (
-    <div className="p-4">
-      <Table columns={columns} rows={rows} />
-      <Typography
+    <div className="p-4"> 
+     <Typography
         variant="h5"
         theme="black"
         tag="h5"
@@ -141,6 +140,9 @@ export const TableExpense = ({ form }: Props) => {
       >
         Veuillez remplir le tableau ci-dessous
       </Typography>
+      
+      <Table columns={columns} rows={rows} />
+    
     </div>
   );
 };

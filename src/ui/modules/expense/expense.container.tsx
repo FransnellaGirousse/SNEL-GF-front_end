@@ -11,6 +11,7 @@ export const ExpenseContainer = () => {
     handleSubmit,
     formState: { errors },
     register,
+    control,
   } = useForm<ExpenseFormFieldsType>();
   const onSubmit: SubmitHandler<ExpenseFormFieldsType> = async (formData) => {
     setIsLoading(true);
@@ -18,7 +19,7 @@ export const ExpenseContainer = () => {
   };
   return (
     <ExpenseView
-      form={{ handleSubmit, errors, register, onSubmit, isLoading }}
+      form={{ handleSubmit, errors, register, onSubmit, isLoading,control }}
     />
   );
 };
