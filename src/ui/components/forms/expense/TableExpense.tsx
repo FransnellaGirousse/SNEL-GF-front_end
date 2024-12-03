@@ -7,6 +7,7 @@ import { Table } from "@/ui/design-system/table/table";
 import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
 import { Button } from "@/ui/design-system/button/button";
 import { Input } from "@/ui/design-system/forms/input";
+import { useState } from "react";
 import CurrencyInput from "react-currency-input-field";
 
 
@@ -16,11 +17,17 @@ interface Props {
 
 export const TableExpense = ({ form }: Props) => {
 
-  const { control, isLoading, register, errors } = form;
+  const { control, isLoading, register, errors,  } = form;
   const { fields,append, remove } = useFieldArray({
     control,
     name: "rows",
   });
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); 
+  };
   const today = new Date().toISOString().split("T")[0];
 
   const columns = [
@@ -95,7 +102,7 @@ export const TableExpense = ({ form }: Props) => {
       exchangeRate: (
         <Controller
           name={`rows[${index}].exchangeRate`}
-          control={form.control} // Utilisation de form.control ici
+          control={form.control} 
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].exchangeRate`}
@@ -179,8 +186,7 @@ export const TableExpense = ({ form }: Props) => {
       </div>
 
       <div className="grid grid-cols-2 gap-5 mb-5">
-        <div>
-        </div>
+        <div></div>
         <div>
           <label htmlFor="date_requested">Date:</label>
           <Input
@@ -194,6 +200,26 @@ export const TableExpense = ({ form }: Props) => {
           />
         </div>
       </div>
+      <div>
+        <input
+          type="checkbox"
+          id="certifyCheckbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          className="w-5 h-5 border-gray-300 rounded text-blue-600 focus:ring focus:ring-blue-300"
+        />
+        <label
+          htmlFor="certifyCheckbox"
+          className="text-gray-700 text-sm leading-5"
+        >
+          « Je certifie que ce bon est véridique et correct à ma connaissance et
+          que le montant dû n'a pas déjà été payé. et que le montant dû n'a pas
+          déjà été payé ou crédité. payé ou crédité »
+        </label>
+      </div>
+      {!isChecked && (
+        <p className="text-red-500 text-sm">*</p>
+      )}
     </div>
   );
 };
