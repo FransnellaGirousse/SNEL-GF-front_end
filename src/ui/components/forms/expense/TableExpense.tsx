@@ -5,6 +5,8 @@ import { MdDeleteForever } from "react-icons/md";
 import { Controller, useFieldArray } from "react-hook-form";
 import { Table } from "@/ui/design-system/table/table";
 import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
+import { Button } from "@/ui/design-system/button/button";
+import { Input } from "@/ui/design-system/forms/input";
 import CurrencyInput from "react-currency-input-field";
 
 
@@ -15,10 +17,11 @@ interface Props {
 export const TableExpense = ({ form }: Props) => {
 
   const { control, isLoading, register, errors } = form;
-  const { fields, remove } = useFieldArray({
+  const { fields,append, remove } = useFieldArray({
     control,
     name: "rows",
   });
+  const today = new Date().toISOString().split("T")[0];
 
   const columns = [
     { title: "Date mm/dd", key: "date" },
@@ -131,8 +134,8 @@ export const TableExpense = ({ form }: Props) => {
   }));
 
   return (
-    <div className="p-4"> 
-     <Typography
+    <div className="p-4">
+      <Typography
         variant="h5"
         theme="black"
         tag="h5"
@@ -140,9 +143,57 @@ export const TableExpense = ({ form }: Props) => {
       >
         Veuillez remplir le tableau ci-dessous
       </Typography>
-      
+
       <Table columns={columns} rows={rows} />
-    
+
+      <Button>
+        <button
+          type="button"
+          onClick={() =>
+            append({
+              date: "",
+              description: "",
+              fund_speedkey: "",
+              ref: "",
+              inMGA: "",
+              exchangeRate: "",
+              totalMGA: "",
+            })
+          }
+        >
+          Ajouter une ligne
+        </button>
+      </Button>
+
+      <div>
+        <label htmlFor="additional_costs">Dépenses Total:</label>
+        <Input
+          id="Coûts supplémentaires"
+          type="text"
+          placeholder="Dépenses total"
+          register={register}
+          errors={errors}
+          required={true}
+          isLoading={isLoading}
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-5 mb-5">
+        <div>
+        </div>
+        <div>
+          <label htmlFor="date_requested">Date:</label>
+          <Input
+            id="date_requested"
+            type="date"
+            register={register}
+            errors={errors}
+            required={true}
+            isLoading={isLoading}
+            defaultValue={today}
+          />
+        </div>
+      </div>
     </div>
   );
 };
