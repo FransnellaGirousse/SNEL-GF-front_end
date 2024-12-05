@@ -1,151 +1,163 @@
 import { FormsType } from "@/types/forms";
+import { Table } from "@/ui/design-system/table/table";
+import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
+import { Button } from "@/ui/design-system/button/button";
+import {  useFieldArray } from "react-hook-form";
+import { Typography } from "@/ui/design-system/typography/typography";
 import { useState } from "react";
+import { MdDeleteForever } from "react-icons/md";
 
 interface Props {
   form: FormsType;
 }
 
+export const FinanceExpense = ({ form }: Props) => {
+const { control, isLoading, register, errors } = form;
+const { fields, append, remove } = useFieldArray({
+  control,
+  name: "rows",
+});
+ 
 
-export const FinanceExpense = () => {
-  // État pour chaque colonne pour gérer les totaux
-  const [columns, setColumns] = useState({
-    travelTempDuty: "",
-    travelLocal: "",
-    faxInternetTelephone: "",
-    officeSupplies: "",
-    postageShipping: "",
-    printing: "",
-    otherAccount: "",
-    otherAmount: "",
-  });
 
-  const handleInputChange = (columnKey: string, value: string) => {
-    setColumns({ ...columns, [columnKey]: value });
-  };
+  const columns = [
+    { title: "540003 TRAVEL TEMP DUTY", key: "travelTempDuty" },
+    { title: "540004 TRAVEL LOCAL", key: "travelLocal" },
+    { title: "551000 FAX, INTERNET TELEPHONE", key: "faxInternetTelephone" },
+    { title: "551500 OFFICE SUPPLIES", key: "officeSupplies" },
+    { title: "552500 POSTAGE SHIPPING", key: "postageShipping" },
+    { title: "552000 PRINTING", key: "printing" },
+    { title: "OTHER ACCOUNT", key: "otherAccount" },
+    { title: "OTHER AMOUNT", key: "otherAmount" },
+    { title: "Actions", key: "actions" },
+  ];
 
-  const calculateTotal = () => {
-    // Calcul de la somme totale
-    return Object.values(columns)
-      .map((value) => parseFloat(value) || 0)
-      .reduce((acc, current) => acc + current, 0);
-  };
+   const rows = fields.map((item, index) => ({
+     id: item.id,
+     data: {
+       travelTempDuty: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].travelTempDuty`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       travelLocal: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].travelLocal`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       faxInternetTelephone: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].faxInternetTelephone`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       officeSupplies: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].officeSupplies`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       postageShipping: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].postageShipping`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       printing: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].printing`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       otherAccount: (
+         <AdvanceInput
+           type="text"
+           id={`rows[${index}].otherAccount`}
+           placeholder="Compte"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       otherAmount: (
+         <AdvanceInput
+           type="number"
+           id={`rows[${index}].otherAmount`}
+           placeholder="Montant"
+           isLoading={isLoading}
+           register={register}
+           errors={errors}
+         />
+       ),
+       actions: (
+         <button
+           type="button"
+           onClick={() => remove(index)}
+           className="text-red-500"
+         >
+           <MdDeleteForever size={20} />
+         </button>
+       ),
+     },
+   }));
 
   return (
-    <div className="p-4 border border-gray-300 rounded-md">
-      <h2 className="text-lg font-bold text-center mb-4">
+    <div className="p-4">
+      <Typography
+        variant="h5"
+        theme="black"
+        tag="h5"
+        className="text-center mb-4"
+      >
         FOR FINANCE OFFICE USE ONLY
-      </h2>
-      <table className="table-auto border-collapse w-full border border-gray-400 text-sm">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-400 p-2">
-              540003 TRAVEL TEMP DUTY
-            </th>
-            <th className="border border-gray-400 p-2">540004 TRAVEL LOCAL</th>
-            <th className="border border-gray-400 p-2">
-              551000 FAX, INTERNET TELEPHONE
-            </th>
-            <th className="border border-gray-400 p-2">
-              551500 OFFICE SUPPLIES
-            </th>
-            <th className="border border-gray-400 p-2">
-              552500 POSTAGE SHIPPING
-            </th>
-            <th className="border border-gray-400 p-2">552000 PRINTING</th>
-            <th className="border border-gray-400 p-2">OTHER ACCOUNT</th>
-            <th className="border border-gray-400 p-2">OTHER AMOUNT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.travelTempDuty}
-                onChange={(e) =>
-                  handleInputChange("travelTempDuty", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.travelLocal}
-                onChange={(e) =>
-                  handleInputChange("travelLocal", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.faxInternetTelephone}
-                onChange={(e) =>
-                  handleInputChange("faxInternetTelephone", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.officeSupplies}
-                onChange={(e) =>
-                  handleInputChange("officeSupplies", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.postageShipping}
-                onChange={(e) =>
-                  handleInputChange("postageShipping", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.printing}
-                onChange={(e) => handleInputChange("printing", e.target.value)}
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.otherAccount}
-                onChange={(e) =>
-                  handleInputChange("otherAccount", e.target.value)
-                }
-              />
-            </td>
-            <td className="border border-gray-400">
-              <input
-                type="number"
-                className="w-full p-2 border-none"
-                value={columns.otherAmount}
-                onChange={(e) =>
-                  handleInputChange("otherAmount", e.target.value)
-                }
-              />
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr className="bg-gray-100 font-bold">
-            <td colSpan={8} className="border border-gray-400 text-center p-2">
-              Total : {calculateTotal()} MGA
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      </Typography>
+
+      <Table columns={columns} rows={rows} />
+      <Button>
+        <button
+          type="button"
+          onClick={() =>
+            append({
+              travelTempDuty: "",
+              travelLocal: "",
+              faxInternetTelephone: "",
+              officeSupplies: "",
+              postageShipping: "",
+              otherAccount: "",
+              otherAmount: "",
+              actions:"",
+            })
+          }
+        >
+          Ajouter une ligne
+        </button>
+      </Button>
     </div>
   );
 };
