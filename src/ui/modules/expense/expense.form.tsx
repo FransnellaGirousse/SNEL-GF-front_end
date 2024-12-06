@@ -34,16 +34,14 @@ export const ExpenseForm = ({ form }: Props) => {
   const stepsItems: Step[] = [
     { name: "Informations de l'employée", number: 1 },
     { name: "Tableau de dépense ", number: 2 },
-    { name: "Total du dépense", number: 3 },
+    { name: "Spéciale fiance", number: 3 },
     { name: "Spéciale fiance", number: 4 },
     { name: "Charges comptables", number: 5 },
     { name: "Programme pour le manager", number: 6 },
     {
       name: "Signature",
       number: 7,
-      icon: (
-        <AiOutlineSignature className=" mx-auto" />
-      ),
+      icon: <AiOutlineSignature className=" mx-auto" />,
     },
   ];
   const verifyError: SubmitHandler<RegisterFormFieldsType> = async (
