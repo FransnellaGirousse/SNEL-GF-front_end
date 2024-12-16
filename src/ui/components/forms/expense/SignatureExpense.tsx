@@ -1,5 +1,4 @@
 import { FormsType } from "@/types/forms";
-import { Textarea } from "@/ui/design-system/forms/textarea";
 import { Typography } from "@/ui/design-system/typography/typography";
 
 interface Props {
@@ -31,3 +30,5 @@ export const SignatureExpense = ({ form }: Props) => {
     </div>
   );
 };
+
+

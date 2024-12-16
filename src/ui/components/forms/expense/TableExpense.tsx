@@ -1,4 +1,3 @@
-
 import { FormsType } from "@/types/forms";
 import { Typography } from "@/ui/design-system/typography/typography";
 import { MdDeleteForever } from "react-icons/md";
@@ -10,15 +9,13 @@ import { Input } from "@/ui/design-system/forms/input";
 import { useState } from "react";
 import CurrencyInput from "react-currency-input-field";
 
-
 interface Props {
   form: FormsType;
 }
 
 export const TableExpense = ({ form }: Props) => {
-
-  const { control, isLoading, register, errors,  } = form;
-  const { fields,append, remove } = useFieldArray({
+  const { control, isLoading, register, errors } = form;
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "rows",
   });
@@ -26,7 +23,7 @@ export const TableExpense = ({ form }: Props) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); 
+    setIsChecked(!isChecked);
   };
   const today = new Date().toISOString().split("T")[0];
 
@@ -86,7 +83,7 @@ export const TableExpense = ({ form }: Props) => {
       inMGA: (
         <Controller
           name={`rows[${index}].inMGA`}
-          control={form.control} 
+          control={form.control}
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].inMGA`}
@@ -102,7 +99,7 @@ export const TableExpense = ({ form }: Props) => {
       exchangeRate: (
         <Controller
           name={`rows[${index}].exchangeRate`}
-          control={form.control} 
+          control={form.control}
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].exchangeRate`}
@@ -118,7 +115,7 @@ export const TableExpense = ({ form }: Props) => {
       totalMGA: (
         <Controller
           name={`rows[${index}].totalMGA`}
-          control={form.control} 
+          control={form.control}
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].totalMGA`}
@@ -217,9 +214,7 @@ export const TableExpense = ({ form }: Props) => {
           déjà été payé ou crédité. payé ou crédité »
         </label>
       </div>
-      {!isChecked && (
-        <p className="text-red-500 text-sm">*</p>
-      )}
+      {!isChecked && <p className="text-red-500 text-sm">*</p>}
     </div>
   );
 };

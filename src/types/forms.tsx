@@ -1,14 +1,16 @@
 export interface FormsType {
-    handleSubmit: any,
-    errors: any,
-    register: any,
-    onSubmit: any,
-    isLoading: any,
-    control?: any,
-    setError?: any,
-    watch?: any,
-    reset?: any,
-    resetField?: any
+  handleSubmit: any;
+  errors: any;
+  register: any;
+  onSubmit: any;
+  isLoading: any;
+  control?: any;
+  setError?: any;
+  watch?: any;
+  reset?: any;
+  resetField?: any;
+  getValues?: (name?: string) => any;
+  setValue?: (name: string, value: any, options?: any) => void;
 }
 
 export interface RegisterFormFieldsType {
