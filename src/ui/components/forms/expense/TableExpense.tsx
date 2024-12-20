@@ -1,3 +1,5 @@
+"use client";
+
 import { FormsType } from "@/types/forms";
 import { Typography } from "@/ui/design-system/typography/typography";
 import { MdDeleteForever } from "react-icons/md";
@@ -6,7 +8,7 @@ import { Table } from "@/ui/design-system/table/table";
 import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
 import { Button } from "@/ui/design-system/button/button";
 import { Input } from "@/ui/design-system/forms/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CurrencyInput from "react-currency-input-field";
 
 interface Props {
@@ -14,7 +16,7 @@ interface Props {
 }
 
 export const TableExpense = ({ form }: Props) => {
-  const { control, isLoading, register, errors } = form;
+  const { control, isLoading, register, errors, watch } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "rows",
@@ -25,7 +27,9 @@ export const TableExpense = ({ form }: Props) => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+
   const today = new Date().toISOString().split("T")[0];
+
 
   const columns = [
     { title: "Date mm/dd", key: "date" },
@@ -35,6 +39,7 @@ export const TableExpense = ({ form }: Props) => {
     { title: "in MGA", key: "inMGA" },
     { title: "Exch. Rate", key: "exchangeRate" },
     { title: "MGA", key: "totalMGA" },
+    { title: "Actions", key: "actions" },
   ];
 
   const rows = fields.map((item, index) => ({
@@ -170,11 +175,11 @@ export const TableExpense = ({ form }: Props) => {
       </Button>
 
       <div>
-        <label htmlFor="additional_costs">Dépenses Total:</label>
+        <label htmlFor="additional_costs">Dépenses Totales:</label>
         <Input
-          id="Coûts supplémentaires"
+          id="additional_costs"
           type="text"
-          placeholder="Dépenses total"
+          placeholder="Dépenses totales"
           register={register}
           errors={errors}
           required={true}
@@ -210,8 +215,7 @@ export const TableExpense = ({ form }: Props) => {
           className="text-gray-700 text-sm leading-5"
         >
           « Je certifie que ce bon est véridique et correct à ma connaissance et
-          que le montant dû n'a pas déjà été payé. et que le montant dû n'a pas
-          déjà été payé ou crédité. payé ou crédité »
+          que le montant dû n'a pas déjà été payé ou crédité. »
         </label>
       </div>
       {!isChecked && <p className="text-red-500 text-sm">*</p>}
