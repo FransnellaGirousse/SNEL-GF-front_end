@@ -34,7 +34,7 @@ export const  AssignmentOMForm = ({form}: Props) => {
   const stepsItems: Step[] = [
     { name: "A propos de la mission", number: 1 },
     { name: "Proposition d'itineraire", number: 2 },
-    { name: "Objet de la mission", number: 3 },
+    { name: "Détails d'hébergement", number: 3 },
     { name: "Moyen de trasport", number: 4 },
   ];
 

@@ -10,7 +10,7 @@ export const AssignmentOMContainer = () => {
     const {
         handleSubmit,
         formState: {errors},
-        register
+        register, control
     } = useForm<AssignmentOMFormFieldsType>()
     const onSubmit: SubmitHandler<AssignmentOMFormFieldsType> = async (formData) => {
         setIsLoading(true)
@@ -18,7 +18,7 @@ export const AssignmentOMContainer = () => {
     }
     return (
         <>
-            <AssignmentOMView form={{handleSubmit, errors, register, onSubmit, isLoading}}/>
+            <AssignmentOMView form={{handleSubmit, errors, register, onSubmit, isLoading, control}}/>
         </>
     )
 }

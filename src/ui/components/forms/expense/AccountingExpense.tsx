@@ -1,16 +1,14 @@
 import { FormsType } from "@/types/forms";
-import { Button } from "@/ui/design-system/button/button";
 import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
+import { Textarea } from "@/ui/design-system/forms/textarea";
 import { Typography } from "@/ui/design-system/typography/typography";
-import { MdOutlineAddTask } from "react-icons/md";
-
 import { useState } from "react";
 
 interface Props {
   form: FormsType;
 }
 
-export const ProgramProjectManagerExpense = ({ form }: Props) => {
+export const AccountingExpense = ({ form }: Props) => {
   const { isLoading, register, errors } = form;
 
   // Gestion dynamique des lignes pour les signatures
@@ -34,17 +32,15 @@ export const ProgramProjectManagerExpense = ({ form }: Props) => {
 
   return (
     <div className="p-4 ">
-      {/* Section Program/Project Manager */}
-      <div className="border border-primary-300 p-4 mb-4">
+      <div className="border border-primary-300 p-4">
         <Typography
           variant="caption1"
           theme="black"
           tag="h5"
           className="text-center"
         >
-          GESTIONNAIRE(S) DE PROGRAMME/PROJET :
+          COMPTABILITÉ:
         </Typography>
-
         <Typography variant="body-sm" theme="black" className="mb-4">
           <input
             type="checkbox"
@@ -53,36 +49,49 @@ export const ProgramProjectManagerExpense = ({ form }: Props) => {
             onChange={handleCheckboxChange}
             className="w-5 h-5 border-gray-300 rounded text-blue-600 focus:ring focus:ring-blue-300"
           />
-          "J'ai examiné les frais figurant sur ce bon et je certifie qu'ils sont
-          corrects et admissibles pour les contrats/programmes indiqués
-          ci-dessous."
+          "Après ce bon, le solde de vos avances en cours est de : "
         </Typography>
-
-        {/* Lignes pour SIGNATURES */}
-        {signatures.map((signature) => (
+        <div className="flex items-center mb-4">
+          <Typography variant="body-sm" theme="black" className="mr-2">
+            MGA
+          </Typography>
           <AdvanceInput
-            key={signature.id}
-            type="text"
-            id={`signature-row-${signature.id}`}
-            value={signature.value}
-            placeholder="Signature & Project or Program"
+            type="number"
+            id="outstanding_balance"
+            placeholder="Montant"
             isLoading={isLoading}
             register={register}
-            onChange={(e) =>
-              handleSignatureChange(signature.id, e.target.value)
-            }
             errors={errors}
           />
-        ))}
-
-        <Button
-          type="button"
-          icon={{ icon: MdOutlineAddTask }}
-          iconPosition="left"
-          onClick={addSignatureRow}
-        >
-          Ajouter une ligne
-        </Button>
+        </div>
+        <div>
+          <div className="mb-2">
+            <Typography variant="body-sm" theme="black">
+              REVIEWED BY:
+            </Typography>
+            <AdvanceInput
+              type="text"
+              id="reviewed_by"
+              placeholder="Name"
+              isLoading={isLoading}
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <div>
+            <Typography variant="body-sm" theme="black">
+              DATE:
+            </Typography>
+            <AdvanceInput
+              type="date"
+              id="review_date"
+              placeholder="Date"
+              isLoading={isLoading}
+              register={register}
+              errors={errors}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

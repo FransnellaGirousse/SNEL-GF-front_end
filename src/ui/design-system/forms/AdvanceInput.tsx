@@ -6,11 +6,11 @@ interface Props {
   type: "text" | "email" | "password" | "date" | "number";
   register?: any;
   errors?: any;
-  id: string; 
-  errorMessage?: string; 
-  required?: boolean; 
-  isAutoCompleted?: boolean; 
-  isLoading?: boolean; 
+  id: string;
+  errorMessage?: string;
+  required?: boolean;
+  isAutoCompleted?: boolean;
+  isLoading?: boolean;
 }
 
 export const AdvanceInput = ({

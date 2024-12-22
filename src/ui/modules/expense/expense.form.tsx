@@ -12,6 +12,7 @@ import { FinanceExpense } from "@/ui/components/forms/expense/FinanceExpense";
 import { ProgramProjectManagerExpense } from "@/ui/components/forms/expense/ProgramProjectManagerExpense";
 import { SignatureExpense } from "@/ui/components/forms/expense/SignatureExpense";
 import { AiOutlineSignature } from "react-icons/ai";
+import { AccountingExpense } from "@/ui/components/forms/expense/AccountingExpense";
 
 interface Props {
   form: FormsType;
@@ -23,6 +24,7 @@ export const ExpenseForm = ({ form }: Props) => {
     <TableExpense form={form} />,
     <FinanceExpense form={form} />,
     <ProgramProjectManagerExpense form={form} />,
+    <AccountingExpense form={form}/>,
     <SignatureExpense form={form} />,
   ]);
   const { handleSubmit, onSubmit, isLoading } = form;
@@ -32,7 +34,10 @@ export const ExpenseForm = ({ form }: Props) => {
     { name: "Tableau de dépense ", number: 2 },
     { name: "Spéciale fiance", number: 3 },
     { name: "Programme pour le manager", number: 4 },
-    {name: "Signature", number: 5,
+    { name: "Comptabilité", number: 5 },
+    {
+      name: "Signature",
+      number: 6,
       icon: <AiOutlineSignature className=" mx-auto" />,
     },
   ];
@@ -49,7 +54,7 @@ export const ExpenseForm = ({ form }: Props) => {
           number={stepsItems[currentStepIndex].number}
         />
       </div>
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-6 gap-2">
         <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
