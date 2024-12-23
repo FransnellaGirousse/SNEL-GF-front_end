@@ -1,82 +1,130 @@
+"use client";
+
 import { FormsType } from "@/types/forms";
-import { Input } from "@/ui/design-system/forms/input";
 import { Typography } from "@/ui/design-system/typography/typography";
+import { MdDeleteForever } from "react-icons/md";
+import { Controller, useFieldArray } from "react-hook-form";
+import { Table } from "@/ui/design-system/table/table";
+import { Input } from "@/ui/design-system/forms/input";
 import { Button } from "@/ui/design-system/button/button";
 import { FaRegCircleCheck } from "react-icons/fa6";
-
 
 interface Props {
   form: FormsType;
 }
 
 export const ProposedItineraryForm = ({ form }: Props) => {
-  const { isLoading, register, errors } = form;
+  const { control, isLoading, register, errors } = form;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "rows",
+  });
+
+  const columns = [
+    { title: "Date", key: "date_hour" },
+    { title: "Point de départ", key: "starting_point" },
+    { title: "Destination", key: "destination" },
+    { title: "Détails", key: "other_details_hotel" },
+    { title: "FUND/SPEEDKEY", key: "fund_speedkey" },
+    { title: "Prix", key: "price" },
+    { title: "Actions", key: "actions" },
+  ];
+
+  const rows = fields.map((item, index) => ({
+    id: item.id,
+    data: {
+      date_hour: (
+        <Input
+          type="date"
+          id={`itineraries[${index}].date_hour`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      starting_point: (
+        <Input
+          type="text"
+          placeholder="Point de départ"
+          id={`itineraries[${index}].starting_point`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      destination: (
+        <Input
+          type="text"
+          placeholder="Destination"
+          id={`itineraries[${index}].destination`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      other_details_hotel: (
+        <Input
+          type="text"
+          placeholder="Détails"
+          id={`itineraries[${index}].other_details_hotel`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      fund_speedkey: (
+        <Input
+          type="text"
+          placeholder="FUND/SPEEDKEY"
+          id={`itineraries[${index}].fund_speedkey`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      price: (
+        <Input
+          type="text"
+          placeholder="Prix"
+          id={`itineraries[${index}].price`}
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      actions: (
+        <button type="button" onClick={() => remove(index)}>
+          <MdDeleteForever className="text-red-500" size={20} />
+        </button>
+      ),
+    },
+  }));
+
   return (
-    <>
+    <div className="p-4">
       <Typography variant="lead" tag="h5" theme="black" className="text-center">
         Itinéraire Proposé
       </Typography>
 
-      <div className="grid grid-cols-2 gap-2">
-        <Input
-          isLoading={isLoading}
-          type="date"
-          register={register}
-          errors={errors}
-          id="date_hour"
-        />
-        <Input
-          isLoading={isLoading}
-          placeholder="Point de départ"
-          type="text"
-          register={register}
-          errors={errors}
-          id="starting_point"
-        />
-        <Input
-          isLoading={isLoading}
-          placeholder="Destination"
-          type="text"
-          register={register}
-          errors={errors}
-          id="destination"
-        />
-        <Input
-          isLoading={isLoading}
-          placeholder="Authorization  -  Airfare at Economy Class Only"
-          type="text"
-          register={register}
-          errors={errors}
-          id="other_details_hotel"
-        />
+      <Table columns={columns} rows={rows} />
 
-        <Input
-          isLoading={isLoading}
-          placeholder="FUND/SPEEDKEY/CODE2/GEO/POT OF FUNDS/SUB"
-          type="text"
-          register={register}
-          errors={errors}
-          id="fund_speedkey"
-        />
-
-        <Input
-          isLoading={isLoading}
-          placeholder="Price "
-          type="text"
-          register={register}
-          errors={errors}
-          id="price"
-        />
-      </div>
-
-      <Button
-        isLoading={isLoading}
-        type="submit"
-        icon={{ icon: FaRegCircleCheck }}
-        iconPosition="left"
-      >
-        Ajouter à l'itinéraire
+      <Button >
+        <button
+        type="button"
+        onClick={() =>
+          append({
+            date_hour: "",
+            starting_point: "",
+            destination: "",
+            other_details_hotel: "",
+            fund_speedkey: "",
+            price: "",
+          })
+        }
+        >
+        Ajouter une ligne
+        </button>        
       </Button>
-    </>
+    </div>
   );
 };
