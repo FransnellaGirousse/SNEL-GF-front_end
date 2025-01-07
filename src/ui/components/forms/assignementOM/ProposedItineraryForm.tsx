@@ -5,9 +5,8 @@ import { Typography } from "@/ui/design-system/typography/typography";
 import { MdDeleteForever } from "react-icons/md";
 import { Controller, useFieldArray } from "react-hook-form";
 import { Table } from "@/ui/design-system/table/table";
-import { Input } from "@/ui/design-system/forms/input";
 import { Button } from "@/ui/design-system/button/button";
-import { FaRegCircleCheck } from "react-icons/fa6";
+import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
 
 interface Props {
   form: FormsType;
@@ -34,59 +33,59 @@ export const ProposedItineraryForm = ({ form }: Props) => {
     id: item.id,
     data: {
       date_hour: (
-        <Input
+        <AdvanceInput
           type="date"
-          id={`itineraries[${index}].date_hour`}
+          id={`rows[${index}].date_hour`}
           isLoading={isLoading}
           register={register}
           errors={errors}
         />
       ),
       starting_point: (
-        <Input
+        <AdvanceInput
           type="text"
           placeholder="Point de départ"
-          id={`itineraries[${index}].starting_point`}
+          id={`rows[${index}].starting_point`}
           isLoading={isLoading}
           register={register}
           errors={errors}
         />
       ),
       destination: (
-        <Input
+        <AdvanceInput
           type="text"
           placeholder="Destination"
-          id={`itineraries[${index}].destination`}
+          id={`rows[${index}].destination`}
           isLoading={isLoading}
           register={register}
           errors={errors}
         />
       ),
       other_details_hotel: (
-        <Input
+        <AdvanceInput
           type="text"
           placeholder="Détails"
-          id={`itineraries[${index}].other_details_hotel`}
+          id={`rows[${index}].other_details_hotel`}
           isLoading={isLoading}
           register={register}
           errors={errors}
         />
       ),
       fund_speedkey: (
-        <Input
+        <AdvanceInput
           type="text"
           placeholder="FUND/SPEEDKEY"
-          id={`itineraries[${index}].fund_speedkey`}
+          id={`rows[${index}].fund_speedkey`}
           isLoading={isLoading}
           register={register}
           errors={errors}
         />
       ),
       price: (
-        <Input
+        <AdvanceInput
           type="text"
           placeholder="Prix"
-          id={`itineraries[${index}].price`}
+          id={`rows[${index}].price`}
           isLoading={isLoading}
           register={register}
           errors={errors}

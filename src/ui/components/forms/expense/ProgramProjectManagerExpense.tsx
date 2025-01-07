@@ -79,9 +79,7 @@ export const ProgramProjectManagerExpense = ({ form }: Props) => {
           type="button"
           icon={{ icon: MdOutlineAddTask }}
           iconPosition="left"
-          onClick={addSignatureRow}
         >
-          
           Ajouter une ligne
         </Button>
       </div>
