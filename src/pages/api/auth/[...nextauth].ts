@@ -26,15 +26,54 @@ export default NextAuth({
 
                 const user = await res.json();
 
-                if (res.ok && user.token) {
-                    return { ...user, token: user.token }; // Return user object if successful
+                if (res.ok && user.token) {   
+                    return user;   
                 }
-                return null; // Return null if user not found
+                return null; 
             },
         }),
     ],
     pages: {
-        signIn: '/login', // Custom sign-in page
+        signIn: '/login', 
+    },
+    session: {
+        strategy: "jwt"
+    },
+    callbacks: {
+        async redirect({url, baseUrl}) {
+            return baseUrl + '/dashboard'
+        },
+        async jwt({token, account, user}) {
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.name = user.name;
+                token.role = user.role;
+            }
+            await fetch("http://localhost:8000/api/register/google", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: user?.email,
+                name: user?.name,
+                google_id: account?.providerAccountId,
+              }),
+            });
+            return token
+        },
+        async session ({session, token}) {
+                
+
+            if (token) {
+                session.user.id = token.id;
+                session.user.email = token.email;
+                session.user.name = token.name;
+                session.user.role = token.role;
+            }
+            return session
+        }
     },
     debug: true
 });

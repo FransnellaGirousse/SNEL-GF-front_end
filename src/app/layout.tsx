@@ -3,6 +3,7 @@ import "./globals.css";
 import clsx from "clsx";
 import NextTopLoader from "nextjs-toploader";
 import {SessionWrapper} from "@/lib/SessionWrapper";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
       <SessionWrapper>
-        <html lang="fr">
+        <html lang="fr" suppressHydrationWarning>
         <body
             className={clsx(geistSans.variable, geistMono.variable, "antialiased bg-white")}
         >
@@ -36,6 +37,10 @@ export default function RootLayout({
             easing="ease"
             speed={200}
             shadow="0 0 10px #2196F3,0 0 5px #2196F3"
+        />
+        <ToastContainer
+        position="top-center"
+        autoClose={8000}
         />
         {children}
         </body>

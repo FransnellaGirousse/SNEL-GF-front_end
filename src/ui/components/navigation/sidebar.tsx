@@ -22,6 +22,8 @@ export const Sidebar = ({ show }: Props) => {
     return null;
   }
 
+  
+
   return (
     <aside
       className={clsx(

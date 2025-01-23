@@ -1,4 +1,4 @@
-
+"use client"
 import {FormsType, RegisterFormFieldsType} from "@/types/forms";
 import {Button} from "@/ui/design-system/button/button";
 import { CiSaveUp1 } from "react-icons/ci";

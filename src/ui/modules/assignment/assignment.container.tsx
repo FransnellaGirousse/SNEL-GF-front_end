@@ -4,6 +4,7 @@ import { AssignmentView } from "@/ui/modules/assignment/assignment.view";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AssignmentFormFieldsType } from "@/types/forms";
+import { toast } from "react-toastify";
 
 export const AssignmentContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -11,6 +12,7 @@ export const AssignmentContainer = () => {
     handleSubmit,
     formState: { errors },
     register,
+    reset
   } = useForm<AssignmentFormFieldsType>();
 
   const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (
@@ -18,7 +20,6 @@ export const AssignmentContainer = () => {
   ) => {
     setIsLoading(true);
     const {
-      mission_title,
       introduction,
       mission_objectives,
       planned_activities,
@@ -30,7 +31,6 @@ export const AssignmentContainer = () => {
       await fetch("http://localhost:8000/api/create-tdr", {
         method: "POST",
         body: JSON.stringify({
-          mission_title,
           introduction,
           mission_objectives,
           planned_activities,
@@ -40,7 +40,7 @@ export const AssignmentContainer = () => {
         headers: {
           "Content-Type": "application/json",
         },
-      });
+      })
 
     } catch (e) {
       console.error(e);

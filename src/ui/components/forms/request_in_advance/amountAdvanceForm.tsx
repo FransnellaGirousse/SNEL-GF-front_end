@@ -34,13 +34,11 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           watch(`rows[${index}].percentage_of_advance_required`) || 0
         );
         const numberOfDays = parseFloat(
-          watch(`rows[${index}].number_of_days`) || 0
+          watch(`rows[${index}].number_of_days`)|| 0
         );
-
         const total = (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
         return isNaN(total) ? 0 : total;
       });
-
       const sum = totals.reduce((acc, curr) => acc + curr, 0);
       setTotalSum(sum);
     };
@@ -122,8 +120,9 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           render={({ field }) => (
             <CurrencyInput
               id={`rows[${index}].number_of_days`}
+              decimalSeparator="."
               decimalScale={2}
-              placeholder="0,75"
+              placeholder="0.75"
               value={field.value}
               onValueChange={(value) => field.onChange(value)}
               allowNegativeValue={false}
@@ -203,7 +202,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
       <div className=" mt-4 p-2 border border-gray-400">
         <label htmlFor="additional_costs">Coûts supplémentaires:</label>
         <Input
-          id="Coûts supplémentaires"
+          id="additional_costs"
           type="text"
           placeholder="Coûts supplémentaires"
           register={register}

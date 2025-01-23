@@ -1,16 +1,17 @@
+import { FinancialManagementAnimation } from "./components/FinancialManagementAnimation";
+import { Footer } from "./components/Footer";
+import { SubscriptionPlans } from "./components/SubscriptionPlans ";
 import { AcceuilComponents } from "./components/acceuilComponents";
-import { NewsletterComponents } from "./components/newsletterComponents";
-import { PricingComponents } from "./components/pricingComponents";
-import { TestimonialComponents } from "./components/testimonialComponents";
+
 
 
 export const HomeView = () => {
   return (
     <>
       <AcceuilComponents/> 
-      <TestimonialComponents />
-      <PricingComponents />
-      <NewsletterComponents />
+      <FinancialManagementAnimation/>
+      <SubscriptionPlans/>
+      <Footer/>
      
     </>
   );

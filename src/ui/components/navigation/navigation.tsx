@@ -124,7 +124,7 @@ export const Navigation = ({}: Props) => {
                   <Typography variant="caption3" tag="span" theme="black">
                     <Link
                       href="/profile"
-                      className="flex justify-between gap-2
+                      className=" flex gap-2
                       items-center text-gray hover:text-primary transition-all
                       mb-3"
                     >

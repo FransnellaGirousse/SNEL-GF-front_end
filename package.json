@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-tools/dynamic": "^0.0.11",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.0.1",
     "google-libphonenumber": "^3.2.38",
+    "netx": "^0.0.1",
     "next": "14.2.11",
     "next-auth": "^4.24.8",
     "nextjs-toploader": "^3.6.15",

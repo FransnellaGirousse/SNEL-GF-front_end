@@ -3,9 +3,10 @@ import {Button} from "@/ui/design-system/button/button";
 import { CgDetailsMore } from "react-icons/cg";
 import { IoArchiveOutline } from "react-icons/io5";
 
+
 export const ReportComponents = () => {
     return(
-        <div className="space-y-5 mb-10">
+        <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
             <Typography
                 variant="h5"
                 theme="black"

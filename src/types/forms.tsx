@@ -67,6 +67,7 @@ export interface requestAdvanceFormFieldsType {
   location: string;
   per_diem_rate: string;
   daily_rating_coefficient: string;
+  number_of_days: string;
   percentage_of_advance_required: string;
   total_amount: string;
   additional_costs_motif: string;
@@ -77,8 +78,8 @@ export interface requestAdvanceFormFieldsType {
   branch: string;
   name: string;
   account_number: number;
-
-  signature: string;
+  total_general: string;
+  final_total:string;
 }
 
 export interface MissionReportFormFieldsType {

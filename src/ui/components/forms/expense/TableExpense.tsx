@@ -22,6 +22,30 @@ export const TableExpense = ({ form }: Props) => {
     name: "rows",
   });
 
+  // const [totalMGA, setTotalMGA] = useState(0);
+
+  //  useEffect(() => {
+  //    const calculateTotalMGA = () => {
+  //      const totals = fields.map((_, index) => {
+  //        const inMGA = parseFloat(watch(`rows[${index}].inMGA`) || 0);
+  //        const exchangeRate = parseFloat(
+  //          watch(`rows[${index}].exchangeRate`) || 0
+  //        );
+         
+
+  //        const total = (inMGA * exchangeRate  ) ;
+  //        return isNaN(total) ? 0 : total;
+  //      });
+
+  //      const sum = totals.reduce((acc, curr) => acc + curr, 0);
+  //      setTotalMGA(sum);
+
+  //    };
+
+  //    calculateTotalMGA();
+  //  }, [fields, watch]);
+
+
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -126,7 +150,9 @@ export const TableExpense = ({ form }: Props) => {
               id={`rows[${index}].totalMGA`}
               decimalScale={2}
               placeholder="Total MGA"
-              value={field.value}
+              value={(parseFloat(watch(`rows[${index}].inMGA`) || "0")) * 
+              (parseFloat(watch(`rows[${index}].inMGA`) || "0"))
+            }
               onValueChange={(value) => field.onChange(value)}
               className="border-gray-400 p-2"
               readOnly

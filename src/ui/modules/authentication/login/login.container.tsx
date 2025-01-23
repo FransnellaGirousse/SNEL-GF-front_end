@@ -21,7 +21,7 @@ export const LoginContainer = () => {
         setIsLoading(true)
         const {email, password} = formData
         const result = await signIn("credentials", {
-            redirect: false,
+            redirect: true,
             email: email,
             password: password,
         });
@@ -33,7 +33,6 @@ export const LoginContainer = () => {
         } else {
             setIsLoading(false)
             redirect("/dashboard");
-            toast.success("Vous êtes maintenant connectés !")
             reset()
         }
     }
