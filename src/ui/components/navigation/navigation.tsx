@@ -17,6 +17,8 @@ import { signOut, useSession } from "next-auth/react";
 import { IoPowerSharp } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { Avatar } from "@/ui/design-system/avatar/avatar";
+import { AiOutlineSignature } from "react-icons/ai";
+
 
 interface Props {}
 
@@ -48,16 +50,15 @@ export const Navigation = ({}: Props) => {
             <div className="z-20">
               {session && (
                 <button
-  type="button"
-  onClick={handleClick}
-  className={clsx(
-    "relative z-20 border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px] transition-transform duration-300",
-    show ? "rotate-90" : "rotate-0"
-  )}
->
-  {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
-</button>
-
+                  type="button"
+                  onClick={handleClick}
+                  className={clsx(
+                    "relative z-20 border-2 border-gray text-gray rounded flex items-center justify-center w-[40px] h-[40px] transition-transform duration-300",
+                    show ? "rotate-90" : "rotate-0"
+                  )}
+                >
+                  {show ? <IoCloseSharp /> : <RxHamburgerMenu />}
+                </button>
               )}
             </div>
             <Link href="/">
@@ -123,7 +124,7 @@ export const Navigation = ({}: Props) => {
                 >
                   <Typography variant="caption3" tag="span" theme="black">
                     <Link
-                      href="/profile"
+                      href="/account"
                       className=" flex gap-2
                       items-center text-gray hover:text-primary transition-all
                       mb-3"
@@ -131,6 +132,19 @@ export const Navigation = ({}: Props) => {
                       <MdOutlineAccountCircle />
                       Mon compte
                     </Link>
+
+                    <Link
+                      href="/"
+                      className=" flex gap-2
+                      items-center text-gray hover:text-primary transition-all
+                      mb-3"
+                    >
+                      <AiOutlineSignature />
+                      Signature
+                    </Link>
+
+                    <hr />
+
                     <button
                       onClick={() => signOut()}
                       className="flex justify-between gap-2 items-center text-gray hover:text-primary transition-all"

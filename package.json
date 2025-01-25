@@ -29,6 +29,7 @@
     "react-signature-canvas": "^1.0.7",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.1.13",
+    "text-to-image": "^7.0.1",
     "uuidv4": "^6.2.13",
     "zustand": "^5.0.0-rc.2"
   },

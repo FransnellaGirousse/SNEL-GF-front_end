@@ -6,8 +6,7 @@ import { MissionReportFormFieldsType } from "@/types/forms";
 import { MissionReportView } from "@/ui/modules/missionReport/missionReport.view";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
-import { useRouter } from "next/navigation"; // Import de useRouter pour la redirection
-
+import { useRouter } from "next/navigation"; 
 
 
 export const MissionReportContainer = () => {

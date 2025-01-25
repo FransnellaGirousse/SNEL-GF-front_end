@@ -1,11 +1,16 @@
 import {Typography} from "@/ui/design-system/typography/typography";
+import { MdOutlineRequestPage } from "react-icons/md";
+
 
 export const AdvanceComponents = () => {
     return (
       <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
-        <Typography variant="h5" theme="black" tag="h5">
-          Avance
-        </Typography>
+        <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
+          <Typography variant="h5" theme="black" tag="h5">
+            <MdOutlineRequestPage className="inline mr-2" size={48} />
+            Listes des Avances
+          </Typography>
+        </div>
         <table className="table-fixed w-full">
           <thead className="text-left text-gray border-b border-t border-gray-500">
             <tr>

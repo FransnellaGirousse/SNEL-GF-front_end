@@ -10,9 +10,9 @@ import { InformationExpense } from "@/ui/components/forms/expense/InformationExp
 import { TableExpense } from "@/ui/components/forms/expense/TableExpense";
 import { FinanceExpense } from "@/ui/components/forms/expense/FinanceExpense";
 import { ProgramProjectManagerExpense } from "@/ui/components/forms/expense/ProgramProjectManagerExpense";
-import { SignatureExpense } from "@/ui/components/forms/expense/SignatureExpense";
 import { AiOutlineSignature } from "react-icons/ai";
 import { AccountingExpense } from "@/ui/components/forms/expense/AccountingExpense";
+import SignatureForm from "@/ui/design-system/signature/SignatureForm";
 
 interface Props {
   form: FormsType;
@@ -25,7 +25,7 @@ export const ExpenseForm = ({ form }: Props) => {
     <FinanceExpense form={form} />,
     <ProgramProjectManagerExpense form={form} />,
     <AccountingExpense form={form}/>,
-    <SignatureExpense form={form} />,
+    <SignatureForm form={form} />,
   ]);
   const { handleSubmit, onSubmit, isLoading } = form;
   

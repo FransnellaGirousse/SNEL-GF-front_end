@@ -1,66 +1,67 @@
-"use client";
-
-import { Button } from "@/ui/design-system/button/button";
-import React, { useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
-import SignatureCanvas from "react-signature-canvas";
-import { v4 as uuidv4 } from "uuid";
+// components/SignatureForm.tsx
+import { useState, useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FaFileSignature } from "react-icons/fa";
-import { FaFilePdf } from "react-icons/fa";
+import { Button } from "@/ui/design-system/button/button";
+import SignatureCanvas from "react-signature-canvas";
+import { v4 as uuidv4 } from "uuid";
 
 type FormData = {
   signataires: { id: string; name: string; signature: string }[];
 };
 
-const SignatureForm = () => {
-  const { control, handleSubmit, setValue, getValues } = useForm<FormData>({
+type SignatureFormProps = {
+  onSubmit: (
+    signataires: { id: string; name: string; signature: string }[]
+  ) => void;
+  initialSignataires?: { id: string; name: string; signature: string }[];
+};
+
+const SignatureForm = ({
+  onSubmit,
+  initialSignataires = [],
+}: SignatureFormProps) => {
+  const { control, handleSubmit, setValue } = useForm<FormData>({
     defaultValues: {
-      signataires: [{ id: uuidv4(), name: "", signature: "" }], // Un signataire par défaut
+      signataires: initialSignataires.length
+        ? initialSignataires
+        : [{ id: uuidv4(), name: "", signature: "" }],
     },
   });
 
-  const [signataires, setSignataires] = useState([
-    { id: uuidv4(), name: "", signature: "" },
-  ]);
-  const signatureRefs = useRef<any>({}); // Références pour les signatures de chaque signataire
+  const [signataires, setSignataires] = useState(
+    initialSignataires.length
+      ? initialSignataires
+      : [{ id: uuidv4(), name: "", signature: "" }]
+  );
+  const signatureRefs = useRef<any>({});
 
-  // Ajouter un nouveau signataire
   const addSignataire = () => {
     const newSignataire = { id: uuidv4(), name: "", signature: "" };
     setSignataires((prev) => [...prev, newSignataire]);
   };
 
-  // Supprimer un signataire
   const removeSignataire = (id: string) => {
     setSignataires((prev) => prev.filter((signataire) => signataire.id !== id));
   };
 
-  // Gérer le changement du nom
   const handleNameChange = (id: string, value: string) => {
     setSignataires((prev) =>
-      prev.map((signataire) => {
-        if (signataire.id === id) {
-          return { ...signataire, name: value };
-        }
-        return signataire;
-      })
+      prev.map((signataire) =>
+        signataire.id === id ? { ...signataire, name: value } : signataire
+      )
     );
   };
 
-  // Gérer la signature du signataire
   const handleSignature = (id: string, signature: string) => {
     setSignataires((prev) =>
-      prev.map((signataire) => {
-        if (signataire.id === id) {
-          return { ...signataire, signature };
-        }
-        return signataire;
-      })
+      prev.map((signataire) =>
+        signataire.id === id ? { ...signataire, signature } : signataire
+      )
     );
   };
 
-  // Fonction pour télécharger une image de signature
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -70,29 +71,22 @@ const SignatureForm = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignataires((prev) =>
-          prev.map((signataire) => {
-            if (signataire.id === id) {
-              return { ...signataire, signature: reader.result as string }; // Met l'image téléchargée dans la signature
-            }
-            return signataire;
-          })
+          prev.map((signataire) =>
+            signataire.id === id
+              ? { ...signataire, signature: reader.result as string }
+              : signataire
+          )
         );
       };
-      reader.readAsDataURL(file); // Convertir l'image en base64
+      reader.readAsDataURL(file);
     }
   };
 
-  // Soumettre le formulaire
-  const onSubmit = () => {
-    const signatairesWithSignatures = signataires.map((signataire) => ({
-      ...signataire,
-      signature: signatureRefs.current[signataire.id]?.toDataURL(),
-    }));
-    console.log(signatairesWithSignatures);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-10 ml-10 ">
+    <form
+      onSubmit={handleSubmit(() => onSubmit(signataires))}
+      className="space-y-6 mt-10 ml-10"
+    >
       <div className="grid grid-cols-3 gap-8">
         {signataires.map((signataire, index) => (
           <div
@@ -106,7 +100,6 @@ const SignatureForm = () => {
                 Signature de {signataire.name || `Signataire ${index + 1}`}
               </label>
 
-              {/* Si la signature est déjà téléchargée, l'afficher comme image */}
               {signataire.signature ? (
                 <img
                   src={signataire.signature}
@@ -121,8 +114,8 @@ const SignatureForm = () => {
                   ref={(ref) => (signatureRefs.current[signataire.id] = ref)}
                   penColor="black"
                   canvasProps={{
-                    width: 250, // Largeur réduite pour trois signatures sur une ligne
-                    height: 100, // Hauteur réduite pour bien adapter
+                    width: 250,
+                    height: 100,
                     className:
                       "signatureCanvas border-2 border-gray-300 rounded",
                   }}
@@ -169,12 +162,13 @@ const SignatureForm = () => {
               className="text-blue-500 font-medium"
             />
 
+            {/* Bouton supprimer */}
             <button
               type="button"
               onClick={() => removeSignataire(signataire.id)}
-              className="red"
+              className="text-red-500"
             >
-              <RiDeleteBin2Line size={25} color="red" />
+              <RiDeleteBin2Line size={25} />
             </button>
           </div>
         ))}
@@ -182,14 +176,13 @@ const SignatureForm = () => {
 
       {/* Ajouter un signataire */}
       <div className="flex justify-center">
-        <Button
-          type="button"
-          className="bg-blue-500 text-black py-2 px-4 rounded-lg flex items-center"
-          onClick={addSignataire}
-        >
-          <button onClick={addSignataire}>
-            <FaFileSignature className="ml-2 text-white" />
-            Ajouter
+        <Button>
+          <button
+            type="button"
+            className="bg-blue-500 text-black py-2 px-4 rounded-lg flex items-center"
+            onClick={addSignataire}
+          >
+            Ajouter <FaFileSignature className="ml-2 text-white" />
           </button>
         </Button>
       </div>

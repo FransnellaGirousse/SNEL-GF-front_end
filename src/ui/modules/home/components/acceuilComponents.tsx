@@ -62,7 +62,7 @@ export const AcceuilComponents = () => {
           className="flex-1"
         >
           <img
-            src="/assets/images/home/finance.png" // Remplacez par le chemin de votre illustration
+            src="/assets/images/home/finance.png"
             alt="Gestion Financière"
             className="w-full h-auto rounded-lg shadow-lg"
           />

@@ -126,6 +126,5 @@ export interface AccountFormFieldsType {
   email: string;
   role: string;
   phone_number: string;
-  profilePhoto: string;
   address: string;
 }

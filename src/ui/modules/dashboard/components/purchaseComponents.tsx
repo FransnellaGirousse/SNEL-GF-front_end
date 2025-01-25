@@ -1,11 +1,17 @@
 import {Typography} from "@/ui/design-system/typography/typography";
+import { PiShoppingCartSimpleLight } from "react-icons/pi";
+
 
 export const PurchaseComponents = () => {
     return (
       <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
-        <Typography variant="h5" theme="white" tag="h5">
-          Achat
-        </Typography>
+        <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
+          <Typography variant="h5" theme="black" tag="h5">
+            <PiShoppingCartSimpleLight className="inline mr-2" size={48} />
+            Liste demande d'Achat
+          </Typography>
+        </div>
+
         <table className="table-fixed w-full">
           <thead className="text-left text-white border-b border-t border-midnight-700">
             <tr>
