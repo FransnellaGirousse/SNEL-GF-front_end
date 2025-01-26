@@ -31,7 +31,7 @@ export const AccounContainer = () => {
 
       // Requête API
       const response = await fetch("http://localhost:8000/api/accounts", {
-        method: "GET", // Remplacez GET par POST si nécessaire
+        method: "POST", // Remplacez GET par POST si nécessaire
         body: JSON.stringify({
           firstname,
           lastname,
@@ -47,8 +47,15 @@ export const AccounContainer = () => {
 
       // Vérification de la réponse
       if (response.ok) {
-        toast.success("Compte créé avec succès !"); // Notification de succès
-        console.log("Réponse du serveur : ", await response.json()); // Log de la réponse du serveur
+        const data = await response.json(); // Récupérer la réponse de l'API
+
+        // Enregistrer le rôle dans le localStorage
+        localStorage.setItem("userRole", data.user.role);
+         // Stocke le rôle dans le localStorage
+
+        toast.success("Compte créé avec succès !");
+        console.log("Réponse du serveur : ", data.user.role); 
+        localStorage.setItem("userRole", data.user.role);// Log de la réponse du serveur
       } else {
         toast.error("Erreur lors de la création du compte !"); // Notification d'erreur
       }

@@ -6,7 +6,7 @@ import { Typography } from "@/ui/design-system/typography/typography";
 import { Button } from "@/ui/design-system/button/button";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -18,6 +18,7 @@ import { IoPowerSharp } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { Avatar } from "@/ui/design-system/avatar/avatar";
 import { AiOutlineSignature } from "react-icons/ai";
+import { TfiControlEject } from "react-icons/tfi";
 
 
 interface Props {}
@@ -26,7 +27,21 @@ export const Navigation = ({}: Props) => {
   const [show, setShow] = useState(false);
   const [showingNav, setShowingNav] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [userRole, setUserRole] = useState<string | null>(null); // State pour stocker le rôle
   const { data: session } = useSession();
+
+  // Lors du changement de session, on récupère le rôle depuis localStorage
+  useEffect(() => {
+    if (session) {
+      // Vérification des rôles dans localStorage
+      const storedRole = localStorage.getItem("userRole"); // Récupérer le rôle stocké dans localStorage
+      if (storedRole) {
+        setUserRole(storedRole); // Si trouvé, on met à jour l'état
+      } else {
+        console.error("Aucun rôle trouvé dans localStorage.");
+      }
+    }
+  }, [session]);
 
   const handleClick = () => {
     setShow((show) => !show);
@@ -101,7 +116,6 @@ export const Navigation = ({}: Props) => {
             <div className="flex items-center gap-5">
               <div className="relative">
                 <RiNotification2Line />
-                {/* Ajouter ici une logique de notification non lue si nécessaire */}
               </div>
 
               <div className="relative">
@@ -111,7 +125,6 @@ export const Navigation = ({}: Props) => {
                     src={session?.user?.image ?? "/default-avatar.png"}
                     alt={session?.user?.name ?? "Utilisateur"}
                   />
-
                   <span className="text-2xl" onClick={showNav}>
                     <MdOutlineKeyboardArrowDown />
                   </span>
@@ -125,9 +138,7 @@ export const Navigation = ({}: Props) => {
                   <Typography variant="caption3" tag="span" theme="black">
                     <Link
                       href="/account"
-                      className=" flex gap-2
-                      items-center text-gray hover:text-primary transition-all
-                      mb-3"
+                      className=" flex gap-2 items-center text-gray hover:text-primary transition-all mb-3"
                     >
                       <MdOutlineAccountCircle />
                       Mon compte
@@ -135,13 +146,19 @@ export const Navigation = ({}: Props) => {
 
                     <Link
                       href="/"
-                      className=" flex gap-2
-                      items-center text-gray hover:text-primary transition-all
-                      mb-3"
+                      className=" flex gap-2 items-center text-gray hover:text-primary transition-all mb-3"
                     >
                       <AiOutlineSignature />
                       Signature
                     </Link>
+
+                    {/* Affichage du rôle de l'utilisateur */}
+                    {userRole && (
+                      <div className="inline-flex items-center gap-2">
+                        <TfiControlEject />
+                        <p className="text-gray-600 mb-3">Rôle : {userRole}</p>
+                      </div>
+                    )}
 
                     <hr />
 

@@ -56,12 +56,25 @@ export default NextAuth({
     },
     async jwt({ token, account, user }) {
       if (user) {
-        // Ajouter le rôle au JWT lors de la création du token
+        // Ajouter des informations utilisateur dans le token JWT
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.role = user.role; // Ajout du rôle dans le token
+
+        // Attribution des rôles en fonction des emails spécifiques
+        if (user.email === "fransnellagirousse@gmail.com") {
+          token.role = "user"; // Rôle "user" pour cet email
+        } else if (user.email === "snelgirousse@gmail.com") {
+          token.role = "director"; // Rôle "director" pour cet email
+        } else if (user.email === "gestionnairefinansnell@gmail.com") {
+          token.role = "administrator"; // Rôle "administrator" pour cet email
+        } else if (user.email === "comptablefinansnell@gmail.com") {
+          token.role = "accountant"; // Rôle "accountant" pour cet email
+        } else {
+          token.role = "user"; // Par défaut, rôle "user" pour les autres utilisateurs
+        }
       }
+
       await fetch("http://localhost:8000/api/register/google", {
         method: "POST",
         headers: {
