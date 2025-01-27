@@ -11,13 +11,20 @@ import {InformationsAdvanceForm} from "@/ui/components/forms/request_in_advance/
 import {SubmitHandler} from "react-hook-form";
 import {PaymentAdvanceForm} from "@/ui/components/forms/request_in_advance/paymentAdvanceForm";
 import {AmountAdvanceForm} from "@/ui/components/forms/request_in_advance/amountAdvanceForm";
+import { AiOutlineSignature } from "react-icons/ai";
+import SignatureForm from "@/ui/design-system/signature/SignatureForm";
 
 interface Props {
     form: FormsType
 }
 
 export const RequestAdvanceForm = ({form}: Props) => {
-    const {step, steps, currentStepIndex, back, next} = useMultiStepForm([<InformationsAdvanceForm form={form}/>, <AmountAdvanceForm form={form}/>, <PaymentAdvanceForm form={form} />])
+    const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
+      <InformationsAdvanceForm form={form} />,
+      <AmountAdvanceForm form={form} />,
+      <PaymentAdvanceForm form={form} />,
+      <SignatureForm form={form} />,
+    ]);
     const {
         handleSubmit,
         isLoading,
@@ -29,10 +36,15 @@ export const RequestAdvanceForm = ({form}: Props) => {
       next();
     };
     const stepsItems: Step[] = [
-        {name: "Informations de la demande", number: 1},
-        {name: "Montant", number: 2},
-        {name: "Virement", number: 3}
-    ]
+      { name: "Informations de la demande", number: 1 },
+      { name: "Montant", number: 2 },
+      { name: "Virement", number: 3 },
+      {
+        name: "Signature",
+        number: 4,
+        icon: <AiOutlineSignature className=" mx-auto" />,
+      },
+    ];
     return (
       <>
         <div className="lg:hidden">
@@ -41,7 +53,7 @@ export const RequestAdvanceForm = ({form}: Props) => {
             number={stepsItems[currentStepIndex].number}
           />
         </div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-4 gap-2">
           <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">

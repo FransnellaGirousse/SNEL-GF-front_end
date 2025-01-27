@@ -55,12 +55,8 @@ export default NextAuth({
       return baseUrl + "/dashboard";
     },
     async jwt({ token, account, user }) {
-      if (user) {
-        // Ajouter des informations utilisateur dans le token JWT
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
-
+      if (user && user.email) {
+        
         // Attribution des rôles en fonction des emails spécifiques
         if (user.email === "fransnellagirousse@gmail.com") {
           token.role = "user"; // Rôle "user" pour cet email
@@ -70,6 +66,8 @@ export default NextAuth({
           token.role = "administrator"; // Rôle "administrator" pour cet email
         } else if (user.email === "comptablefinansnell@gmail.com") {
           token.role = "accountant"; // Rôle "accountant" pour cet email
+        } else if (user.email.includes("directeur")) {
+          token.role = "director";
         } else {
           token.role = "user"; // Par défaut, rôle "user" pour les autres utilisateurs
         }

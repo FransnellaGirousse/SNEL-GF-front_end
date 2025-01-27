@@ -132,7 +132,7 @@ export const Sidebar = ({ show }: Props) => {
           )}
 
           {canAccess(["user"]) && (
-            <ActiveLink href="/mission_report">
+            <ActiveLink href="/">
               <PiPuzzlePieceBold />
               Pièce justificative
             </ActiveLink>

@@ -159,7 +159,6 @@ export const Navigation = ({}: Props) => {
                         <p className="text-gray-600 mb-3">Rôle : {userRole}</p>
                       </div>
                     )}
-
                     <hr />
 
                     <button

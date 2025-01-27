@@ -9,7 +9,7 @@ export const DashboardContainer = async () => {
   if (!session?.user?.role) { 
     return (
     <Container className="mt-10 flex max-lg:block gap-5">
-      <aside className="w-[310px] bg-alert-danger max-lg:w-full max-lg:mb-10 flex-none">
+      <aside className="w-[310px] bg-white max-lg:w-full max-lg:mb-10 flex-none">
         {/* Navigation ou autre contenu du panneau latéral */}
       </aside>
       <main className="w-full">
