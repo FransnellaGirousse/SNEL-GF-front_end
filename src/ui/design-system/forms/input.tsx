@@ -3,22 +3,23 @@ import {Typography} from "@/ui/design-system/typography/typography";
 import {useState} from "react";
 
 interface Props {
-    placeholder?: string,
-    type: "text" | "email" | "password" | "date",
-    register?: any,
-    errors?: any,
-    id: string,
-    errorMessage?: string,
-    required?: boolean,
-    isAutoCompleted?: boolean,
-    isLoading?: boolean,
-    minLength?: number,
-    maxLength?: number,
-    pattern?: any,
-    messagePattern?: string,
-    passRegex?: RegExp[]
-    pwd?: string,
-    defaultValue?: string
+  placeholder?: string;
+  type: "text" | "email" | "password" | "date";
+  register?: any;
+  errors?: any;
+  id: string;
+  errorMessage?: string;
+  required?: boolean;
+  isAutoCompleted?: boolean;
+  isLoading?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  pattern?: any;
+  messagePattern?: string;
+  passRegex?: RegExp[];
+  pwd?: string;
+  defaultValue?: string;
+  disabled?: boolean;
 }
 
 export const Input = ({

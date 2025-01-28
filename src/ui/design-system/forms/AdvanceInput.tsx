@@ -11,6 +11,7 @@ interface Props {
   required?: boolean;
   isAutoCompleted?: boolean;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
 export const AdvanceInput = ({

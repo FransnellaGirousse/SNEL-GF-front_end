@@ -1,112 +1,85 @@
-import {FormsType} from "@/types/forms";
-import {Textarea} from "@/ui/design-system/forms/textarea";
-import {Input} from "@/ui/design-system/forms/input";
-import {Button} from "@/ui/design-system/button/button";
-import { BiSolidPurchaseTag } from "react-icons/bi";
+"use client";
+
+import { FormsType, RegisterFormFieldsType } from "@/types/forms";
+import { Button } from "@/ui/design-system/button/button";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
+import { useMultiStepForm } from "@/hooks/useMultiStepForm";
+import { VscGitPullRequest } from "react-icons/vsc";
+import { Steps, StepTypography } from "@/ui/design-system/step/steps";
+import { Step } from "@/types/step";
+import { SubmitHandler } from "react-hook-form";
+import { AiOutlineSignature } from "react-icons/ai";
+import SignatureForm from "@/ui/design-system/signature/SignatureForm";
+import { AmountPurchaseForm } from "@/ui/components/forms/purchase_request/AmountPurchaseForm";
 
 interface Props {
-    form: FormsType
+  form: FormsType;
 }
 
-export const PurchaseRequestForm = ({form}: Props) => {
-    const {
-        handleSubmit,
-        errors,
-        register,
-        onSubmit,
-        isLoading
-    } = form;
-    return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
-                <Textarea
-                    isLoading={isLoading}
-                    placeholder="Article"
-                    register={register}
-                    errors={errors}
-                    id="item"
-                />
-                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Quantité"
-                        register={register}
-                        errors={errors}
-                        id="quantity"
-                    />
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Type d'unité"
-                        register={register}
-                        errors={errors}
-                        id="unit_type"
-                    />
-                </div>
-                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Description"
-                        register={register}
-                        errors={errors}
-                        id="description"
-                    />
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Prix d'unité estimé"
-                        register={register}
-                        errors={errors}
-                        id="estimated_unit_price"
-                    />
-                </div>
-                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Total estimé"
-                        register={register}
-                        errors={errors}
-                        id="estimated_total"
-                    />
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Notes"
-                        register={register}
-                        errors={errors}
-                        id="notes"
-                    />
-                </div>
-                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Code du projet"
-                        register={register}
-                        errors={errors}
-                        id="project_code"
-                    />
-                    <Input
-                        type="text"
-                        isLoading={isLoading}
-                        placeholder="Code géographique"
-                        register={register}
-                        errors={errors}
-                        id="geo_code"
-                    />
-                </div>
-                <Button
-                    isLoading={isLoading}
-                    type="submit"
-                    icon={{icon: BiSolidPurchaseTag}}
-                    iconPosition="left"
-                >
-                    Soumettre la demande
-                </Button>
-            </form>
-        </>
-    )
-}
+export const PurchaseRequestForm = ({ form }: Props) => {
+  const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
+    <AmountPurchaseForm form={form} />,
+    <SignatureForm form={form} />,
+  ]);
+  const { handleSubmit, isLoading, onSubmit } = form;
+  const verifyError: SubmitHandler<RegisterFormFieldsType> = async (
+    formData
+  ) => {
+    next();
+  };
+  const stepsItems: Step[] = [
+    { name: "Informations de la demande", number: 1 },
+    {
+      name: "Signature",
+      number: 2,
+      icon: <AiOutlineSignature className=" mx-auto" />,
+    },
+  ];
+  return (
+    <>
+      <div className="lg:hidden">
+        <StepTypography
+          name={stepsItems[currentStepIndex].name}
+          number={stepsItems[currentStepIndex].number}
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
+        {step}
+        <div className="flex justify-between">
+          {currentStepIndex !== 0 && (
+            <button
+              type="button"
+              className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
+              onClick={back}
+              disabled={isLoading}
+            >
+              <GrFormPreviousLink />
+            </button>
+          )}
+          {currentStepIndex !== steps.length - 1 ? (
+            <button
+              type="button"
+              className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
+              onClick={handleSubmit(verifyError)}
+              disabled={isLoading}
+            >
+              <GrFormNextLink />
+            </button>
+          ) : (
+            <Button
+              isLoading={isLoading}
+              type="submit"
+              icon={{ icon: VscGitPullRequest }}
+              iconPosition="left"
+            >
+              Soumettre la demande
+            </Button>
+          )}
+        </div>
+      </form>
+    </>
+  );
+};
