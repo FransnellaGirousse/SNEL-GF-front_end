@@ -40,19 +40,20 @@ export interface AssignmentFormFieldsType {
 export interface AssignmentOMFormFieldsType {
   traveler: string;
   date: Date;
+  Purpose_of_the_mission: string;
+  date_hour: Date;
   starting_point: string;
   destination: string;
-  date_hour: Date;
-  Purpose_of_the_mission: string;
+  authorization_airfare: string;
+  fund_speedkey: string;
+  price: string;
   name_of_the_hotel: string;
   room_rate: string;
   confirmation_number: number;
   date_hotel: Date;
-  authorization_airfare: string;
-  fund_speedkey: string;
-  price: string;
   other_details_hotel: string;
   other_logistical_requirments: string;
+  tdr_id:number;
 }
 
 export interface requestAdvanceFormFieldsType {

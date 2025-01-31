@@ -66,7 +66,7 @@ export const  AssignmentOMForm = ({form}: Props) => {
               <button
                 type="button"
                 className="bg-primary hover:bg-primary-500 text-white rounded-full flex items-center justify-center w-[40px] h-[40px] transition-all text-2xl"
-                onClick={verifyError}
+                onClick={() => handleSubmit(verifyError)()}
                 disabled={isLoading}
               >
                 <GrFormNextLink />

@@ -17,6 +17,7 @@ import { RiAccountPinCircleFill } from "react-icons/ri";
 import clsx from "clsx";
 import { IoPowerSharp } from "react-icons/io5";
 import { PiPuzzlePieceBold } from "react-icons/pi";
+import { FcApprove } from "react-icons/fc";
 
 
 
@@ -89,7 +90,7 @@ export const Sidebar = ({ show }: Props) => {
             </ActiveLink>
           )}
 
-          {canAccess(["user", "administrator", "accountant"]) && (
+          {canAccess(["user"]) && (
             <ActiveLink href="/assignment">
               <MdAssignment />
               Mission
@@ -121,6 +122,13 @@ export const Sidebar = ({ show }: Props) => {
             <ActiveLink href="/approval">
               <FcApproval />
               Approbation
+            </ActiveLink>
+          )}
+
+          {canAccess(["administrator"]) && (
+            <ActiveLink href="/approval-missions">
+              <FcApprove />
+              Approbation Mission
             </ActiveLink>
           )}
 

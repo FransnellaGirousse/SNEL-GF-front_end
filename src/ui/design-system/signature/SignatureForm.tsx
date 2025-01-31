@@ -11,12 +11,15 @@ type FormData = {
   signataires: { id: string; name: string; signature: string }[];
 };
 
+
+
 type SignatureFormProps = {
   onSubmit: (
     signataires: { id: string; name: string; signature: string }[]
   ) => void;
   initialSignataires?: { id: string; name: string; signature: string }[];
 };
+
 
 const SignatureForm = ({
   onSubmit,

@@ -1,23 +1,20 @@
-import { Button } from "@/ui/design-system/button/button";
 import { Typography } from "@/ui/design-system/typography/typography";
-import { LiaExchangeAltSolid } from "react-icons/lia";
-import { MdAssignment } from "react-icons/md";
+import { MdOutlineRequestPage } from "react-icons/md";
 
-
-export const MissionComponents = () => {
+export const ExpenseComponent = () => {
   return (
     <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
       <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
         <Typography variant="h5" theme="black" tag="h5">
-          <MdAssignment className="inline mr-2" size={48} />
-          Mission
+          <MdOutlineRequestPage className="inline mr-2" size={48} />
+          Listes des dépenses
         </Typography>
       </div>
       <table className="table-fixed w-full">
         <thead className="text-left text-gray border-b border-t border-gray-500">
           <tr>
             <th className="py-5">Date</th>
-            <th>Nom du missionnaire</th>
+            <th>Description</th>
             <th>Etat</th>
             <th>Etape</th>
             <th>Actions</th>
@@ -25,19 +22,14 @@ export const MissionComponents = () => {
         </thead>
         <tbody className="text-left text-midnight-700 border-b border-t border-gray-500">
           <tr>
-            <td>28/04/24</td>
-            <td>Missionnaire1</td>
+            <td className="py-3">28/04/24</td>
+            <td>
+              Supervision Communaute Locale - Encadrement des formateurs de
+              formateur : SOFIA & BOENY
+            </td>
             <td>En Cours</td>
             <td>Oui</td>
-            <td className="py-3">
-              <Button
-                variant="outline"
-                icon={{ icon: LiaExchangeAltSolid }}
-                iconPosition="left"
-              >
-                Modifier
-              </Button>
-            </td>
+            <td>Modifier</td>
           </tr>
         </tbody>
       </table>

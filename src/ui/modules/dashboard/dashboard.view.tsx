@@ -3,6 +3,7 @@ import {AdvanceComponents} from "@/ui/modules/dashboard/components/advanceCompon
 import {PurchaseComponents} from "@/ui/modules/dashboard/components/purchaseComponents";
 import {LiquidationComponents} from "@/ui/modules/dashboard/components/liquidationComponents";
 import {ReportComponents} from "@/ui/modules/dashboard/components/reportComponents";
+import { ExpenseComponent } from "./components/expenseComponent";
 
 export const DashboardView = () => {
     return(
@@ -12,6 +13,7 @@ export const DashboardView = () => {
             <AdvanceComponents/>
             <PurchaseComponents/>
             <LiquidationComponents/>
+            <ExpenseComponent />
         </>
     )
 }

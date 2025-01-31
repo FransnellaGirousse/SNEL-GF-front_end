@@ -54,7 +54,7 @@ export const HotelForm = ({ form }: Props) => {
         placeholder="Autres détails à propos de l'hotel"
         register={register}
         errors={errors}
-        id="confirmation_number"
+        id="other_details_hotel"
       />
     </>
   );

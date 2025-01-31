@@ -15,7 +15,7 @@ export const AdvanceComponents = () => {
           <thead className="text-left text-gray border-b border-t border-gray-500">
             <tr>
               <th className="py-5">Date</th>
-              <th>Nom du missionnaire</th>
+              <th>Destination</th>
               <th>Etat</th>
               <th>Etape</th>
               <th>Actions</th>
@@ -24,7 +24,7 @@ export const AdvanceComponents = () => {
           <tbody className="text-left text-midnight-700 border-b border-t border-gray-500">
             <tr>
               <td className="py-3">28/04/24</td>
-              <td>Norman</td>
+              <td>Antsiranana</td>
               <td>En Cours</td>
               <td>Oui</td>
               <td>Modifier</td>

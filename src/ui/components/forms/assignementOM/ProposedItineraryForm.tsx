@@ -23,7 +23,7 @@ export const ProposedItineraryForm = ({ form }: Props) => {
     { title: "Date", key: "date_hour" },
     { title: "Point de départ", key: "starting_point" },
     { title: "Destination", key: "destination" },
-    { title: "Détails", key: "other_details_hotel" },
+    { title: "Autorisation", key: "authorization_airfare" },
     { title: "FUND/SPEEDKEY", key: "fund_speedkey" },
     { title: "Prix", key: "price" },
     { title: "Actions", key: "actions" },
@@ -61,11 +61,11 @@ export const ProposedItineraryForm = ({ form }: Props) => {
           errors={errors}
         />
       ),
-      other_details_hotel: (
+      authorization_airfare: (
         <AdvanceInput
           type="text"
-          placeholder="Détails"
-          id={`rows[${index}].other_details_hotel`}
+          placeholder="Autorisation"
+          id={`rows[${index}]. authorization_airfare`}
           isLoading={isLoading}
           register={register}
           errors={errors}
