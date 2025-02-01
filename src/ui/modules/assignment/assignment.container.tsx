@@ -21,6 +21,9 @@ export const AssignmentContainer = () => {
   ) => {
     setIsLoading(true);
     const {
+      date_tdr,
+      traveler,
+      mission_title,
       introduction,
       mission_objectives,
       planned_activities,
@@ -32,6 +35,9 @@ export const AssignmentContainer = () => {
       const response = await fetch("http://localhost:8000/api/create-tdr", {
         method: "POST",
         body: JSON.stringify({
+          date_tdr,
+          traveler,
+          mission_title,
           introduction,
           mission_objectives,
           planned_activities,

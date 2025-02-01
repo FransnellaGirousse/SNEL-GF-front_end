@@ -13,8 +13,8 @@ export default function Assignment () {
             <table className="table-fixed w-full">
               <thead className="text-left text-gray border-b border-t border-gray-500">
                 <tr>
-                  <th className="py-5">Date de début</th>
-                  <th>Destination</th>
+                  <th className="py-5">Date de TDR</th>
+                  <th>Nom du missionnaire</th>
                   <th>Statut</th>
                   <th>TDR Validé</th>
                   <th>OM Validé</th>
@@ -24,7 +24,7 @@ export default function Assignment () {
               <tbody className="text-left text-midnight-700 border-b border-t border-gray-500">
                 <tr>
                   <td className="py-3">28/04/24</td>
-                  <td>Mahajanga</td>
+                  <td>Missionnaire 1</td>
                   <td>En Cours</td>
                   <td>Oui</td>
                   <td>Non</td>
@@ -40,7 +40,7 @@ export default function Assignment () {
                 </tr>
                 <tr>
                   <td className="py-3">09/05/24</td>
-                  <td>Ambondromamy</td>
+                  <td>Missionnaire 2</td>
                   <td>Terminée</td>
                   <td>Oui</td>
                   <td>Non</td>

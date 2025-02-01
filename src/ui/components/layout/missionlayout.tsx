@@ -16,14 +16,14 @@ export const MissionLayout = ({children}: PropsWithChildren) => {
                         className="p-3 w-full font-white rounded focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-500 text-gray-800"
                         placeholder="Rechercher par destination"
                     />
-                    <select id="countries"
+                    {/* <select id="countries"
                             className="p-4 w-full border border-midnight-600 font-white rounded focus:outline-none focus:ring-1 bg-midnight-700 text-white">
                         <option selected>Choisir votre rôle</option>
                         <option value="user">Utilisateur</option>
                         <option value="Ges">Gestionnaire</option>
                         <option value="Cmpt">Comptable</option>
                         <option value="Dr">Directeur</option>
-                    </select>
+                    </select> */}
                 <Typography
                     variant="caption3"
                     tag="div"
