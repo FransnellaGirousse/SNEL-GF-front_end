@@ -10,11 +10,10 @@ export const DashboardContainer = async () => {
           <input
             type="text"
             className="p-3 w-full font-white rounded focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-500 text-gray-800"
-            placeholder="Rechercher par utilisateur"
+            placeholder="Rechercher"
           />
           {/* Navigation ou autre contenu du panneau latéral */}
           {/* <DashboardChart /> */}
-          <PieChart />
         </aside>
         <main className="w-full">
           <DashboardView />
