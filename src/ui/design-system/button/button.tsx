@@ -19,6 +19,7 @@ interface Props {
     type?: "button" | "submit",
     fullWidth?: boolean,
     action?: Function,
+    onClick?: () => void,
 }
 
 export const Button = ({

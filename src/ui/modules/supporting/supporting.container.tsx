@@ -303,12 +303,15 @@ const SupportingContainer = () => {
               className="w-full h-64 border rounded"
               title="Aperçu du fichier"
             />
-            <button
+            <Button>
+              <button
               onClick={() => setPreviewFileUrl(null)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="mt-4 bg-red-500 text-primary-300 px-4 py-2 rounded hover:bg-red-600"
             >
               Fermer
             </button>
+            </Button>
+            
           </div>
         </div>
       )}
