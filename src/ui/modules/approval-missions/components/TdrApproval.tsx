@@ -12,10 +12,10 @@ interface Tdr {
   mission_title: string;
   status: string;
   introduction: string;
-  mission_objectives: string; 
+  mission_objectives: string;
   planned_activities: string;
-  necessary_resources: string; 
-  conclusion: string; 
+  necessary_resources: string;
+  conclusion: string;
 }
 
 export const TdrApproval = () => {
@@ -42,28 +42,32 @@ export const TdrApproval = () => {
 
   // Fonction pour approuver ou rejeter un TDR
   const handleApproval = async (status: string) => {
-    if (selectedTdr) {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/create-tdr/${selectedTdr.id}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status }),
-          }
-        );
+    if (!selectedTdr) return;
 
-        if (response.ok) {
-          setTdrs((prevTdrs) =>
-            prevTdrs.map((tdr) =>
-              tdr.id === selectedTdr.id ? { ...tdr, status } : tdr
-            )
-          );
-          setIsModalOpen(false); // Fermer la modale après l'approbation ou le rejet
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/create-tdr/${selectedTdr.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status }),
         }
-      } catch (error) {
-        console.error("Erreur lors de la mise à jour du TDR", error);
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la mise à jour du TDR");
       }
+
+      // Mettre à jour le statut localement
+      setTdrs((prevTdrs) =>
+        prevTdrs.map((tdr) =>
+          tdr.id === selectedTdr.id ? { ...tdr, status } : tdr
+        )
+      );
+
+      closeModal(); // Fermer la modale après l'approbation ou le rejet
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -83,7 +87,7 @@ export const TdrApproval = () => {
     <div className="space-y-5 mb-10 border border-gray-500 p-10 rounded">
       <Typography variant="h5" theme="black" tag="h5">
         <MdAssignment className="inline mr-2" size={48} />
-        Liste des Approbations Missions
+        Missions
       </Typography>
 
       <table className="table-fixed w-full">
@@ -112,14 +116,15 @@ export const TdrApproval = () => {
                 <td>{tdr.status}</td>
                 <td className="py-3 space-x-2">
                   <Button>
-                    <button
-                      type="button"
-                      onClick={() => openDetailsModal(tdr)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                      Détails
-                    </button>
+                       <button
+                        type="button"
+                        onClick={() => openDetailsModal(tdr)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                        >
+                        Détails
+                      </button>
                   </Button>
+               
                 </td>
               </tr>
             ))
@@ -168,21 +173,25 @@ export const TdrApproval = () => {
             </div>
 
             <div className="mt-5 flex justify-end space-x-4">
-              <Button
-                variant="accent"
+              <button
                 onClick={() => handleApproval("Approuvé")}
+                className="bg-green-500 text-white px-4 py-2 rounded"
               >
                 Approuver
-              </Button>
-              <Button
-                variant="secondary"
+              </button>
+              <button
                 onClick={() => handleApproval("Rejeté")}
+                className="bg-red-500 text-white px-4 py-2 rounded"
               >
                 Rejeter
-              </Button>
-              <Button variant="outline" onClick={closeModal}>
+              </button>
+
+              <button
+                onClick={closeModal}
+                className="bg-primary-200 text-white px-4 py-2 rounded"
+              >
                 Fermer
-              </Button>
+              </button>
             </div>
           </div>
         </div>
