@@ -51,7 +51,6 @@ export const AmountAdvanceForm = ({ form }: Props) => {
     setAdditionalCosts(isNaN(parsedValue) ? 0 : parsedValue);
   };
 
-  // Définition des colonnes par le composant table
   const columns = [
     { title: "Location", key: "location" },
     { title: "Taux journalier", key: "per_diem_rate" },

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { FormsType } from "@/types/forms";
 import { Typography } from "@/ui/design-system/typography/typography";
 import { MdDeleteForever } from "react-icons/md";
@@ -7,8 +8,6 @@ import { Controller, useFieldArray } from "react-hook-form";
 import { Table } from "@/ui/design-system/table/table";
 import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
 import { Button } from "@/ui/design-system/button/button";
-import { Input } from "@/ui/design-system/forms/input";
-import { useState } from "react";
 import CurrencyInput from "react-currency-input-field";
 
 interface Props {
@@ -16,15 +15,40 @@ interface Props {
 }
 
 export const TableExpense = ({ form }: Props) => {
-  const { control, isLoading, register, errors, watch } = form;
+  const { control, isLoading, register, errors } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "rows",
   });
 
-  const [isChecked, setIsChecked] = useState(false);
-  const handleCheckboxChange = () => setIsChecked(!isChecked);
-  const today = new Date().toISOString().split("T")[0];
+  // Utilisation de useState pour gérer chaque ligne indépendamment
+  const [rowsData, setRowsData] = useState(
+    fields.map(() => ({
+      inMGA: "",
+      exchangeRate: "",
+      totalMGA: "0",
+    }))
+  );
+
+  // Fonction pour mettre à jour les valeurs d'une ligne spécifique
+  const handleValueChange = (index: number, field: string, value: string) => {
+    setRowsData((prev) =>
+      prev.map((row, i) =>
+        i === index
+          ? {
+              ...row,
+              [field]: value,
+              totalMGA: (
+                parseFloat(field === "inMGA" ? value : row.inMGA || "0") *
+                parseFloat(
+                  field === "exchangeRate" ? value : row.exchangeRate || "0"
+                )
+              ).toFixed(2),
+            }
+          : row
+      )
+    );
+  };
 
   const columns = [
     { title: "Date mm/dd", key: "date" },
@@ -37,113 +61,108 @@ export const TableExpense = ({ form }: Props) => {
     { title: "Actions", key: "actions" },
   ];
 
-  const rows = fields.map((item, index) => {
-    const inMGA = parseFloat(watch(`rows[${index}].inMGA`) || "0");
-    const exchangeRate = parseFloat(
-      watch(`rows[${index}].exchangeRate`) || "0"
-    );
-    const totalMGA = inMGA * exchangeRate; // Correction du calcul ici
-
-    return {
-      id: item.id,
-      data: {
-        date: (
-          <AdvanceInput
-            type="date"
-            id={`rows[${index}].date`}
-            placeholder="Date mm/dd"
-            isLoading={isLoading}
-            register={register}
-            errors={errors}
-          />
-        ),
-        description: (
-          <AdvanceInput
-            type="text"
-            id={`rows[${index}].description`}
-            placeholder="Description"
-            isLoading={isLoading}
-            register={register}
-            errors={errors}
-          />
-        ),
-        fund_speedkey: (
-          <AdvanceInput
-            type="text"
-            id={`rows[${index}].fund_speedkey`}
-            placeholder="FUND/SPEEDKEY..."
-            isLoading={isLoading}
-            register={register}
-            errors={errors}
-          />
-        ),
-        ref: (
-          <AdvanceInput
-            type="text"
-            id={`rows[${index}].ref`}
-            placeholder="Ref"
-            isLoading={isLoading}
-            register={register}
-            errors={errors}
-          />
-        ),
-        inMGA: (
-          <Controller
-            name={`rows[${index}].inMGA`}
-            control={form.control}
-            render={({ field }) => (
-              <CurrencyInput
-                id={`rows[${index}].inMGA`}
-                decimalScale={2}
-                placeholder="Montant en MGA"
-                value={field.value}
-                onValueChange={(value) => field.onChange(value)}
-                className="border-gray-400 p-2"
-              />
-            )}
-          />
-        ),
-        exchangeRate: (
-          <Controller
-            name={`rows[${index}].exchangeRate`}
-            control={form.control}
-            render={({ field }) => (
-              <CurrencyInput
-                id={`rows[${index}].exchangeRate`}
-                decimalScale={2}
-                placeholder="Taux de change"
-                value={field.value}
-                onValueChange={(value) => field.onChange(value)}
-                className="border-gray-400 p-2"
-              />
-            )}
-          />
-        ),
-        totalMGA: (
-          <Controller
-            name={`rows[${index}].totalMGA`}
-            control={form.control}
-            render={({ field }) => (
-              <CurrencyInput
-                id={`rows[${index}].totalMGA`}
-                decimalScale={2}
-                placeholder="Total MGA"
-                value={totalMGA}
-                onValueChange={(value) => field.onChange(value)}
-                className="border-gray-400 p-2"
-                readOnly
-              />
-            )}
-          />
-        ),
-        actions: (
-          <button type="button" onClick={() => remove(index)}>
-            <MdDeleteForever className="text-red-500" size={20} />
-          </button>
-        ),
-      },
-    };
-  });
+  const rows = fields.map((item, index) => ({
+    id: item.id,
+    data: {
+      date: (
+        <AdvanceInput
+          type="date"
+          id={`rows[${index}].date`}
+          placeholder="Date mm/dd"
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      description: (
+        <AdvanceInput
+          type="text"
+          id={`rows[${index}].description`}
+          placeholder="Description"
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      fund_speedkey: (
+        <AdvanceInput
+          type="text"
+          id={`rows[${index}].fund_speedkey`}
+          placeholder="FUND/SPEEDKEY..."
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      ref: (
+        <AdvanceInput
+          type="text"
+          id={`rows[${index}].ref`}
+          placeholder="Ref"
+          isLoading={isLoading}
+          register={register}
+          errors={errors}
+        />
+      ),
+      inMGA: (
+        <Controller
+          name={`rows[${index}].inMGA`}
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id={`rows[${index}].inMGA`}
+              decimalScale={2}
+              placeholder="Montant en MGA"
+              value={rowsData[index]?.inMGA || ""}
+              onValueChange={(value) =>
+                handleValueChange(index, "inMGA", value || "0")
+              }
+              className="border-gray-400 p-2"
+            />
+          )}
+        />
+      ),
+      exchangeRate: (
+        <Controller
+          name={`rows[${index}].exchangeRate`}
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id={`rows[${index}].exchangeRate`}
+              decimalScale={2}
+              placeholder="Taux de change"
+              value={rowsData[index]?.exchangeRate || ""}
+              onValueChange={(value) =>
+                handleValueChange(index, "exchangeRate", value || "0")
+              }
+              className="border-gray-400 p-2"
+            />
+          )}
+        />
+      ),
+      totalMGA: (
+        <CurrencyInput
+          id={`rows[${index}].totalMGA`}
+          decimalScale={2}
+          placeholder="Total MGA"
+          value={rowsData[index]?.totalMGA || "0"}
+          className="border-gray-400 p-2"
+          disabled
+        />
+      ),
+      actions: (
+        <button
+          type="button"
+          onClick={() => {
+            remove(index);
+            setRowsData((prev) => prev.filter((_, i) => i !== index));
+          }}
+        >
+          <MdDeleteForever className="text-red-500" size={20} />
+        </button>
+      ),
+    },
+  }));
 
   return (
     <div className="p-4">
@@ -161,7 +180,7 @@ export const TableExpense = ({ form }: Props) => {
       <Button>
         <button
           type="button"
-          onClick={() =>
+          onClick={() => {
             append({
               date: "",
               description: "",
@@ -170,59 +189,33 @@ export const TableExpense = ({ form }: Props) => {
               inMGA: "",
               exchangeRate: "",
               totalMGA: "",
-            })
-          }
+            });
+
+            setRowsData((prev) => [
+              ...prev,
+              { inMGA: "", exchangeRate: "", totalMGA: "0" },
+            ]);
+          }}
         >
           Ajouter une ligne
         </button>
       </Button>
 
-      <div>
-        <label htmlFor="additional_costs">Dépenses Totales:</label>
-        <Input
-          id="additional_costs"
-          type="text"
-          placeholder="Dépenses totales"
-          register={register}
-          errors={errors}
-          required={true}
-          isLoading={isLoading}
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-5 mb-5">
-        <div></div>
-        <div>
-          <label htmlFor="date_requested">Date:</label>
-          <Input
-            id="date_requested"
-            type="date"
-            register={register}
-            errors={errors}
-            required={true}
-            isLoading={isLoading}
-            defaultValue={today}
-          />
-        </div>
-      </div>
-
-      <div>
-        <input
-          type="checkbox"
-          id="certifyCheckbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-          className="w-5 h-5 border-gray-300 rounded text-blue-600 focus:ring focus:ring-blue-300"
-        />
-        <label
-          htmlFor="certifyCheckbox"
-          className="text-gray-700 text-sm leading-5"
-        >
-          « Je certifie que ce bon est véridique et correct à ma connaissance et
-          que le montant dû n'a pas déjà été payé ou crédité. »
+      <div className="mt-4 p-2 font-bold">
+        <label htmlFor="final_total" className="font-bold">
+          Total général:
         </label>
+        <CurrencyInput
+          id="final_total"
+          value={rowsData.reduce(
+            (sum, row) => sum + parseFloat(row.totalMGA || "0"),
+            0
+          )}
+          decimalScale={2}
+          disabled
+          className="border-gray-400 p-2 w-full"
+        />
       </div>
-      {!isChecked && <p className="text-red-500 text-sm">*</p>}
     </div>
   );
 };
