@@ -17,7 +17,7 @@ export const AcceuilComponents = () => {
             theme="black"
             className="font-bold text-3xl md:text-4xl"
           >
-            Bienvenue sur <span className="text-blue-500">FinanSnell</span>
+            Flowz
           </Typography>
 
           <Typography
@@ -25,7 +25,7 @@ export const AcceuilComponents = () => {
             theme="black"
             className="font-semibold mt-2 text-2xl"
           >
-            Simplifiez la gestion de vos finances
+            Smart money, smart life.
           </Typography>
 
           <Typography
@@ -34,11 +34,7 @@ export const AcceuilComponents = () => {
             theme="black"
             className="mt-4 text-gray-700"
           >
-            ✏️ Notre plateforme vous permet de gérer vos comptes en toute
-            simplicité, d'accéder à des rapports détaillés, et d'optimiser vos
-            dépenses. Que vous soyez un particulier ou une entreprise, nous
-            avons les outils pour vous aider à atteindre vos objectifs
-            financiers. 🚀
+            ✏️ 🚀
           </Typography>
 
           <div className="flex justify-start mt-6">

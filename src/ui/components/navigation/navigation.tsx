@@ -81,10 +81,10 @@ export const Navigation = ({}: Props) => {
                 <Logo size="small" />
                 <div className="flex flex-col max-sm:hidden">
                   <div className="text-gray font-extrabold text-[24px]">
-                    FinanSnell
+                    Flowz
                   </div>
                   <Typography variant="caption4" tag="span" theme="gray">
-                    Votre solution financière !
+                    Smart money, smart life!
                   </Typography>
                 </div>
               </div>
