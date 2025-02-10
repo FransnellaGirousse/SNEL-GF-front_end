@@ -116,15 +116,14 @@ export const TdrApproval = () => {
                 <td>{tdr.status}</td>
                 <td className="py-3 space-x-2">
                   <Button>
-                       <button
-                        type="button"
-                        onClick={() => openDetailsModal(tdr)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
-                        >
-                        Détails
-                      </button>
+                    <button
+                      type="button"
+                      onClick={() => openDetailsModal(tdr)}
+                      className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                      Détails
+                    </button>
                   </Button>
-               
                 </td>
               </tr>
             ))
@@ -175,13 +174,13 @@ export const TdrApproval = () => {
             <div className="mt-5 flex justify-end space-x-4">
               <button
                 onClick={() => handleApproval("Approuvé")}
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="bg-primary-200 text-white px-4 py-2 rounded"
               >
                 Approuver
               </button>
               <button
                 onClick={() => handleApproval("Rejeté")}
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-primary-200 text-white px-4 py-2 rounded"
               >
                 Rejeter
               </button>
