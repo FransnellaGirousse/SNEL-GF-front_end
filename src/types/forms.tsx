@@ -27,6 +27,10 @@ export interface LoginFormFieldsType {
     email: string,
     password: string
 }
+export interface AdminLoginFormFieldsType {
+  email: string;
+  password: string;
+}
 
 export interface AssignmentFormFieldsType {
   date_tdr: Date,

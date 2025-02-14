@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginFormFieldsType } from "@/types/forms";
+import { AdminLoginFormFieldsType } from "@/types/forms";
 import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
@@ -16,8 +16,10 @@ export const AdminLoginContainer = () => {
     register,
     reset,
     resetField,
-  } = useForm<LoginFormFieldsType>();
-  const onSubmit: SubmitHandler<LoginFormFieldsType> = async (formData) => {
+  } = useForm<AdminLoginFormFieldsType>();
+  const onSubmit: SubmitHandler<AdminLoginFormFieldsType> = async (
+    formData
+  ) => {
     setIsLoading(true);
     const { email, password } = formData;
     const result = await signIn("credentials", {
