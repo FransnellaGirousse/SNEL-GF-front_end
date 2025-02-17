@@ -3,8 +3,6 @@ import { Footer } from "./components/Footer";
 import { SubscriptionPlans } from "./components/SubscriptionPlans ";
 import { AcceuilComponents } from "./components/acceuilComponents";
 
-
-
 export const HomeView = () => {
   return (
     <>
@@ -14,5 +12,5 @@ export const HomeView = () => {
       <Footer/>
      
     </>
-  );
+  ) 
 };

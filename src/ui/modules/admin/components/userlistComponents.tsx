@@ -34,11 +34,12 @@ export const UserListComponents = () => {
             <td>Rakoto</td>
             <td>rakoto@gmail.com</td>
             <td>Directeur</td>
-            <td className="py-3">
+            <td className="py-3 space-x-2">
               <Button
                 variant="outline"
                 icon={{ icon: MdDetails }}
                 iconPosition="left"
+                size="medium"
               ></Button>
               <Button
                 variant="outline"
