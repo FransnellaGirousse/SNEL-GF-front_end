@@ -122,7 +122,10 @@ export const Navigation = ({}: Props) => {
                 <div className="flex justify-between gap-1 items-center">
                   <Avatar
                     size="medium"
-                    src={session?.user?.image ?? "/default-avatar.png"}
+                    src={
+                      session?.user?.image ??
+                      "/assets/images/authentication/default-avatar.jpg"
+                    }
                     alt={session?.user?.name ?? "Utilisateur"}
                   />
                   <span className="text-2xl" onClick={showNav}>

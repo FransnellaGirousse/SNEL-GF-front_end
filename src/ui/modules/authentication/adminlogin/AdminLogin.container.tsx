@@ -34,7 +34,7 @@ export const AdminLoginContainer = () => {
       resetField("password");
     } else {
       setIsLoading(false);
-      redirect("/dashboard");
+      redirect("/admin");
       reset();
     }
   };

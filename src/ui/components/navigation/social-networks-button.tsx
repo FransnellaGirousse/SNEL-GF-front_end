@@ -1,9 +1,8 @@
-import { footerNetworkLinks } from "@/src/ui/components/navigation/app-links";
+import { footerNetworkLinks } from "@/ui/components/navigation/app-links";
 import { v4 as uuidv4 } from "uuid";
-import { Button } from "@/src/ui/design-system/button/button";
+import { Button } from "@/ui/design-system/button/button";
 import clsx from "clsx";
 import { RiFacebookBoxFill } from "react-icons/ri";
-
 
 interface SocialNetwork {
   icon?: React.ComponentType; // or use a more specific type if available
