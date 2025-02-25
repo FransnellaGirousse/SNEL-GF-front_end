@@ -13,7 +13,7 @@ export const LogisticalForm = ({ form }: Props) => {
         id="countries"
         className="p-4 w-full font-white rounded focus:outline-none   bg-gray-500 text-gray-800"
       >
-        <option selected>Choisit votre moyen de transport</option>
+        <option selected>Moyen de transport</option>
         <option value="">Avion</option>
         <option value="">Taxi</option>
         <option value="">Taxi Brousse</option>

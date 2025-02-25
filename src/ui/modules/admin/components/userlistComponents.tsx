@@ -17,10 +17,10 @@ interface User {
 }
 
 export const UserListComponents = () => {
-  const [users, setUsers] = useState<User[]>([]); // Définition explicite du type
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/users") // Appel API Laravel
+    fetch("http://localhost:8000/api/users") 
       .then((response) => response.json())
       .then((data: User[]) => setUsers(data)) 
       .catch((error) =>

@@ -11,8 +11,7 @@ export default async function Login() {
   }
 
   return (
-    <Layout>
+    
       <AdminLoginContainer />
-    </Layout>
   );
 }

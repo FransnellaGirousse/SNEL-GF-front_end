@@ -18,6 +18,8 @@ import clsx from "clsx";
 import { IoPowerSharp } from "react-icons/io5";
 import { PiPuzzlePieceBold } from "react-icons/pi";
 import { FcApprove } from "react-icons/fc";
+import useStore from "@/store/useStore";
+import {useRouter} from "next/navigation"
 
 
 
@@ -33,42 +35,56 @@ interface Props {
   show: boolean;
 }
 
+const CheckAndAddUser = async (email, setUser) => {
+  try {
+    const res = await fetch("http://localhost:8000/api/check-and-add-user", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json()
+    if (data.user) {
+      setUser(data.user)
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export const Sidebar = ({ show }: Props) => {
-  const { data: session } = useSession();
-  const [roles, setRoles] = useState<string[]>([]);
+  const { data: session } = useSession()
+  const { user, setUser } = useStore()
+  const router = useRouter()
+  console.log("sfsdfsjdfsdhf", user)
+  
+  const roles = []
+  if (user.role) {
+    roles.push(user.role)
+  }
 
+  const CheckUser = async () => {
+    try {
+      await CheckAndAddUser(session?.user.email, setUser);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   useEffect(() => {
-    // Vérifier si le rôle est stocké dans localStorage
-    const storedRole = localStorage.getItem("userRole");
-    if (storedRole) {
-      setRoles([storedRole]); // Le rôle est supposé être unique
-      console.log("Rôle récupéré depuis localStorage : ", storedRole);
-    }
-
-    if (session?.user?.role) {
-      // Si un rôle est présent dans la session (ex. récupéré via NextAuth)
-      localStorage.setItem("userRole", session.user.role); // Stocker le rôle dans localStorage
-      setRoles([session.user.role]); // Mettre à jour l'état
-    }
-
-    console.log("Détails de la session après connexion :", session?.user.role);
-  }, [session]);
+    CheckUser();
+  }, [session?.user.email]);
+  if (!session) return null;
 
   const handleSignOut = () => {
-    // Supprimer le rôle du localStorage à la déconnexion
-    localStorage.removeItem("userRole");
-    signOut(); 
+    signOut();
   };
-
-  if (!session) {
-    return null; 
-  }
 
   // Fonction de vérification des accès en fonction des rôles
   const canAccess = (requiredRoles: string[]) => {
-    return requiredRoles.some((role) => roles.includes(role));
+    return requiredRoles.some((role) => roles.includes(role))
   };
-
+  
   return (
     <aside
       className={clsx(

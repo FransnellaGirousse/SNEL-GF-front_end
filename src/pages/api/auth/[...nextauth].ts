@@ -16,26 +16,27 @@ export default NextAuth({
       },
       async authorize(credentials) {
         // Faire la requête à ton backend Laravel pour récupérer les informations utilisateur
-        const res = await fetch("http://localhost:8000/api/login", {
-          method: "POST",
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const user = await res.json();
-
-        if (res.ok && user.token) {
-          // Ajouter le rôle à la réponse de l'API, si disponible
-          return {
-            ...user,
-            role: user.role, // Assurez-vous que le rôle est dans la réponse de l'API
-          };
+        if (credentials) {
+          try {
+            const res = await fetch("http://localhost:8000/api/login", {
+              method: "POST",
+              body: JSON.stringify({
+                email: credentials?.email,
+                password: credentials?.password,
+              }),
+              headers: { "Content-Type": "application/json" },
+            });
+            const data = await res.json();
+            const user = data.user;
+            if (!user) return null;
+            return user;
+          } catch (e) {
+            console.error(
+              "Erreur lors de la recuperation de l'utilisateur !",
+              e
+            );
+          }
         }
-
-        return null;
       },
     }),
   ],
@@ -46,33 +47,12 @@ export default NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      if (url === baseUrl) {
-        // Gérer la redirection en fonction du rôle
-        const userRole = url.includes("director") ? "/approval" : "/dashboard";
-        return userRole; // Remplacer par la page appropriée
-      }
-      return baseUrl + "/dashboard";
-    },
     async jwt({ token, account, user }) {
-      if (user && user.email) {
-        
-        // Attribution des rôles en fonction des emails spécifiques
-        if (user.email === "fransnellagirousse@gmail.com") {
-          token.role = "user"; // Rôle "user" pour cet email
-        } else if (user.email === "snelgirousse@gmail.com") {
-          token.role = "director"; // Rôle "director" pour cet email
-        } else if (user.email === "gestionnairefinansnell@gmail.com") {
-          token.role = "administrator"; // Rôle "administrator" pour cet email
-        } else if (user.email === "comptablefinansnell@gmail.com") {
-          token.role = "accountant"; // Rôle "accountant" pour cet email
-        } else if (user.email.includes("directeur")) {
-          token.role = "director";
-        } else {
-          token.role = "user"; // Par défaut, rôle "user" pour les autres utilisateurs
-        }
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
       }
-
       await fetch("http://localhost:8000/api/register/google", {
         method: "POST",
         headers: {
@@ -86,8 +66,8 @@ export default NextAuth({
       });
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
+    async session({ session, token, user }) {
+      if (user) {
         session.user.id = token.id;
         session.user.email = token.email;
         session.user.name = token.name;

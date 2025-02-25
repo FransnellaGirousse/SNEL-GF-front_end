@@ -4,12 +4,14 @@ import { AccountFormFieldsType } from "@/types/forms";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AccountView } from "@/ui/modules/account/account.view";
-import { toast } from "react-toastify"; // Importation de react-toastify
-import { useSession } from "next-auth/react"; // Importation de useSession
+import { toast } from "react-toastify"; 
+import useStore from "@/store/useStore";// Importation de react-toastify
+import { useRouter } from "next/navigation";
 
-export const AccounContainer = () => {
-  const { data: session, status } = useSession(); // Récupération de la session
+export const AccountContainer = ({ userId }: { userId: number }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user, setUser } = useStore();
+  const router = useRouter()
 
   const {
     control,
@@ -20,65 +22,56 @@ export const AccounContainer = () => {
 
   const onSubmit: SubmitHandler<AccountFormFieldsType> = async (formData) => {
     setIsLoading(true);
-    const { firstname, lastname, email, role, phone_number, address } =
+    const { firstname, lastname, role, phone_number } =
       formData;
-
-    // Si le rôle est défini dans la session, on peut l'ajouter ou l'utiliser
-    const userRole = session?.role || role; // Priorité au rôle de la session, sinon utilise le rôle du formulaire
 
     try {
       console.log("Données envoyées : ", formData); // Log des données envoyées
 
-      // Requête API
-      const response = await fetch("http://localhost:8000/api/accounts", {
-        method: "POST", // Remplacez GET par POST si nécessaire
-        body: JSON.stringify({
-          firstname,
-          lastname,
-          email,
-          role: userRole, // Utilisation du rôle récupéré depuis la session ou du formulaire
-          phone_number,
-          address,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/users/${user.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            role,
+            phone_number,
+          }),
+        }
+      )
 
-      // Vérification de la réponse
       if (response.ok) {
         const data = await response.json(); // Récupérer la réponse de l'API
-
-        // Enregistrer le rôle dans le localStorage
-        localStorage.setItem("userRole", data.user.role);
-         // Stocke le rôle dans le localStorage
-
-        toast.success("Compte créé avec succès !");
-        console.log("Réponse du serveur : ", data.user.role); 
-        localStorage.setItem("userRole", data.user.role);// Log de la réponse du serveur
+        toast.success("Compte mis à jour avec succès !");
+        router.push("/dashboard") 
       } else {
-        toast.error("Erreur lors de la création du compte !"); // Notification d'erreur
+        const errorData = await response.json();
+        toast.error(
+          errorData.error || "Erreur lors de la mise à jour du compte !"
+        );
       }
     } catch (e) {
-      console.error("Erreur : ", e); // Log des erreurs
-      toast.error("Erreur interne, veuillez réessayer !"); // Notification d'erreur générale
+      console.error("Erreur : ", e);
+      toast.error("Erreur interne, veuillez réessayer !");
     } finally {
-      setIsLoading(false); // Arrêter le chargement
+      setIsLoading(false);
     }
   };
 
   return (
-    <>
-      <AccountView
-        form={{
-          handleSubmit,
-          errors,
-          register,
-          onSubmit,
-          isLoading,
-          control,
-        }}
-      />
-    </>
+    <AccountView
+      form={{
+        handleSubmit,
+        errors,
+        register,
+        onSubmit,
+        isLoading,
+        control,
+      }}
+    />
   );
 };

@@ -134,7 +134,7 @@ export const Navigation = ({}: Props) => {
                 </div>
                 <div
                   className={clsx(
-                    "absolute w-[200px] bg-white p-5 right-0 top-10 shadow-2xl rounded",
+                    "absolute w-[200px] z-50 bg-white p-5 right-0 top-10 shadow-2xl rounded",
                     !showingNav ? "hidden" : "block"
                   )}
                 >
@@ -154,16 +154,6 @@ export const Navigation = ({}: Props) => {
                       <AiOutlineSignature />
                       Signature
                     </Link>
-
-                    {/* Affichage du rôle de l'utilisateur */}
-                    {userRole && (
-                      <div className="inline-flex items-center gap-2">
-                        <TfiControlEject />
-                        <p className="text-gray-600 mb-3">Rôle : {userRole}</p>
-                      </div>
-                    )}
-                    <hr />
-
                     <button
                       onClick={() => signOut()}
                       className="flex justify-between gap-2 items-center text-gray hover:text-primary transition-all"

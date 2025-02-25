@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { AdminLoginFormFieldsType } from "@/types/forms";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { AdminLoginView } from "./AdminLogin.view";
 
 export const AdminLoginContainer = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const {
     handleSubmit,
     formState: { errors },
@@ -17,27 +19,34 @@ export const AdminLoginContainer = () => {
     reset,
     resetField,
   } = useForm<AdminLoginFormFieldsType>();
+
   const onSubmit: SubmitHandler<AdminLoginFormFieldsType> = async (
     formData
   ) => {
     setIsLoading(true);
-    const { email, password } = formData;
-    const result = await signIn("credentials", {
-      redirect: true,
-      email: email,
-      password: password,
-    });
 
-    if (result?.error) {
-      setIsLoading(false);
-      toast.error("Email ou Mot de passe non reconnu !");
-      resetField("password");
-    } else {
-      setIsLoading(false);
-      redirect("/admin");
+    try {
+      const result = await signIn("admin-credentials", {
+        redirect: false, 
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result?.error) {
+        throw new Error("Email ou mot de passe incorrect !");
+      }
+
+      toast.success("Connexion Admin réussie !");
       reset();
+      router.push("/admin");
+    } catch (error: any) {
+      toast.error(error.message);
+      resetField("password");
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <>
       <AdminLoginView

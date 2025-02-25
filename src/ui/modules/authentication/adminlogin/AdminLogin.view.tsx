@@ -83,24 +83,7 @@ export const AdminLoginView = ({ form }: Props) => {
             </Typography>
           )}
           <AdminLoginForm form={form} />
-          <Typography variant="caption2" tag="h4" theme="black">
-            Se connecter avec :
-          </Typography>
-          <div className="flex gap-2 justify-center">
-            <button
-              type="button"
-              className="bg-alert-danger hover:bg-alert-danger/50 text-white rounded-full flex items-center justify-center w-[50px] h-[50px] transition-all text-2xl"
-              onClick={() => signIn("google")}
-            >
-              <IoLogoGoogle />
-            </button>
-            <Button
-              variant="ico"
-              baseUrl="http://web.facebook.com/"
-              icon={{ icon: FaFacebook }}
-              iconTheme="accent"
-            />
-          </div>
+         
         </Box>
       </div>
     </Container>
