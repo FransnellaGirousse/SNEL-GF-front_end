@@ -10,7 +10,7 @@ import { FormsType } from "@/types/forms";
 import { IoLogoGoogle } from "react-icons/io5";
 import { FaFacebook } from "react-icons/fa";
 import { Button } from "@/ui/design-system/button/button";
-import { signIn, useSession } from "next-auth/react"; // Importer useSession pour récupérer la session
+import { signIn, useSession } from "next-auth/react"; 
 import { useEffect } from "react";
 
 interface Props {
@@ -20,22 +20,22 @@ interface Props {
 export const LoginView = ({ form }: Props) => {
   const { data: session, status } = useSession(); // Récupérer la session
 
-  // Effet pour gérer la session et stocker le rôle dans localStorage après la connexion
-  useEffect(() => {
-    if (session) {
-      // Si la session existe, récupère le rôle de l'utilisateur
-      const userRole = session.user?.role; // Le rôle est stocké dans session.user
+  // // Effet pour gérer la session et stocker le rôle dans localStorage après la connexion
+  // useEffect(() => {
+  //   if (session) {
+  //     // Si la session existe, récupère le rôle de l'utilisateur
+  //     const userRole = session.user?.role; // Le rôle est stocké dans session.user
 
-      if (userRole) {
-        // Stocke le rôle dans localStorage
-        localStorage.setItem("userRole", userRole);
-        console.log(
-          "Rôle de l'utilisateur stocké dans localStorage:",
-          userRole
-        );
-      }
-    }
-  }, [session]); // Le hook s'exécute chaque fois que la session change
+  //     if (userRole) {
+  //       // Stocke le rôle dans localStorage
+  //       localStorage.setItem("userRole", userRole);
+  //       console.log(
+  //         "Rôle de l'utilisateur stocké dans localStorage:",
+  //         userRole
+  //       );
+  //     }
+  //   }
+  // }, [session]); // Le hook s'exécute chaque fois que la session change
 
   return (
     <Container className="flex justify-center items-center gap-5 mt-10 mb-32">
