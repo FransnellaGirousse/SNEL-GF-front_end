@@ -28,14 +28,6 @@ export const AcceuilComponents = () => {
             Smart money, smart life.
           </Typography>
 
-          <Typography
-            variant="caption2"
-            tag="p"
-            theme="black"
-            className="mt-4 text-gray-700"
-          >
-            ✏️ 🚀
-          </Typography>
 
           <div className="flex justify-start mt-6">
             <motion.div

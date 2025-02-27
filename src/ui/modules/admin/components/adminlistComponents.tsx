@@ -7,7 +7,6 @@ import { TiUserDelete } from "react-icons/ti";
 import { FaListUl } from "react-icons/fa";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { Input } from "@/ui/design-system/forms/input";
-import { Button } from "@/ui/design-system/button/button";
 
 export const AdminListComponents = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,15 +30,13 @@ export const AdminListComponents = () => {
           <FaListUl className="inline mr-2" size={30} />
           Listes admins
         </Typography>
-        <Button>
           <button
             onClick={toggleModal}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2"
+            className="bg-primary-400 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2"
           >
             <IoPersonAddSharp size={20} />
             <span>Ajouter l'Admin</span>
           </button>
-        </Button>
       </div>
 
       <table className="table-fixed w-full">
