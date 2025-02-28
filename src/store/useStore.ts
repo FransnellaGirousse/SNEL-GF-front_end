@@ -1,9 +1,9 @@
-import {create} from "zustand"
+import { create } from "zustand";
 
 const useStore = create((set) => ({
-    user: [],
-    setUser: (user) => set({user}),
-    resetUser: () => set({user: []})
-}))
+  user: {},
+  setUser: (user) => set({ user }),
+  resetUser: () => set({ user: [] }),
+}));
 
-export default useStore
+export default useStore;

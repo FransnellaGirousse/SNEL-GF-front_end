@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { ActiveLink } from "@/ui/components/navigation/active-link";
 import { Typography } from "@/ui/design-system/typography/typography";
@@ -19,9 +19,7 @@ import { IoPowerSharp } from "react-icons/io5";
 import { PiPuzzlePieceBold } from "react-icons/pi";
 import { FcApprove } from "react-icons/fc";
 import useStore from "@/store/useStore";
-import {useRouter} from "next/navigation"
-
-
+import { useRouter } from "next/navigation";
 
 const userRoles = [
   "user",
@@ -44,24 +42,24 @@ const CheckAndAddUser = async (email, setUser) => {
       }),
       headers: { "Content-Type": "application/json" },
     });
-    const data = await res.json()
+    const data = await res.json();
     if (data.user) {
-      setUser(data.user)
+      setUser(data.user);
     }
   } catch (e) {
     console.error(e);
   }
-}
+};
 
 export const Sidebar = ({ show }: Props) => {
-  const { data: session } = useSession()
-  const { user, setUser } = useStore()
-  const router = useRouter()
-  console.log("sfsdfsjdfsdhf", user)
-  
-  const roles = []
+  const { data: session } = useSession();
+  const prevEmailRef = useRef(null);
+  const { user, setUser } = useStore();
+  const router = useRouter();
+
+  const roles = [];
   if (user.role) {
-    roles.push(user.role)
+    roles.push(user.role);
   }
 
   const CheckUser = async () => {
@@ -72,8 +70,16 @@ export const Sidebar = ({ show }: Props) => {
     }
   };
   useEffect(() => {
-    CheckUser();
+    if (session?.user.email && session?.user.email !== prevEmailRef.current) {
+      CheckUser();
+      prevEmailRef.current = session?.user.email;
+    }
   }, [session?.user.email]);
+  useEffect(() => {
+    if (Object.keys(user).length > 0 && user.role === "visiteur") {
+      router.push("/account");
+    }
+  }, [user]);
   if (!session) return null;
 
   const handleSignOut = () => {
@@ -82,9 +88,9 @@ export const Sidebar = ({ show }: Props) => {
 
   // Fonction de vérification des accès en fonction des rôles
   const canAccess = (requiredRoles: string[]) => {
-    return requiredRoles.some((role) => roles.includes(role))
+    return requiredRoles.some((role) => roles.includes(role));
   };
-  
+
   return (
     <aside
       className={clsx(
