@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Typography } from "@/ui/design-system/typography/typography";
 
 export const SubscriptionPlans = () => {
   const plans = [
@@ -31,9 +32,9 @@ export const SubscriptionPlans = () => {
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold text-gray-800">Abonnement</h2>
-        <p className="mt-2 text-gray-600">
-          Choisissez le plan qui convient le mieux à vos besoins.
-        </p>
+        <Typography theme="black">
+          Choisissez le plan qui convient le mieux à vos besoins
+        </Typography>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
