@@ -85,7 +85,6 @@ export const AssignmentOMContainer = () => {
         form={{ handleSubmit, errors, register, onSubmit, isLoading, control }}
       />
       {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-      {/* Afficher un message d'erreur si nécessaire */}
     </>
   );
 };

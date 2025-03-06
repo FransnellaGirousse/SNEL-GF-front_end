@@ -29,7 +29,14 @@ export const TdrApproval = () => {
       try {
         const response = await fetch("http://localhost:8000/api/create-tdr");
         if (response.ok) {
-          const data: Tdr[] = await response.json();
+          let data: Tdr[] = await response.json();
+
+          // Trier du plus récent au plus ancien (basé sur `date_tdr`)
+          data = data.sort(
+            (a, b) =>
+              new Date(b.date_tdr).getTime() - new Date(a.date_tdr).getTime()
+          );
+
           setTdrs(data);
         }
       } catch (error) {
@@ -113,7 +120,19 @@ export const TdrApproval = () => {
                 <td>{tdr.date_tdr}</td>
                 <td>{tdr.traveler}</td>
                 <td>{tdr.mission_title}</td>
-                <td>{tdr.status}</td>
+                <td>
+                  <span
+                    className={`px-3 py-1 rounded-full text-white ${
+                      tdr.status === "Approuvé"
+                        ? "bg-green-500"
+                        : tdr.status === "Rejeté"
+                        ? "bg-red-500"
+                        : "bg-gray-400"
+                    }`}
+                  >
+                    {tdr.status}
+                  </span>
+                </td>
                 <td className="py-3 space-x-2">
                   <Button>
                     <button
