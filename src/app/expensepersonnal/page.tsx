@@ -94,7 +94,9 @@ export default function ExpensePersonnal() {
             Dépenses
           </Typography>
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold">Répartition des Dépenses</h2>
+            <Typography variant="caption2" theme="black">
+              Répartition des Dépenses{" "}
+            </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={aggregatedData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -107,7 +109,9 @@ export default function ExpensePersonnal() {
           </div>
 
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold">Ajouter une dépense</h2>
+            <Typography theme="black" variant="caption2">
+              Ajouter une dépense
+            </Typography>
             <div className="grid grid-cols-5 gap-4 mt-4">
               <input
                 type="text"
@@ -159,7 +163,7 @@ export default function ExpensePersonnal() {
           </div>
 
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold">Historique des Dépenses</h2>
+            <Typography theme="black" variant="caption2">Historique des Dépenses</Typography>
             <table className="w-full mt-4 border-collapse border border-gray-300">
               <thead>
                 <tr className="bg-gray-200">

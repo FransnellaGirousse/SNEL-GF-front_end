@@ -20,6 +20,8 @@ import { PiPuzzlePieceBold } from "react-icons/pi";
 import { FcApprove } from "react-icons/fc";
 import useStore from "@/store/useStore";
 import { useRouter } from "next/navigation";
+import { GrUserAdmin } from "react-icons/gr";
+import { FcMoneyTransfer } from "react-icons/fc";
 
 const userRoles = [
   "user",
@@ -27,6 +29,7 @@ const userRoles = [
   "director",
   "accountant",
   "visitor",
+  "admin",
 ];
 
 interface Props {
@@ -76,7 +79,7 @@ export const Sidebar = ({ show }: Props) => {
     }
   }, [session?.user.email]);
   useEffect(() => {
-    if (Object.keys(user).length > 0 && user.role === "visiteur") {
+    if (Object.keys(user).length > 0 && !user.role) {
       router.push("/account");
     }
   }, [user]);
@@ -154,6 +157,13 @@ export const Sidebar = ({ show }: Props) => {
             </ActiveLink>
           )}
 
+          {canAccess(["admin"]) && (
+            <ActiveLink href="/admin">
+              <GrUserAdmin />
+              Admin
+            </ActiveLink>
+          )}
+
           {canAccess(["user"]) && (
             <ActiveLink href="/mission_report">
               <MdReportGmailerrorred />
@@ -165,6 +175,13 @@ export const Sidebar = ({ show }: Props) => {
             <ActiveLink href="/supporting">
               <PiPuzzlePieceBold />
               Pièce justificative
+            </ActiveLink>
+          )}
+
+          {canAccess(["visitor"]) && (
+            <ActiveLink href="/expensepersonnal">
+              <FcMoneyTransfer />
+              Dépenses
             </ActiveLink>
           )}
 
