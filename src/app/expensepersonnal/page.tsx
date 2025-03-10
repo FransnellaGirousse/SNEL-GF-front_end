@@ -1,19 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { Tooltip, ResponsiveContainer } from "recharts";
 import { Layout } from "@/ui/components/layout/layout";
 import { Container } from "@/ui/components/container/container";
 import { Typography } from "@/ui/design-system/typography/typography";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
-
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
 interface Expense {
   id: number;
@@ -40,6 +32,7 @@ export default function ExpensePersonnal() {
     category: "",
     date: "",
   });
+  const [totalBudget, setTotalBudget] = useState<number>(0);
 
   const addExpense = () => {
     if (
@@ -49,19 +42,28 @@ export default function ExpensePersonnal() {
       !newExpense.category
     )
       return;
+
+    const expenseAmount = parseFloat(newExpense.amount);
+    if (expenseAmount > totalBudget) {
+      alert("Fonds insuffisants");
+      return;
+    }
+
     setExpenses([
       ...expenses,
       {
         id: expenses.length + 1,
         ...newExpense,
-        amount: parseFloat(newExpense.amount),
+        amount: expenseAmount,
       },
     ]);
+    setTotalBudget(totalBudget - expenseAmount);
     setNewExpense({ description: "", amount: "", category: "", date: "" });
   };
 
-  const deleteExpense = (id: number) => {
+  const deleteExpense = (id: number, amount: number) => {
     setExpenses(expenses.filter((expense) => expense.id !== id));
+    setTotalBudget(totalBudget + amount);
   };
 
   const editExpense = (id: number) => {
@@ -93,9 +95,10 @@ export default function ExpensePersonnal() {
           <Typography theme="black" variant="h5">
             Dépenses
           </Typography>
+
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
             <Typography variant="caption2" theme="black">
-              Répartition des Dépenses{" "}
+              Répartition des Dépenses
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={aggregatedData}>
@@ -106,6 +109,19 @@ export default function ExpensePersonnal() {
                 <Bar dataKey="value" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+
+          <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
+            <Typography theme="black" variant="caption2">
+              Définir le Budget Total
+            </Typography>
+            <input
+              type="number"
+              placeholder="Budget (€)"
+              className="p-2 border rounded w-full mt-2"
+              value={totalBudget}
+              onChange={(e) => setTotalBudget(parseFloat(e.target.value) || 0)}
+            />
           </div>
 
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
@@ -163,7 +179,9 @@ export default function ExpensePersonnal() {
           </div>
 
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <Typography theme="black" variant="caption2">Historique des Dépenses</Typography>
+            <Typography theme="black" variant="caption2">
+              Historique des Dépenses
+            </Typography>
             <table className="w-full mt-4 border-collapse border border-gray-300">
               <thead>
                 <tr className="bg-gray-200">
@@ -192,7 +210,9 @@ export default function ExpensePersonnal() {
                       </button>
                       <button
                         className="bg-red-500 text-white p-1 rounded"
-                        onClick={() => deleteExpense(expense.id)}
+                        onClick={() =>
+                          deleteExpense(expense.id, expense.amount)
+                        }
                       >
                         🗑️ Supprimer
                       </button>
