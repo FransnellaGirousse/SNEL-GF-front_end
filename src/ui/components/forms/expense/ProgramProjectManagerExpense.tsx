@@ -1,9 +1,9 @@
-import { FormsType } from "@/types/forms";
-import { Button } from "@/ui/design-system/button/button";
-import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
-import { Typography } from "@/ui/design-system/typography/typography";
-import { MdOutlineAddTask } from "react-icons/md";
+"use client"; // Nécessaire pour Next.js 14 avec useState
 
+import { FormsType } from "@/types/forms";
+import { Typography } from "@/ui/design-system/typography/typography";
+import { AdvanceInput } from "@/ui/design-system/forms/AdvanceInput";
+import { MdOutlineAddTask, MdDelete } from "react-icons/md";
 import { useState } from "react";
 
 interface Props {
@@ -13,27 +13,38 @@ interface Props {
 export const ProgramProjectManagerExpense = ({ form }: Props) => {
   const { isLoading, register, errors } = form;
 
-  // Gestion dynamique des lignes pour les signatures
   const [signatures, setSignatures] = useState([{ id: 1, value: "" }]);
 
+  // Ajouter une nouvelle ligne
   const addSignatureRow = () => {
-    setSignatures([...signatures, { id: signatures.length + 1, value: "" }]);
+    setSignatures((prevSignatures) => [
+      ...prevSignatures,
+      { id: prevSignatures.length + 1, value: "" },
+    ]);
   };
 
+  // Modifier une ligne
   const handleSignatureChange = (id: number, value: string) => {
-    setSignatures(
-      signatures.map((row) => (row.id === id ? { ...row, value } : row))
+    setSignatures((prevSignatures) =>
+      prevSignatures.map((row) => (row.id === id ? { ...row, value } : row))
+    );
+  };
+
+  // Supprimer une ligne
+  const removeSignatureRow = (id: number) => {
+    setSignatures((prevSignatures) =>
+      prevSignatures.filter((row) => row.id !== id)
     );
   };
 
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    setIsChecked((prev) => !prev);
   };
 
   return (
-    <div className="p-4 ">
+    <div className="p-4">
       {/* Section Program/Project Manager */}
       <div className="border border-primary-300 p-4 mb-4">
         <Typography
@@ -60,28 +71,38 @@ export const ProgramProjectManagerExpense = ({ form }: Props) => {
 
         {/* Lignes pour SIGNATURES */}
         {signatures.map((signature) => (
-          <AdvanceInput
-            key={signature.id}
-            type="text"
-            id={`signature-row-${signature.id}`}
-            value={signature.value}
-            placeholder="Signature & Project or Program"
-            isLoading={isLoading}
-            register={register}
-            onChange={(e) =>
-              handleSignatureChange(signature.id, e.target.value)
-            }
-            errors={errors}
-          />
+          <div key={signature.id} className="flex items-center gap-2 mb-2">
+            <AdvanceInput
+              type="text"
+              id={`signature-row-${signature.id}`}
+              value={signature.value}
+              placeholder="Signature & Project or Program"
+              isLoading={isLoading}
+              register={register}
+              onChange={(e) =>
+                handleSignatureChange(signature.id, e.target.value)
+              }
+              errors={errors}
+              className="flex-1"
+            />
+
+            <button
+              type="button"
+              onClick={() => removeSignatureRow(signature.id)}
+            >
+              <MdDelete className="mr-2" />
+            </button>
+          </div>
         ))}
 
-        <Button
+        {/* Bouton Ajouter une ligne */}
+        <button
           type="button"
-          icon={{ icon: MdOutlineAddTask }}
-          iconPosition="left"
+          onClick={addSignatureRow}
+          className="bg-primary-400 text-white px-4 py-2 rounded mt-2 flex items-center"
         >
-          Ajouter une ligne
-        </Button>
+          <MdOutlineAddTask className="mr-2" /> Ajouter une ligne
+        </button>
       </div>
     </div>
   );

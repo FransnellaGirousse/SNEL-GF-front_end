@@ -83,10 +83,10 @@ export const RequestAdvanceContainer = () => {
         }
       );
       if (response.ok) {
-        toast.success("TDR envoyé avec succès !");
+        toast.success(" envoyé avec succès !");
         reset();
       } else {
-        toast.error("Erreur lors de l'envoi du TDR.");
+        toast.error("Erreur lors de l'envoi.");
       }
     } catch (e) {
       console.error(e);

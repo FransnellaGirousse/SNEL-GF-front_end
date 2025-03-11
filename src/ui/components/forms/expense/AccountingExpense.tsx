@@ -51,22 +51,27 @@ export const AccountingExpense = ({ form }: Props) => {
           />
           "Après ce bon, le solde de vos avances en cours est de : "
         </Typography>
-        <div className="flex items-center mb-4">
-          <Typography variant="body-sm" theme="black" className="mr-2">
-            MGA
-          </Typography>
-          <AdvanceInput
-            type="number"
-            id="outstanding_balance"
-            placeholder="Montant"
-            isLoading={isLoading}
-            register={register}
-            errors={errors}
-          />
-        </div>
-        <div>
-          <div className="mb-2">
+
+        <div className="flex items-center gap-8 w-full">
+          {/* Section MGA et Montant */}
+          <div className="flex items-center gap-2 w-1/2">
             <Typography variant="body-sm" theme="black">
+              MGA
+            </Typography>
+            <AdvanceInput
+              type="number"
+              id="outstanding_balance"
+              placeholder="Montant"
+              isLoading={isLoading}
+              register={register}
+              errors={errors}
+              className="w-full"
+            />
+          </div>
+
+          {/* Section Reviewed By */}
+          <div className="flex flex-col w-1/2">
+            <Typography variant="body-sm" theme="black" className="mb-1">
               REVIEWED BY:
             </Typography>
             <AdvanceInput
@@ -76,21 +81,23 @@ export const AccountingExpense = ({ form }: Props) => {
               isLoading={isLoading}
               register={register}
               errors={errors}
+              className="w-full"
             />
           </div>
-          <div>
-            <Typography variant="body-sm" theme="black">
-              DATE:
-            </Typography>
-            <AdvanceInput
-              type="date"
-              id="review_date"
-              placeholder="Date"
-              isLoading={isLoading}
-              register={register}
-              errors={errors}
-            />
-          </div>
+        </div>
+
+        <div>
+          <Typography variant="body-sm" theme="black">
+            DATE:
+          </Typography>
+          <AdvanceInput
+            type="date"
+            id="review_date"
+            placeholder="Date"
+            isLoading={isLoading}
+            register={register}
+            errors={errors}
+          />
         </div>
       </div>
     </div>

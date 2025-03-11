@@ -8,15 +8,25 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 
 const COLORS = ["#4CAF50", "#F44336"];
 
-export default function MonthlyBudgetDashboard({ expenses, totalBudget }) {
+export default function MonthlyBudgetDashboard({
+  expenses = [],
+  totalBudget = 0,
+}) {
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
 
   useEffect(() => {
+    if (!expenses || !Array.isArray(expenses)) {
+      setMonthlyExpenses(0);
+      return;
+    }
+
     const currentMonth = new Date().getMonth() + 1;
     const filteredExpenses = expenses.filter((expense) => {
+      if (!expense.date) return false;
       const expenseMonth = new Date(expense.date).getMonth() + 1;
       return expenseMonth === currentMonth;
     });
+
     const totalSpent = filteredExpenses.reduce(
       (acc, curr) => acc + curr.amount,
       0
@@ -25,7 +35,7 @@ export default function MonthlyBudgetDashboard({ expenses, totalBudget }) {
   }, [expenses]);
 
   const budgetData = [
-    { name: "Restant", value: totalBudget - monthlyExpenses },
+    { name: "Restant", value: Math.max(totalBudget - monthlyExpenses, 0) },
     { name: "Dépensé", value: monthlyExpenses },
   ];
 
@@ -66,7 +76,7 @@ export default function MonthlyBudgetDashboard({ expenses, totalBudget }) {
                 Dépensé ce Mois: {monthlyExpenses} €
               </Typography>
               <Typography theme="success" variant="caption2">
-                Restant: {totalBudget - monthlyExpenses} €
+                Restant: {Math.max(totalBudget - monthlyExpenses, 0)} €
               </Typography>
             </div>
           </div>
