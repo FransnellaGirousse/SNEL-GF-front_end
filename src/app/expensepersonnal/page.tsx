@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Tooltip, ResponsiveContainer } from "recharts";
 import { Layout } from "@/ui/components/layout/layout";
 import { Container } from "@/ui/components/container/container";
@@ -34,60 +36,129 @@ export default function ExpensePersonnal() {
   });
   const [totalBudget, setTotalBudget] = useState<number>(0);
 
-  const addExpense = () => {
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/expenses")
+      .then((response) => response.json())
+      .then((data) => setExpenses(data))
+      .catch((error) =>
+        console.error("Erreur lors de la récupération des dépenses", error)
+      );
+  }, []);
+
+  const addExpense = async () => {
     if (
       !newExpense.description ||
       !newExpense.amount ||
       !newExpense.date ||
       !newExpense.category
-    )
-      return;
-
-    const expenseAmount = parseFloat(newExpense.amount);
-    if (expenseAmount > totalBudget) {
-      alert("Fonds insuffisants");
+    ) {
+      toast.error("Veuillez remplir tous les champs !");
       return;
     }
 
-    setExpenses([
-      ...expenses,
-      {
-        id: expenses.length + 1,
-        ...newExpense,
-        amount: expenseAmount,
-      },
-    ]);
-    setTotalBudget(totalBudget - expenseAmount);
-    setNewExpense({ description: "", amount: "", category: "", date: "" });
+    const expenseAmount = parseFloat(newExpense.amount);
+    if (expenseAmount > totalBudget) {
+      toast.error("Fonds insuffisants !");
+      return;
+    }
+
+    const expenseData = {
+      description: newExpense.description,
+      amount: expenseAmount,
+      category: newExpense.category,
+      date: newExpense.date,
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/expenses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(expenseData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'ajout de la dépense");
+      }
+
+      const data = await response.json();
+      setExpenses([...expenses, data]);
+      setTotalBudget(totalBudget - expenseAmount);
+      setNewExpense({ description: "", amount: "", category: "", date: "" });
+
+      toast.success("Dépense ajoutée avec succès !");
+    } catch (error) {
+      toast.error("Erreur lors de l'ajout de la dépense");
+      console.error(error);
+    }
   };
 
-  const deleteExpense = (id: number, amount: number) => {
-    setExpenses(expenses.filter((expense) => expense.id !== id));
-    setTotalBudget(totalBudget + amount);
+  const deleteExpense = async (id: number, amount: number) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/expenses/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression de la dépense");
+      }
+
+      setExpenses(expenses.filter((expense) => expense.id !== id));
+      setTotalBudget(totalBudget + amount);
+
+      toast.info("Dépense supprimée avec succès !");
+    } catch (error) {
+      toast.error("Erreur lors de la suppression de la dépense");
+      console.error(error);
+    }
   };
 
-  const editExpense = (id: number) => {
+  const editExpense = async (id: number) => {
     const expenseToEdit = expenses.find((expense) => expense.id === id);
     if (expenseToEdit) {
       setNewExpense({
         ...expenseToEdit,
         amount: expenseToEdit.amount.toString(),
       });
-      setExpenses(expenses.filter((expense) => expense.id !== id));
+
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/expenses/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(expenseToEdit),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la mise à jour de la dépense");
+        }
+
+        const updatedExpense = await response.json();
+        setExpenses(
+          expenses.map((exp) => (exp.id === id ? updatedExpense : exp))
+        );
+
+        toast.success("Dépense mise à jour avec succès !");
+      } catch (error) {
+        toast.error("Erreur lors de la mise à jour de la dépense");
+        console.error(error);
+      }
     }
   };
 
   const aggregatedData = categories
-    .map((category) => {
-      return {
-        name: category,
-        value: expenses
-          .filter((expense) => expense.category === category)
-          .reduce((acc, curr) => acc + curr.amount, 0),
-      };
-    })
+    .map((category) => ({
+      name: category,
+      value: expenses
+        .filter((expense) => expense.category === category)
+        .reduce((acc, curr) => acc + curr.amount, 0),
+    }))
     .filter((data) => data.value > 0);
-
   return (
     <Layout>
       <Container className="mt-10">
@@ -106,22 +177,34 @@ export default function ExpensePersonnal() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="value" fill="#8884d8" />
+                {aggregatedData.map((entry, index) => (
+                  <Bar
+                    key={entry.name}
+                    dataKey="value"
+                    fill={COLORS[categories.indexOf(entry.name)]}
+                    radius={[5, 5, 0, 0]} // Coins arrondis pour un meilleur design
+                  />
+                ))}
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <Typography theme="black" variant="caption2">
-              Définir le Budget Total
-            </Typography>
-            <input
-              type="number"
-              placeholder="Budget (€)"
-              className="p-2 border rounded w-full mt-2"
-              value={totalBudget}
-              onChange={(e) => setTotalBudget(parseFloat(e.target.value) || 0)}
-            />
+          <div className="flex justify-center items-center">
+            <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
+              <Typography theme="black" variant="caption2">
+                Budget
+              </Typography>
+
+              <input
+                type="number"
+                placeholder="Budget (€)"
+                className="p-4 rounded mt-3 bg-gray-500"
+                value={totalBudget}
+                onChange={(e) =>
+                  setTotalBudget(parseFloat(e.target.value) || 0)
+                }
+              />
+            </div>
           </div>
 
           <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
@@ -132,7 +215,7 @@ export default function ExpensePersonnal() {
               <input
                 type="text"
                 placeholder="Description"
-                className="p-2 border rounded"
+                className="p-3  bg-gray-500 rounded"
                 value={newExpense.description}
                 onChange={(e) =>
                   setNewExpense({ ...newExpense, description: e.target.value })
@@ -141,14 +224,14 @@ export default function ExpensePersonnal() {
               <input
                 type="number"
                 placeholder="Montant (€)"
-                className="p-2 border rounded"
+                className="p-3  bg-gray-500 rounded"
                 value={newExpense.amount}
                 onChange={(e) =>
                   setNewExpense({ ...newExpense, amount: e.target.value })
                 }
               />
               <select
-                className="p-2 border rounded"
+                className="p-3  bg-gray-500 rounded"
                 value={newExpense.category}
                 onChange={(e) =>
                   setNewExpense({ ...newExpense, category: e.target.value })
@@ -163,14 +246,14 @@ export default function ExpensePersonnal() {
               </select>
               <input
                 type="date"
-                className="p-2 border rounded"
+                className="p-3  bg-gray-500 rounded"
                 value={newExpense.date}
                 onChange={(e) =>
                   setNewExpense({ ...newExpense, date: e.target.value })
                 }
               />
               <button
-                className="bg-blue-500 text-black p-2 rounded"
+                className="bg-primary-400 text-black p-3 rounded"
                 onClick={addExpense}
               >
                 Ajouter
@@ -178,49 +261,58 @@ export default function ExpensePersonnal() {
             </div>
           </div>
 
-          <div className="mt-6 bg-white p-5 rounded-lg shadow-md">
-            <Typography theme="black" variant="caption2">
+          <div className="mt-6 bg-white p-5 rounded-lg shadow-lg">
+            <Typography
+              theme="black"
+              variant="caption2"
+              className="text-lg font-semibold"
+            >
               Historique des Dépenses
             </Typography>
-            <table className="w-full mt-4 border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="border p-2">Date</th>
-                  <th className="border p-2">Description</th>
-                  <th className="border p-2">Montant (€)</th>
-                  <th className="border p-2">Catégorie</th>
-                  <th className="border p-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {expenses.map((expense) => (
-                  <tr key={expense.id} className="border">
-                    <td className="border p-2">{expense.date}</td>
-                    <td className="border p-2">{expense.description}</td>
-                    <td className="border p-2 text-red-500">
-                      -{expense.amount} €
-                    </td>
-                    <td className="border p-2">{expense.category}</td>
-                    <td className="border p-2">
-                      <button
-                        className="bg-yellow-500 text-white p-1 rounded mr-2"
-                        onClick={() => editExpense(expense.id)}
-                      >
-                        ✏️ Modifier
-                      </button>
-                      <button
-                        className="bg-red-500 text-white p-1 rounded"
-                        onClick={() =>
-                          deleteExpense(expense.id, expense.amount)
-                        }
-                      >
-                        🗑️ Supprimer
-                      </button>
-                    </td>
+            <div className="overflow-x-auto mt-4">
+              <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700">
+                    <th className="p-4 text-left">Date</th>
+                    <th className="p-4 text-left">Description</th>
+                    <th className="p-4 text-left">Montant (€)</th>
+                    <th className="p-4 text-left">Catégorie</th>
+                    <th className="p-4 text-center">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {expenses.map((expense) => (
+                    <tr
+                      key={expense.id}
+                      className="border-b border-gray-300 hover:bg-gray-100 transition"
+                    >
+                      <td className="p-4">{expense.date}</td>
+                      <td className="p-4">{expense.description}</td>
+                      <td className="p-4 text-red-500 font-semibold">
+                        -{expense.amount} €
+                      </td>
+                      <td className="p-4">{expense.category}</td>
+                      <td className="p-4 flex justify-center space-x-2">
+                        <button
+                          className="bg-yellow-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-yellow-600 transition"
+                          onClick={() => editExpense(expense.id)}
+                        >
+                          ✏️ Modifier
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-red-600 transition"
+                          onClick={() =>
+                            deleteExpense(expense.id, expense.amount)
+                          }
+                        >
+                          🗑️ Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </Container>
