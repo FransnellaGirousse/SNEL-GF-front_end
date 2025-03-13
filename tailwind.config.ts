@@ -1,9 +1,7 @@
-import type {Config} from "tailwindcss";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}"
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     colors: {
       white: "#FFF",
@@ -40,6 +38,12 @@ const config: Config = {
         DEFAULT: "#1a1b26",
         900: "#242530",
       },
+      pink: {
+        DEFAULT: "#E80675",
+      },
+      purple: {
+        DEFAULT: "#7A1FA2",
+      },
       alert: {
         danger: "#FF4E4E",
         success: "#FEB72F",
@@ -52,117 +56,113 @@ const config: Config = {
         {
           lineHeight: "120px",
           letterSpacing: "-6px",
-          fontWeight: "500"
-        }
+          fontWeight: "500",
+        },
       ],
       "7xl": [
         "72px",
         {
           lineHeight: "80px",
           letterSpacing: "-4.5px",
-          fontWeight: "600"
-        }
+          fontWeight: "600",
+        },
       ],
       "6xl": [
         "55px",
         {
           lineHeight: "60px",
           letterSpacing: "-2.5px",
-          fontWeight: "500"
-        }
+          fontWeight: "500",
+        },
       ],
       "5xl": [
         "48px",
         {
           lineHeight: "54px",
           letterSpacing: "-1.6px",
-          fontWeight: "500"
-        }
+          fontWeight: "500",
+        },
       ],
       "4xl": [
         "36px",
         {
           lineHeight: "44px",
           letterSpacing: "-1.2px",
-          fontWeight: "500"
-        }
+          fontWeight: "500",
+        },
       ],
       "3xl": [
         "28px",
         {
           lineHeight: "34px",
           letterSpacing: "-0.8px",
-          fontWeight: "500"
-        }
+          fontWeight: "500",
+        },
       ],
       "2xl": [
         "24px",
         {
           lineHeight: "30px",
           letterSpacing: "-1px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
-      "xl": [
+      xl: [
         "21px",
         {
           lineHeight: "30px",
           letterSpacing: "-0.8px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
-      "lg": [
+      lg: [
         "17px",
         {
           lineHeight: "25px",
           letterSpacing: "-0.7px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
-      "base": [
+      base: [
         "15px",
         {
           lineHeight: "23px",
           letterSpacing: "-0.6px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
       caption1: [
         "20px",
         {
           lineHeight: "24px",
           letterSpacing: "-0.6px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
       caption2: [
         "18px",
         {
           lineHeight: "20px",
           letterSpacing: "-0.3px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
       caption3: [
         "16px",
         {
           lineHeight: "18px",
           letterSpacing: "-0.5px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
       caption4: [
         "13px",
         {
           lineHeight: "15px",
           letterSpacing: "-0.2px",
-          fontWeight: "400"
-        }
+          fontWeight: "400",
+        },
       ],
-    },
-    borderRadius: {
-      DEFAULT: "10px",
-      full: "9999px"
     },
     extend: {},
   },
