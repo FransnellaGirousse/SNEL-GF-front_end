@@ -107,22 +107,22 @@ export const ProposedItineraryForm = ({ form }: Props) => {
 
       <Table columns={columns} rows={rows} />
 
-      <Button >
+      <Button>
         <button
-        type="button"
-        onClick={() =>
-          append({
-            date_hour: "",
-            starting_point: "",
-            destination: "",
-            other_details_hotel: "",
-            fund_speedkey: "",
-            price: "",
-          })
-        }
+          type="button"
+          onClick={() =>
+            append({
+              date_hour: "",
+              starting_point: "",
+              destination: "",
+              other_details_hotel: "",
+              fund_speedkey: "",
+              price: "",
+            })
+          }
         >
-        Ajouter une ligne
-        </button>        
+          Ajouter une ligne
+        </button>
       </Button>
     </div>
   );

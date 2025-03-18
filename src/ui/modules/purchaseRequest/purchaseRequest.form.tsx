@@ -25,7 +25,7 @@ export const PurchaseRequestForm = ({ form }: Props) => {
   const { step, steps, currentStepIndex, back, next } = useMultiStepForm([
     <AmountPurchaseForm form={form} />,
     <SignatureForm form={form} />,
-    <PdfPreview formRef={useRef<HTMLDivElement>(null)} />, // ✅ Ajout de l'aperçu PDF comme étape finale
+    // <PdfPreview formRef={useRef<HTMLDivElement>(null)} />, // ✅ Ajout de l'aperçu PDF comme étape finale
   ]);
 
   const { handleSubmit, isLoading, onSubmit } = form;
@@ -64,11 +64,11 @@ export const PurchaseRequestForm = ({ form }: Props) => {
       number: 2,
       icon: <AiOutlineSignature className=" mx-auto" />,
     },
-    {
-      name: "Aperçu PDF",
-      number: 3,
-      icon: <VscGitPullRequest className="mx-auto" />,
-    },
+    // {
+    //   name: "Aperçu PDF",
+    //   number: 3,
+    //   icon: <VscGitPullRequest className="mx-auto" />,
+    // },
   ];
 
   return (
@@ -79,7 +79,7 @@ export const PurchaseRequestForm = ({ form }: Props) => {
           number={stepsItems[currentStepIndex].number}
         />
       </div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <Steps currentStepIndex={currentStepIndex + 1} steps={stepsItems} />
       </div>
 

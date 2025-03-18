@@ -5,9 +5,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { requestAdvanceFormFieldsType } from "@/types/forms";
 import { toast } from "react-toastify";
 import { RequestAdvanceView } from "@/ui/modules/requestAdvance/requestAdvance.view";
+import { useTotalStore } from "@/store/useStore";
 
 export const RequestAdvanceContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { total_general, final_total } = useTotalStore();
   const {
     control,
     handleSubmit,
@@ -28,66 +30,48 @@ export const RequestAdvanceContainer = () => {
       date_need_by,
       purpose_of_travel,
       destination,
-      location,
-      per_diem_rate,
-      percentage_of_advance_required,
-      daily_rating_coefficient,
-      number_of_days,
-      total_amount,
       additional_costs_motif,
       additional_costs,
-      total_sum,
       amount_requested,
       bank,
       branch,
       name,
       account_number,
-      special_mailing_instruction,
-      total_general,
-      final_total,
+      rows,
     } = formData;
+    const requestData = {
+      social_security_number,
+      nationality: nationality.value,
+      address,
+      date_requested,
+      date_need_by,
+      purpose_of_travel,
+      destination,
+      additional_costs_motif,
+      additional_costs,
+      final_total: final_total.toString(),
+      amount_requested,
+      bank,
+      branch,
+      name,
+      account_number,
+      total_general: total_general.toString(),
+      rows,
+    };
+    console.log("formData", formData);
+    console.log("requestData", requestData);
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/request-in-advances",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            social_security_number,
-            nationality,
-            address,
-            date_need_by,
-            date_requested,
-            special_mailing_instruction,
-            purpose_of_travel,
-            destination,
-            location,
-            per_diem_rate,
-            daily_rating_coefficient,
-            percentage_of_advance_required,
-            total_amount,
-            additional_costs_motif,
-            additional_costs,
-            total_sum,
-            amount_requested,
-            bank,
-            branch,
-            name,
-            account_number,
-            number_of_days,
-            total_general,
-            final_total,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        toast.success(" envoyé avec succès !");
-        reset();
-      } else {
-        toast.error("Erreur lors de l'envoi.");
-      }
+      await fetch("http://localhost:8000/api/request-in-advances", {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          toast.success(data.message);
+        });
     } catch (e) {
       console.error(e);
       toast.error("Erreur de connexion. Veuillez réessayer.");

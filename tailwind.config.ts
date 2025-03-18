@@ -46,8 +46,8 @@ const config: Config = {
       },
       alert: {
         danger: "#FF4E4E",
-        success: "#FEB72F",
-        warning: "#90DA1A",
+        success: "#90DA1A",
+        warning: "#FEB72F",
       },
     },
     fontSize: {
@@ -163,6 +163,10 @@ const config: Config = {
           fontWeight: "400",
         },
       ],
+    },
+    borderRadius: {
+      DEFAULT: "10px",
+      full: "9999px",
     },
     extend: {},
   },

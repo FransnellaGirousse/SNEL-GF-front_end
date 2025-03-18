@@ -14,18 +14,18 @@ export interface FormsType {
 }
 
 export interface RegisterFormFieldsType {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
-    role: string,
-    phone_number: string
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+  phone_number: string;
 }
 
 export interface LoginFormFieldsType {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 export interface AdminLoginFormFieldsType {
   email: string;
@@ -33,14 +33,14 @@ export interface AdminLoginFormFieldsType {
 }
 
 export interface AssignmentFormFieldsType {
-  date_tdr: Date,
-  traveler: string,
-  mission_title: string,
-  introduction: string,
-  mission_objectives: string,
-  planned_activities: string,
-  necessary_resources: string,
-  conclusion: string
+  date_tdr: Date;
+  traveler: string;
+  mission_title: string;
+  introduction: string;
+  mission_objectives: string;
+  planned_activities: string;
+  necessary_resources: string;
+  conclusion: string;
 }
 
 export interface AssignmentOMFormFieldsType {
@@ -59,7 +59,7 @@ export interface AssignmentOMFormFieldsType {
   date_hotel: Date;
   other_details_hotel: string;
   other_logistical_requirments: string;
-  tdr_id:number;
+  tdr_id: number;
 }
 
 export interface requestAdvanceFormFieldsType {
@@ -68,25 +68,22 @@ export interface requestAdvanceFormFieldsType {
   address: string;
   date_requested: Date;
   date_need_by: Date;
-  special_mailing_instruction: string;
   purpose_of_travel: string;
   destination: string;
   location: string;
   per_diem_rate: string;
-  daily_rating_coefficient: string;
   number_of_days: string;
   percentage_of_advance_required: string;
   total_amount: string;
   additional_costs_motif: string;
   additional_costs: string;
-  total_sum: string;
   amount_requested: number;
   bank: string;
   branch: string;
   name: string;
   account_number: number;
   total_general: string;
-  final_total:string;
+  final_total: string;
 }
 
 export interface MissionReportFormFieldsType {
@@ -103,15 +100,15 @@ export interface MissionReportFormFieldsType {
 }
 
 export interface PurchaseRequestFormFieldsType {
-    item: string,
-    quantity: string,
-    unit_type: string,
-    description: string,
-    estimated_unit_price: string,
-    estimated_total: string,
-    notes: string,
-    project_code: string,
-    geo_code: string
+  item: string;
+  quantity: string;
+  unit_type: string;
+  description: string;
+  estimated_unit_price: string;
+  estimated_total: string;
+  notes: string;
+  project_code: string;
+  geo_code: string;
 }
 
 export interface ExpenseFormFieldsType {

@@ -41,7 +41,7 @@ export const SubscriptionPlans = () => {
         {plans.map((plan, index) => (
           <motion.div
             key={index}
-            className="relative bg-white/30 backdrop-blur-xl shadow-xl rounded-2xl p-8 hover:shadow-2xl transition-all border border-gray-200 border-x-primary-600"
+            className="relative bg-white/30 backdrop-blur-xl shadow-xl rounded-2x p-8 hover:shadow-2xl transition-all border border-gray-200 border-x-primary-600"
             whileHover={{ scale: 1.05 }}
           >
             {/* Effet lumineux sur le coin supérieur */}
@@ -69,24 +69,24 @@ export const SubscriptionPlans = () => {
 
             {/* Bouton stylisé */}
            <div className="mt-8 flex justify-center relative">
-  {/* Effet lumineux derrière le bouton */}
-  <div className="absolute inset-0 flex justify-center">
-    <div className="w-36 h-12 bg-gradient-to-r from-blue-500 to-purple-500 opacity-50 blur-lg rounded-lg"></div>
-  </div>
 
-  {/* Bouton avec effets interactifs */}
-  <motion.button
-    whileHover={{
-      scale: 1.1,
-      boxShadow: "0px 0px 20px rgba(37, 99, 235, 0.6)",
-    }}
-    whileTap={{ scale: 0.95 }}
-    className="relative z-10 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 font-bold rounded-xl shadow-lg transition-all hover:shadow-2xl hover:from-blue-700 hover:to-purple-700 focus:outline-none"
-  >
-    {plan.buttonText}
-  </motion.button>
+          {/* Effet lumineux derrière le bouton */}
+          <div className="absolute inset-0 flex justify-center">
+            <div className="w-36 h-12 bg-gradient-to-r from-blue-500 to-purple-500 opacity-50 blur-lg rounded-lg"></div>
+          </div>
+
+      {/* Bouton avec effets interactifs */}
+      <motion.button
+        whileHover={{
+          scale: 1.1,
+          boxShadow: "0px 0px 20px rgba(37, 99, 235, 0.6)",
+        }}
+        whileTap={{ scale: 0.95 }}
+        className="relative z-10 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 font-bold rounded-xl shadow-lg transition-all hover:shadow-2xl hover:from-blue-700 hover:to-purple-700 focus:outline-none"
+      >
+        {plan.buttonText}
+      </motion.button>
 </div>
-
 
             {/* Effet de lueur */}
             <div className="absolute inset-0 rounded-2xl opacity-20 bg-gradient-to-b from-blue-500 to-purple-500 blur-2xl"></div>

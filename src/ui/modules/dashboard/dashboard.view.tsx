@@ -15,7 +15,7 @@ import { FaBeer } from "react-icons/fa";
 import { useRef, useState } from "react";
 
 export const DashboardView = () => {
-  const [activeComponent, setActiveComponent] = useState(<MissionComponents />);
+  const [activeComponent, setActiveComponent] = useState();
   const componentRef = useRef<HTMLDivElement>(null);
   const handleClick = (component) => {
     if (activeComponent !== component) {
@@ -33,7 +33,7 @@ export const DashboardView = () => {
     <>
       <div className="grid grid-cols-3 gap-2">
         <div
-          className="bg-primary-600 flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-primary-600 flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<MissionComponents />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">
@@ -62,7 +62,7 @@ export const DashboardView = () => {
           </div>
         </div>
         <div
-          className="bg-alert-danger flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-alert-danger flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<ExpenseComponent />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">
@@ -91,7 +91,7 @@ export const DashboardView = () => {
           </div>
         </div>
         <div
-          className="bg-purple flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-purple flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<ReportComponents />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">
@@ -122,7 +122,7 @@ export const DashboardView = () => {
           </div>
         </div>
         <div
-          className="bg-pink flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-pink flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<AdvanceComponents />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">
@@ -154,7 +154,7 @@ export const DashboardView = () => {
         </div>
 
         <div
-          className="bg-secondary-600 flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-secondary-600 flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<PurchaseComponents />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">
@@ -186,7 +186,7 @@ export const DashboardView = () => {
         </div>
 
         <div
-          className="bg-gray-800 flex gap-5 p-5 rounded-md cursor-pointer hover:shadow-xl transition-all"
+          className="bg-gray-800 flex gap-5 p-5 rounded cursor-pointer hover:shadow-xl transition-all"
           onClick={() => handleClick(<LiquidationComponents />)}
         >
           <div className="w-1/3 flex flex-wrap justify-center">

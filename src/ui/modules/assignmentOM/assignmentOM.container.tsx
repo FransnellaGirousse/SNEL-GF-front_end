@@ -6,7 +6,6 @@ import { AssignmentOMFormFieldsType } from "@/types/forms";
 import { AssignmentOMView } from "@/ui/modules/assignmentOM/assignmentOM.view";
 import { toast } from "react-toastify";
 
-
 export const AssignmentOMContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +14,7 @@ export const AssignmentOMContainer = () => {
     formState: { errors },
     register,
     control,
-    reset
+    reset,
   } = useForm<AssignmentOMFormFieldsType>();
   const onSubmit: SubmitHandler<AssignmentOMFormFieldsType> = async (
     formData
@@ -44,31 +43,31 @@ export const AssignmentOMContainer = () => {
         method: "POST",
         body: JSON.stringify({
           traveler,
-      date,
-      Purpose_of_the_mission,
-      date_hour,
-      starting_point,
-      destination,
-      authorization_airfare,
-      fund_speedkey,
-      price,
-      name_of_the_hotel,
-      room_rate,
-      confirmation_number,
-      date_hotel,
-      other_details_hotel,
-      other_logistical_requirments,
-      tdr_id,
+          date,
+          Purpose_of_the_mission,
+          date_hour,
+          starting_point,
+          destination,
+          authorization_airfare,
+          fund_speedkey,
+          price,
+          name_of_the_hotel,
+          room_rate,
+          confirmation_number,
+          date_hotel,
+          other_details_hotel,
+          other_logistical_requirments,
+          tdr_id,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-       if (response.ok) {
+      if (response.ok) {
         toast.success("OM envoyé avec succès !");
-        reset(); 
+        reset();
       } else {
-        toast.error("Erreur lors de l'envoi du TDR.");
+        toast.error("Erreur lors de l'envoi de l'OM.");
       }
     } catch (e) {
       console.error(e);
@@ -76,8 +75,7 @@ export const AssignmentOMContainer = () => {
     } finally {
       setIsLoading(false);
     }
-    }
-
+  };
 
   return (
     <>

@@ -55,15 +55,10 @@ export const MissionReportContainer = () => {
         },
       });
 
-      localStorage.setItem(
-        "missionReport",
-        JSON.stringify({ date, name_of_missionary })
-      );
-
       toast.success("Mission envoyée avec succès !");
+      reset();
 
-      reset(); 
-      router.push("/dashboard");
+    router.push("/dashboard");
     } catch (e) {
       console.error(e);
       toast.error("Une erreur est survenue lors de l'envoi de la mission.");

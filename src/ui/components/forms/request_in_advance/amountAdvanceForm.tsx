@@ -9,42 +9,63 @@ import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { Table } from "@/ui/design-system/table/table";
 import { Input } from "@/ui/design-system/forms/input";
+import { useTotalStore } from "@/store/useStore";
 
 interface Props {
   form: FormsType;
 }
 
 export const AmountAdvanceForm = ({ form }: Props) => {
-  const { control, isLoading, register, errors, watch } = form;
+  const { control, setValue, isLoading, register, errors, watch } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "rows",
   });
+  const hasRows = fields.length > 0;
+  const final_total = useTotalStore((state) => state.final_total);
+  const updateFinalTotal = useTotalStore((state) => state.updateFinalTotal);
+
+  const total_general = useTotalStore((state) => state.total_general);
+  const updateTotalGeneral = useTotalStore((state) => state.updateTotalGeneral);
 
   const [totalSum, setTotalSum] = useState(0);
   const [additionalCosts, setAdditionalCosts] = useState(0);
 
   useEffect(() => {
-    const calculateTotalSum = () => {
+    // Fonction pour recalculer `total_general` en fonction des totaux de chaque ligne
+    const calculateTotalGeneral = () => {
       const totals = fields.map((_, index) => {
         const perDiemRate = parseFloat(
-          watch(`rows[${index}].per_diem_rate`) || 0
+          watch(`rows[${index}].per_diem_rate`) || "0"
         );
         const percentageOfAdvance = parseFloat(
-          watch(`rows[${index}].percentage_of_advance_required`) || 0
+          watch(`rows[${index}].percentage_of_advance_required`) || "0"
         );
         const numberOfDays = parseFloat(
-          watch(`rows[${index}].number_of_days`)|| 0
+          watch(`rows[${index}].number_of_days`) || "0"
         );
-        const total = (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
-        return isNaN(total) ? 0 : total;
+
+        // Calcul du total de chaque ligne
+        const totalAmount =
+          (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
+        return isNaN(totalAmount) ? 0 : totalAmount;
       });
+
+      // Calcul de la somme totale de tous les `total_amount`
       const sum = totals.reduce((acc, curr) => acc + curr, 0);
-      setTotalSum(sum);
+
+      // Met à jour `total_general` avec la somme calculée
+      updateTotalGeneral(sum);
     };
 
-    calculateTotalSum();
-  }, [fields, watch]);
+    // Recalcule `total_general` dès qu'un champ est modifié
+    calculateTotalGeneral();
+  }, [fields, watch]); // Cette `useEffect` se déclenche chaque fois que `fields` ou `watch` change
+  // Recalcule à chaque modification des lignes // Le recalcul se fait à chaque modification dans les champs
+
+  useEffect(() => {
+    updateFinalTotal(parseFloat(totalSum) + parseFloat(additionalCosts));
+  }, [totalSum, additionalCosts, updateFinalTotal]);
 
   const handleAdditionalCostsChange = (value: string | undefined) => {
     const parsedValue = parseFloat(value || "0");
@@ -131,21 +152,40 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         />
       ),
       total_amount: (
-        <CurrencyInput
-          id={`rows[${index}].total_amount`}
+        <Controller
           name={`rows[${index}].total_amount`}
-          value={
-            (parseFloat(watch(`rows[${index}].per_diem_rate`) || "0") *
-              parseFloat(
-                watch(`rows[${index}].percentage_of_advance_required`) || "0"
-              ) *
-              parseFloat(watch(`rows[${index}].number_of_days`) || "0")) /
-            100
-          }
-          prefix="Ariary"
-          decimalScale={2}
-          disabled={true}
-          className=" border-gray-400 p-2 "
+          control={control}
+          render={({ field }) => {
+            // Définir une valeur calculée, mais sans provoquer de re-rendu constant
+            const perDiemRate = parseFloat(
+              watch(`rows[${index}].per_diem_rate`) || "0"
+            );
+            const percentageOfAdvance = parseFloat(
+              watch(`rows[${index}].percentage_of_advance_required`) || "0"
+            );
+            const numberOfDays = parseFloat(
+              watch(`rows[${index}].number_of_days`) || "0"
+            );
+
+            const totalAmount =
+              (perDiemRate * percentageOfAdvance * numberOfDays) / 100;
+            const validTotalAmount = isNaN(totalAmount) ? 0 : totalAmount;
+
+            // Utiliser useEffect pour mettre à jour `total_amount` uniquement lorsque les autres champs changent
+            useEffect(() => {
+              field.onChange(validTotalAmount.toString());
+            }, [perDiemRate, percentageOfAdvance, numberOfDays]);
+
+            return (
+              <div
+                id={`rows[${index}].total_amount`}
+                className="border-gray-400 p-2"
+              >
+                {/* Affichage du total_amount calculé */}
+                {`Ariary ${validTotalAmount.toFixed(2)}`}
+              </div>
+            );
+          }}
         />
       ),
       actions: (
@@ -156,26 +196,17 @@ export const AmountAdvanceForm = ({ form }: Props) => {
     },
   }));
 
- rows.push({
-   id: "total_general",
-   data: {
-     location: <strong>Total général:</strong>,
-     per_diem_rate: <span></span>, 
-     percentage_of_advance_required: <span></span>, 
-     number_of_days: <span></span>, 
-     total_amount: (
-       <CurrencyInput
-         id="total_general"
-         value={totalSum}
-         prefix="Ariary"
-         decimalScale={2}
-         disabled={true}
-         className="  p-2 font-bold"
-       />
-     ),
-     actions: <span></span>, 
-   },
- });
+  rows.push({
+    id: "total_general",
+    data: {
+      location: <strong>Total général:</strong>,
+      per_diem_rate: <span></span>,
+      percentage_of_advance_required: <span></span>,
+      number_of_days: <span></span>,
+      total_amount: `Ariary ${total_general.toFixed(2)}`,
+      actions: <span></span>,
+    },
+  });
 
   return (
     <div className="overflow-x-auto">
@@ -194,14 +225,14 @@ export const AmountAdvanceForm = ({ form }: Props) => {
             })
           }
         >
-          Ajouter une ligne
+          {hasRows ? "Ajouter au total général" : "Ajouter une ligne"}
         </button>
       </Button>
 
       <div className=" mt-4 p-2 border border-gray-400">
-        <label htmlFor="additional_costs">Coûts supplémentaires:</label>
+        <label htmlFor="additional_costs_motif">Coûts supplémentaires:</label>
         <Input
-          id="additional_costs"
+          id="additional_costs_motif"
           type="text"
           placeholder="Coûts supplémentaires"
           register={register}
@@ -209,14 +240,24 @@ export const AmountAdvanceForm = ({ form }: Props) => {
           required={true}
           isLoading={isLoading}
         />
-        <CurrencyInput
-          id="additional_costs"
-          value={additionalCosts}
-          onValueChange={handleAdditionalCostsChange}
-          prefix="Ariary"
-          decimalScale={2}
-          allowNegativeValue={false}
-          className="  p-2 w-full"
+        <Controller
+          name="additional_costs"
+          control={control}
+          render={({ field }) => (
+            <CurrencyInput
+              id="additional_costs"
+              value={additionalCosts}
+              onValueChange={(value) => {
+                const val = value || "0.00";
+                setAdditionalCosts(val);
+                field.onChange(val); // Maintient la synchro avec react-hook-form
+              }}
+              prefix="Ariary "
+              decimalScale={2}
+              allowNegativeValue={false}
+              className="p-2 w-full"
+            />
+          )}
         />
       </div>
 
@@ -224,14 +265,7 @@ export const AmountAdvanceForm = ({ form }: Props) => {
         <label htmlFor="final_total" className="font-bold">
           Total final (avec coûts supplémentaires):
         </label>
-        <CurrencyInput
-          id="final_total"
-          value={totalSum + additionalCosts}
-          prefix="Ariary"
-          decimalScale={2}
-          disabled={true}
-          className=" border-gray-400 p-2 w-full"
-        />
+        {final_total}
       </div>
     </div>
   );

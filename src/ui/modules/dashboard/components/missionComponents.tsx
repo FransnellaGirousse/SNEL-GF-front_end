@@ -18,8 +18,8 @@ export const MissionComponents = () => {
           <tr>
             <th className="py-5">Date</th>
             <th>Nom du missionnaire</th>
-            <th>Etat</th>
-            <th>Etape</th>
+            <th>TDR</th>
+            <th>OM</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -27,8 +27,8 @@ export const MissionComponents = () => {
           <tr>
             <td>28/04/24</td>
             <td>Missionnaire1</td>
-            <td>En Cours</td>
             <td>Oui</td>
+            <td>En cours</td>
             <td className="py-3">
               <Button
                 variant="outline"
