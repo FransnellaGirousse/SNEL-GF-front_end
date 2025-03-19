@@ -70,7 +70,7 @@ export const RequestAdvanceContainer = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          toast.success(data.message);
+          toast.success(data.message)
         });
     } catch (e) {
       console.error(e);

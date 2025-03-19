@@ -21,6 +21,9 @@ export interface RegisterFormFieldsType {
   confirmPassword: string;
   role: string;
   phone_number: string;
+  gestionType: string;
+  key_company: string;
+  key_role: string;
 }
 
 export interface LoginFormFieldsType {

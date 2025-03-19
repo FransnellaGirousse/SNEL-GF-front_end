@@ -39,8 +39,12 @@ export const RegisterContainer = () => {
       phone_number,
       password,
       confirmPassword,
-      role,
+      gestionType,
+      key_company,
+      key_role,
     } = formData;
+
+    console.log("gestionType", gestionType);
 
     try {
       await fetch("http://localhost:8000/api/register", {
@@ -52,7 +56,9 @@ export const RegisterContainer = () => {
           phone_number,
           password,
           confirmPassword,
-          role,
+          gestion_type: gestionType,
+          key_company,
+          key_role,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -94,6 +100,7 @@ export const RegisterContainer = () => {
           isLoading,
           control,
           setError,
+          setValue,
           watch,
         }}
       />

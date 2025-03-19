@@ -6,11 +6,10 @@ import { AcceuilComponents } from "./components/acceuilComponents";
 export const HomeView = () => {
   return (
     <>
-      <AcceuilComponents/> 
-      <FinancialManagementAnimation/>
-      <SubscriptionPlans/>
-      <Footer/>
-     
+      <AcceuilComponents />
+      <FinancialManagementAnimation />
+      <SubscriptionPlans />
+      <Footer />
     </>
-  ) 
+  );
 };

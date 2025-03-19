@@ -1,6 +1,7 @@
 import { Button } from "@/ui/design-system/button/button";
 import { Typography } from "@/ui/design-system/typography/typography";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const AcceuilComponents = () => {
   return (
@@ -28,6 +29,15 @@ export const AcceuilComponents = () => {
             Smart money, smart life.
           </Typography>
 
+          <p className="text-caption3 pt-8">
+            Gérez votre activité en toute simplicité ! .{" "}
+            <Link
+              className="text-primary hover:underline transition-all"
+              href="/create-company"
+            >
+              👉 Créez votre entreprise dès maintenant
+            </Link>
+          </p>
 
           <div className="flex justify-start mt-6">
             <motion.div

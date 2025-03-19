@@ -5,16 +5,19 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AssignmentFormFieldsType } from "@/types/forms";
 import { toast } from "react-toastify";
-
+import useStore from "@/store/useStore";
 
 export const AssignmentContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user, setUser } = useStore();
   const {
     handleSubmit,
     formState: { errors },
     register,
     reset,
   } = useForm<AssignmentFormFieldsType>();
+
+  const user_id = user.id;
 
   const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (
     formData
@@ -43,6 +46,7 @@ export const AssignmentContainer = () => {
           planned_activities,
           necessary_resources,
           conclusion,
+          user_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +55,7 @@ export const AssignmentContainer = () => {
 
       if (response.ok) {
         toast.success("TDR envoyé avec succès !");
-        reset(); 
+        reset();
       } else {
         toast.error("Erreur lors de l'envoi du TDR.");
       }
