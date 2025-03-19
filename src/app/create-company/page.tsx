@@ -12,6 +12,8 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import React from "react";
 import { BsFiletypePdf } from "react-icons/bs";
+import Image from "next/image";
+
 
 function generateRandomKey(length = 16) {
   const chars =
@@ -96,40 +98,53 @@ export default function Page() {
     <Layout>
       <div className="p-10">
         <Container>
-          <div className="border border-gray-500 p-10 rounded">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="pt-8 pb-5 space-y-4"
-            >
-              <Input
-                isLoading={isLoading}
-                placeholder="Nom de l'entreprise"
-                type="text"
-                register={register}
-                errors={errors}
-                id="company_name"
-              />
-              <Input
-                isLoading={isLoading}
-                placeholder="Description"
-                type="text"
-                register={register}
-                errors={errors}
-                id="company_description"
-              />
-              <Button isLoading={isLoading} type="submit">
-                Créer
-              </Button>
-            </form>
-            {key !== 0 && (
-              <div className="w-full flex justify-center items-center p-10">
-                <p className="text-xl">Voici votre clé d'entreprise :&nbsp;</p>
-                <div className="text-center bg-gray-500 p-5 w-[200px] text-gray">
-                  {key}
+          <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen gap-10 p-6">
+            <div className="flex-1 border border-gray-500 p-10 rounded w-full max-w-lg">              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="pt-8 pb-5 space-y-4"
+              >
+                <Input
+                  isLoading={isLoading}
+                  placeholder="Nom de l'entreprise"
+                  type="text"
+                  register={register}
+                  errors={errors}
+                  id="company_name"
+                />
+                <Input
+                  isLoading={isLoading}
+                  placeholder="Description"
+                  type="text"
+                  register={register}
+                  errors={errors}
+                  id="company_description"
+                />
+                <Button isLoading={isLoading} type="submit">
+                  Créer
+                </Button>
+              </form>
+              {key !== 0 && (
+                <div className="w-full flex justify-center items-center p-10">
+                  <p className="text-xl">
+                    Voici votre clé d'entreprise :&nbsp;
+                  </p>
+                  <div className="text-center bg-gray-500 p-5 w-[200px] text-gray">
+                    {key}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <div className="flex-1 hidden lg:flex justify-center">
+              <Image
+                width={450}
+                height={450}
+                src="/assets/images/home/created.png"
+                alt="Image ..."
+                className="max-w-full h-auto"
+              />
+            </div>
           </div>
+
           {data.length > 0 && (
             <section>
               <div className="p-4">
