@@ -93,7 +93,7 @@ const SupportingContainer = () => {
   return (
     <div className="flex flex-col md:flex-row gap-6 p-6">
       {/* Formulaire à gauche */}
-      <div className="w-full md:w-1/3 p-6 bg-white rounded-lg shadow-lg border-2 border-primary-400">
+      <div className="w-full md:w-1/3 p-6 bg-white rounded-lg shadow-lg border-2 border-primary-400 mb-10 rounded">
         <Typography theme="black">
           <h1 className="text-2xl font-bold mb-4">
             Ajouter une Pièce Justificative
@@ -157,27 +157,38 @@ const SupportingContainer = () => {
               className="w-full border border-gray-300 p-2 rounded focus:outline-blue-500"
             />
           </div>
-          <div>
+          <div className="mb-4">
             <label
               htmlFor="file"
-              className="block text-gray-700 font-medium mb-1"
+              className="block text-gray-700 font-medium mb-2"
             >
               Ajouter un fichier (PDF ou image)
             </label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              accept=".pdf,.jpg,.png,.jpeg"
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  file: e.target.files ? e.target.files[0] : null,
-                })
-              }
-              className="w-full border border-gray-300 p-2 rounded"
-            />
+
+            <div className="relative w-full">
+              <input
+                type="file"
+                name="file"
+                id="file"
+                accept=".pdf,.jpg,.png,.jpeg"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    file: e.target.files ? e.target.files[0] : null,
+                  })
+                }
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <div className="border border-gray-300 p-3 rounded bg-white text-center cursor-pointer hover:bg-gray-100 transition">
+                {formData.file ? (
+                  <span className="text-gray-800">{formData.file.name}</span>
+                ) : (
+                  <span className="text-gray-700">Choisir un fichier</span>
+                )}
+              </div>
+            </div>
           </div>
+
           <Button>
             <button type="submit">Soumettre</button>
           </Button>
@@ -268,8 +279,8 @@ const SupportingContainer = () => {
 
       {/* Modal for Document Details */}
       {selectedDocument && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
-          <div className="bg-white p-6 rounded-lg w-full max-w-lg border-2 border-primary-200">
+        <div className="  fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+          <div className="bg-white p-6 rounded-lg w-full max-w-lg border-2 border-primary-200 mb-10 rounded ">
             <h2 className="text-xl font-bold mb-4">
               Détails de la Pièce Justificative
             </h2>
@@ -286,9 +297,14 @@ const SupportingContainer = () => {
               <strong>Nom:</strong> {selectedDocument.name}
             </p>
 
-            <Button>
-              <button onClick={handleCloseModal}>Fermer</button>
-            </Button>
+            <button
+              className="bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
+             text-white font-semibold px-6 py-2 rounded-full shadow-md 
+             transition duration-300 ease-in-out transform hover:scale-105"
+              onClick={handleCloseModal}
+            >
+              Fermer
+            </button>
           </div>
         </div>
       )}
@@ -303,15 +319,14 @@ const SupportingContainer = () => {
               className="w-full h-64 border rounded"
               title="Aperçu du fichier"
             />
-            <Button>
-              <button
+            <button
               onClick={() => setPreviewFileUrl(null)}
-              className="mt-4 bg-red-500 text-primary-300 px-4 py-2 rounded hover:bg-red-600"
+              className="bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
+             text-white font-semibold px-6 py-3 rounded-full shadow-md 
+             transition duration-300 ease-in-out transform hover:scale-105"
             >
               Fermer
             </button>
-            </Button>
-            
           </div>
         </div>
       )}

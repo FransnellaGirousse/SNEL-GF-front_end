@@ -99,7 +99,7 @@ export default function Page() {
       <div className="p-10">
         <Container>
           <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen gap-10 p-6">
-            <div className="flex-1 border border-gray-500 p-10 rounded w-full max-w-lg">              <form
+      <div className="flex-1 border border-gray-500 p-10 rounded w-full max-w-lg">              <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="pt-8 pb-5 space-y-4"
               >

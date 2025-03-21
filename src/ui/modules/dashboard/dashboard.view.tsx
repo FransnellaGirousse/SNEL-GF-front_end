@@ -57,7 +57,7 @@ export const DashboardView = () => {
                 Dernières Missions
               </span>
               <br />
-              <span className="text-white">12 Sept 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ export const DashboardView = () => {
                 Dernières dépenses
               </span>
               <br />
-              <span className="text-white">12 Sept 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@ export const DashboardView = () => {
                 Dernier rapport
               </span>
               <br />
-              <span className="text-white">12 Juin 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@ export const DashboardView = () => {
                 Derniers avances
               </span>
               <br />
-              <span className="text-white">12 Juillet 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ export const DashboardView = () => {
                 Derniers avances
               </span>
               <br />
-              <span className="text-white">12 Juillet 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@ export const DashboardView = () => {
                 Derniers avances
               </span>
               <br />
-              <span className="text-white">12 Juillet 2025</span>
+              <span className="text-white">19 Mars 2025</span>
             </div>
           </div>
         </div>

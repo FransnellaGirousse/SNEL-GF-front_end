@@ -19,7 +19,7 @@ import { IoMdSearch } from "react-icons/io";
 import { Avatar } from "@/ui/design-system/avatar/avatar";
 import { AiOutlineSignature } from "react-icons/ai";
 import { TfiControlEject } from "react-icons/tfi";
-
+import useStore, { useNotifStore } from "@/store/useStore";
 
 interface Props {}
 
@@ -56,6 +56,30 @@ export const Navigation = ({}: Props) => {
     console.log("Search for:", searchQuery);
     // Logique de recherche à implémenter ici
   };
+
+  const {read, setRead} = useNotifStore();
+  const { user, setUser } = useStore();
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const fetchUnreadNotifications = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:8000/api/notifications/unread-count/${user.id}`
+        );
+        if (!res.ok)
+          throw new Error("Erreur de récupération des notifications");
+
+        const data = await res.json();
+        console.log(data);
+        setRead(data.count);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUnreadNotifications();
+  }, [user]);
 
   return (
     <section>
@@ -115,7 +139,14 @@ export const Navigation = ({}: Props) => {
           {session ? (
             <div className="flex items-center gap-5">
               <div className="relative">
-                <RiNotification2Line />
+                <Link href="/notifications" className="relative text-caption1">
+                  {read > 0 && (
+                    <span className="absolute -top-3 -right-2 bg-alert-danger rounded-full w-[20px] h-[20px] text-white text-caption3 flex justify-center items-center">
+                      {read}
+                    </span>
+                  )}
+                  <RiNotification2Line />
+                </Link>
               </div>
 
               <div className="relative">

@@ -18,6 +18,8 @@ export const AssignmentContainer = () => {
   } = useForm<AssignmentFormFieldsType>();
 
   const user_id = user.id;
+  const user_key_company = user.key_company;
+  console.log(user_key_company);
 
   const onSubmit: SubmitHandler<AssignmentFormFieldsType> = async (
     formData
@@ -47,6 +49,7 @@ export const AssignmentContainer = () => {
           necessary_resources,
           conclusion,
           user_id,
+          key_company: user_key_company,
         }),
         headers: {
           "Content-Type": "application/json",

@@ -39,7 +39,7 @@ export const AssignmentOMContainer = () => {
       tdr_id,
     } = formData;
     try {
-      const response = await fetch("", {
+      const response = await fetch("http://localhost:8000/api/missions", {
         method: "POST",
         body: JSON.stringify({
           traveler,

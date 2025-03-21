@@ -6,6 +6,12 @@ const useStore = create((set) => ({
   resetUser: () => set({ user: [] }),
 }));
 
+export const useNotifStore = create((set) => ({
+  read: {},
+  setRead: (read) => set({ read }),
+  resetRead: () => set({ read: [] }),
+}));
+
 export const useTotalStore = create((set) => ({
   final_total: 0,
   total_general: 0,
