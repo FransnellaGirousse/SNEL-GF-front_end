@@ -5,11 +5,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { requestAdvanceFormFieldsType } from "@/types/forms";
 import { toast } from "react-toastify";
 import { RequestAdvanceView } from "@/ui/modules/requestAdvance/requestAdvance.view";
-import { useTotalStore } from "@/store/useStore";
+import useStore, { useTotalStore } from "@/store/useStore";
 
 export const RequestAdvanceContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { total_general, final_total } = useTotalStore();
+  const { user, setUser } = useStore();
   const {
     control,
     handleSubmit,
@@ -37,8 +38,10 @@ export const RequestAdvanceContainer = () => {
       branch,
       name,
       account_number,
+      missionId,
       rows,
     } = formData;
+    console.log("missionId", missionId);
     const requestData = {
       social_security_number,
       nationality: nationality.value,
@@ -55,7 +58,10 @@ export const RequestAdvanceContainer = () => {
       branch,
       name,
       account_number,
+      tdr_id: missionId,
       total_general: total_general.toString(),
+      user_id: user.id,
+      key_company: user.key_company,
       rows,
     };
     console.log("formData", formData);
@@ -70,7 +76,7 @@ export const RequestAdvanceContainer = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          toast.success(data.message)
+          toast.success(data.message);
         });
     } catch (e) {
       console.error(e);

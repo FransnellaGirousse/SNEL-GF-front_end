@@ -8,6 +8,7 @@ import { FaRegBell } from "react-icons/fa";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import clsx from "clsx";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -33,6 +34,9 @@ const NotificationItem = ({ notification }) => {
   switch (notification.type) {
     case "TDR":
       notif_message = "vous a envoyé un TDR";
+      break;
+    case "REQUEST_IN_ADVANCE":
+      notif_message = "vous a envoyé une demande d'avance";
       break;
   }
   useEffect(() => {
@@ -161,10 +165,12 @@ export default function Page() {
         </div>
         <div>
           {notifications.map((notification) => (
-            <NotificationItem
-              key={notification.id}
-              notification={notification}
-            />
+            <Link href={`/approval-missions/${notification.id_type_request}`}>
+              <NotificationItem
+                key={notification.id}
+                notification={notification}
+              />
+            </Link>
           ))}
         </div>
       </div>

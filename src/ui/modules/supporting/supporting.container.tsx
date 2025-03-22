@@ -214,41 +214,62 @@ const SupportingContainer = () => {
             Aucune pièce justificative ajoutée pour le moment.
           </p>
         ) : (
-          <table className="table-auto w-full text-left border border-gray-200 rounded">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="px-4 py-2 border">ID</th>
-                <th className="px-4 py-2 border">Date</th>
-                <th className="px-4 py-2 border">Nom</th>
-                <th className="px-4 py-2 border">Fichiers</th>
-                <th className="px-4 py-2 border">Détails</th>
+          <table className="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-xl overflow-hidden">
+            <thead className="bg-gradient-to-r from-gray-100 to-gray-200">
+              <tr>
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 text-left">
+                  ID
+                </th>
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 text-left">
+                  Date
+                </th>
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 text-left">
+                  Nom
+                </th>
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 text-left">
+                  Fichiers
+                </th>
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 text-left">
+                  Détails
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {currentDocuments.map((document) => (
-                <tr key={document.id}>
-                  <td className="px-4 py-2 border">{document.id}</td>
-                  <td className="px-4 py-2 border">{document.date}</td>
-                  <td className="px-4 py-2 border">{document.name}</td>
-                  <td className="px-4 py-2 border flex items-center gap-2">
+                <tr
+                  key={document.id}
+                  className="hover:bg-gray-50 transition duration-150 ease-in-out"
+                >
+                  <td className="px-6 py-4 text-sm text-gray-800">
+                    {document.id}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600">
+                    {document.date}
+                  </td>
+                  <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                    {document.name}
+                  </td>
+                  <td className="px-6 py-4 flex items-center gap-3">
                     <button
                       onClick={() => handlePreview(document.fileUrl)}
-                      className="text-blue-500 hover:text-blue-700"
+                      className="text-blue-500 hover:text-blue-700 transition"
+                      title="Prévisualiser"
                     >
                       <TiEyeOutline className="w-5 h-5" />
                     </button>
                     <a
                       href={document.fileUrl}
                       download={document.fileName}
-                      className="text-green-500 hover:text-green-700"
+                      className="text-green-500 hover:text-green-700 transition"
+                      title="Télécharger"
                     >
                       <MdOutlineFileDownload className="w-5 h-5" />
                     </a>
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-6 py-4">
                     <button
                       onClick={() => handleShowDetails(document)}
-                      className="text-blue-500 hover:text-blue-700"
+                      className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
                     >
                       Détails
                     </button>
@@ -299,7 +320,7 @@ const SupportingContainer = () => {
 
             <button
               className="bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
-             text-white font-semibold px-6 py-2 rounded-full shadow-md 
+             text-white font-semibold px-6 py-2 rounded-full shadow-md mt-3
              transition duration-300 ease-in-out transform hover:scale-105"
               onClick={handleCloseModal}
             >
@@ -323,7 +344,7 @@ const SupportingContainer = () => {
               onClick={() => setPreviewFileUrl(null)}
               className="bg-primary-600 hover:bg-primary-700 active:bg-primary-800 
              text-white font-semibold px-6 py-3 rounded-full shadow-md 
-             transition duration-300 ease-in-out transform hover:scale-105"
+             transition duration-300 ease-in-out transform hover:scale-105 mt-3"
             >
               Fermer
             </button>

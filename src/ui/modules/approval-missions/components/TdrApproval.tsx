@@ -14,7 +14,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-
 interface Tdr {
   id: number;
   date_tdr: string;
@@ -58,15 +57,14 @@ export const TdrApproval = () => {
 
           setTdrs(data);
 
-           // Calculer le nombre de TDRs par statut
+          // Calculer le nombre de TDRs par statut
           const stats = {
-            enAttente: data.filter(tdr => tdr.status === "En attente").length,
-            valide: data.filter(tdr => tdr.status === "Validé").length,
-            rejete: data.filter(tdr => tdr.status === "Rejeté").length
+            enAttente: data.filter((tdr) => tdr.status === "En attente").length,
+            valide: data.filter((tdr) => tdr.status === "Validé").length,
+            rejete: data.filter((tdr) => tdr.status === "Rejeté").length,
           };
           setTdrStats(stats);
         }
-        
       } catch (error) {
         console.error("Erreur lors de la récupération des TDRs", error);
       }
@@ -136,9 +134,7 @@ export const TdrApproval = () => {
 
       {/* Ajout du graphique des statuts */}
       <div className="mb-5">
-        <Typography  theme="black" >
-          Statistiques des TDR
-        </Typography>
+        <Typography theme="black">Statistiques des TDR</Typography>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={[
