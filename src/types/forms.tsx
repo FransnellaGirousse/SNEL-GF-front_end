@@ -131,7 +131,9 @@ export interface AccountFormFieldsType {
   firstname: string;
   lastname: string;
   email: string;
-  role: string;
+  key_company: string;
+  key_role: string;
+  gestionType: string;
   phone_number: string;
   address: string;
 }

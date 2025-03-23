@@ -7,26 +7,36 @@ import { PhoneInputNumber } from "@/ui/design-system/forms/inputPhone";
 import { Typography } from "@/ui/design-system/typography/typography";
 import Select from "react-select";
 import { Controller } from "react-hook-form";
-
+import { useEffect } from "react";
 
 interface Props {
   form: FormsType;
 }
 export const AccountForm = ({ form }: Props) => {
-  const { handleSubmit, onSubmit, isLoading, control, errors, register } = form;
+  const {
+    handleSubmit,
+    onSubmit,
+    isLoading,
+    control,
+    setValue,
+    watch,
+    errors,
+    register,
+  } = form;
   const today = new Date().toISOString().split("T")[0];
   const { user, setUser } = useStore();
-  const options = [
-    { value: "user", label: "Utilisateur" },
-    { value: "administrator", label: "Gestionnaire" },
-    { value: "accountant", label: "Comptable" },
-    { value: "director", label: "Directeur" },
-    { value: "visitor", label: "Visiteur" },
-  ];
-  const arr: string[] = [];
-  options.map((option) => {
-    arr.push(option.value);
-  });
+  const gestionType = watch("gestionType") || ""; // 🔥 Suivi en temps réel de `gestionType`
+
+  // Met à jour `gestionType` dans react-hook-form
+  useEffect(() => {
+    setValue("gestionType", gestionType);
+  }, [gestionType, setValue]);
+  useEffect(() => {
+    if (gestionType === "personnel") {
+      setValue("key_company", ""); // Réinitialisation
+      setValue("key_role", ""); // Réinitialisation
+    }
+  }, [gestionType, setValue]);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="pt-8 pb-5 space-y-4">
@@ -76,43 +86,6 @@ export const AccountForm = ({ form }: Props) => {
               errors={errors}
               defaultValue={user.phone_number ? user.phone_number : ""}
             />
-            <div>
-              <label htmlFor="role">Rôle :</label>
-              <Controller
-                name="role"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        backgroundColor: "#E5E5E5",
-                        borderColor: state.isFocused ? "#E5E5E5" : "#E5E5E5",
-                        hover: "none",
-                      }),
-                    }}
-                    className="p-3 w-full font-white rounded focus:outline-none focus:ring-1 bg-gray-500 text-gray top-1"
-                    options={options}
-                    value={options.find((c) => c.value === value)}
-                    onChange={(val) => onChange(val?.value)}
-                    defaultValue={
-                      options[
-                        options.findIndex((obj) => obj["value"] === user.role)
-                      ]
-                    }
-                  />
-                )}
-                rules={{
-                  required: true,
-                  validate: (value: string) => {
-                    const verificationValue = arr.includes(value);
-                    if (!verificationValue) {
-                      return "Veuillez choisir le bon rôle";
-                    }
-                  },
-                }}
-              />
-            </div>
           </div>
           {errors["role"] && (
             <Typography variant="caption4" tag="div" theme="danger">
@@ -120,6 +93,66 @@ export const AccountForm = ({ form }: Props) => {
             </Typography>
           )}
         </>
+        {!user.role && (
+          <>
+            <div className="grid grid-cols gap-2">
+              <div className="col-span-2 flex flex-col gap-2">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={gestionType === "personnel"}
+                    onChange={() => setValue("gestionType", "personnel")}
+                    className="w-4 h-4"
+                  />
+                  <Typography theme="black" variant="caption2">
+                    Gestion personnel
+                  </Typography>
+                </label>
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={gestionType === "entreprise"}
+                    onChange={() => setValue("gestionType", "entreprise")}
+                    className="w-4 h-4"
+                  />
+                  <Typography theme="black" variant="caption2">
+                    Gestion d'entreprise
+                  </Typography>
+                </label>
+              </div>
+              <input
+                type="hidden"
+                {...register("gestionType")}
+                value={gestionType}
+              />
+            </div>
+            {gestionType === "entreprise" && (
+              <div className="col-span-2 grid grid-cols-2 gap-5 mt-5 mb-5">
+                <Input
+                  id="key_company"
+                  type="text"
+                  placeholder="Clé de l'entreprise"
+                  register={register}
+                  errors={errors}
+                  required={true}
+                  isLoading={isLoading}
+                />
+
+                <Input
+                  id="key_role"
+                  type="text"
+                  placeholder="Clé de votre rôle"
+                  register={register}
+                  errors={errors}
+                  required={true}
+                  isLoading={isLoading}
+                />
+              </div>
+            )}
+          </>
+        )}
         <Button
           isLoading={isLoading}
           type="submit"

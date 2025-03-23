@@ -4,26 +4,34 @@ import { AccountFormFieldsType } from "@/types/forms";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AccountView } from "@/ui/modules/account/account.view";
-import { toast } from "react-toastify"; 
-import useStore from "@/store/useStore";// Importation de react-toastify
+import { toast } from "react-toastify";
+import useStore from "@/store/useStore"; // Importation de react-toastify
 import { useRouter } from "next/navigation";
 
 export const AccountContainer = ({ userId }: { userId: number }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user, setUser } = useStore();
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     register,
+    setValue,
+    watch,
   } = useForm<AccountFormFieldsType>();
 
   const onSubmit: SubmitHandler<AccountFormFieldsType> = async (formData) => {
     setIsLoading(true);
-    const { firstname, lastname, role, phone_number } =
-      formData;
+    const {
+      firstname,
+      lastname,
+      gestionType,
+      key_company,
+      key_role,
+      phone_number,
+    } = formData;
 
     try {
       console.log("Données envoyées : ", formData); // Log des données envoyées
@@ -38,16 +46,18 @@ export const AccountContainer = ({ userId }: { userId: number }) => {
           body: JSON.stringify({
             firstname,
             lastname,
-            role,
+            gestion_type: gestionType,
+            key_company,
+            key_role,
             phone_number,
           }),
         }
-      )
+      );
 
       if (response.ok) {
         const data = await response.json(); // Récupérer la réponse de l'API
         toast.success("Compte mis à jour avec succès !");
-        router.push("/dashboard") 
+        router.push("/dashboard");
       } else {
         const errorData = await response.json();
         toast.error(
@@ -70,6 +80,8 @@ export const AccountContainer = ({ userId }: { userId: number }) => {
         register,
         onSubmit,
         isLoading,
+        setValue,
+        watch,
         control,
       }}
     />

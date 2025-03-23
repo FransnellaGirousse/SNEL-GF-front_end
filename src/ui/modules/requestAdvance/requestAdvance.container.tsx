@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { requestAdvanceFormFieldsType } from "@/types/forms";
 import { toast } from "react-toastify";
 import { RequestAdvanceView } from "@/ui/modules/requestAdvance/requestAdvance.view";
 import useStore, { useTotalStore } from "@/store/useStore";
+import CheckCompaniesResponsables from "@/utils/check_companies_responsable";
 
 export const RequestAdvanceContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { total_general, final_total } = useTotalStore();
   const { user, setUser } = useStore();
+  const [status, setStatus] = useState(null);
   const {
     control,
     handleSubmit,
@@ -19,6 +21,24 @@ export const RequestAdvanceContainer = () => {
     watch,
     reset,
   } = useForm<requestAdvanceFormFieldsType>();
+  const Check = async () => {
+    try {
+      const checked = await CheckCompaniesResponsables(
+        user.key_company,
+        "accountant"
+      );
+      if (checked) {
+        setStatus(true);
+      } else {
+        setStatus(false);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    Check();
+  }, [user]);
   const onSubmit: SubmitHandler<requestAdvanceFormFieldsType> = async (
     formData
   ) => {
@@ -41,7 +61,6 @@ export const RequestAdvanceContainer = () => {
       missionId,
       rows,
     } = formData;
-    console.log("missionId", missionId);
     const requestData = {
       social_security_number,
       nationality: nationality.value,
@@ -62,10 +81,10 @@ export const RequestAdvanceContainer = () => {
       total_general: total_general.toString(),
       user_id: user.id,
       key_company: user.key_company,
+      status: "en attente",
       rows,
     };
-    console.log("formData", formData);
-    console.log("requestData", requestData);
+    console.log(requestData);
     try {
       await fetch("http://localhost:8000/api/request-in-advances", {
         method: "POST",
@@ -79,12 +98,23 @@ export const RequestAdvanceContainer = () => {
           toast.success(data.message);
         });
     } catch (e) {
-      console.error(e);
       toast.error("Erreur de connexion. Veuillez réessayer.");
     } finally {
       setIsLoading(false);
     }
   };
+  if (status === false) {
+    return (
+      <p>
+        Vous ne pouvez pas faire une demande d'avance car votre entreprise ne
+        dispose pas encore un comptable . Veuillez contacter l'administrateur de
+        votre entreprise !
+      </p>
+    );
+  }
+  if (status === null) {
+    return <p>Chargement ....</p>;
+  }
   return (
     <RequestAdvanceView
       form={{

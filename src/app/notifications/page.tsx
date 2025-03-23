@@ -31,12 +31,19 @@ const convertToIlYa = (dateString) => {
 const NotificationItem = ({ notification }) => {
   const [userRequest, setUserRequest] = useState(null);
   let notif_message: string = "";
+  let link_notif = "";
   switch (notification.type) {
     case "TDR":
       notif_message = "vous a envoyé un TDR";
+      link_notif = `/approval-missions/${notification.id_type_request}`;
       break;
     case "REQUEST_IN_ADVANCE":
       notif_message = "vous a envoyé une demande d'avance";
+      link_notif = `/approval-advance/${notification.id_type_request}`;
+      break;
+    case "TDR_RESPONSE":
+      notif_message = "a repondu a votre TDR";
+      link_notif = `/assignment`;
       break;
   }
   useEffect(() => {
@@ -65,27 +72,29 @@ const NotificationItem = ({ notification }) => {
   }, [notification.id_user_request]);
   if (!userRequest) return <div>Chargement...</div>;
   return (
-    <div
-      className={clsx(
-        "flex relative gap-2 items-center p-4 border-b last:border-b-0 border-gray-300 bg-gray-500",
-        notification.read === 1 && "bg-white"
-      )}
-    >
-      <Avatar
-        size="large"
-        src="/assets/images/authentication/default-avatar.jpg"
-        alt={userRequest.firstname}
-      />
-      <div>
-        <span className="font-bold">
-          {userRequest?.firstname} {userRequest?.lastname}
-        </span>
-        <span>&nbsp;{notif_message}</span>
+    <Link href={link_notif}>
+      <div
+        className={clsx(
+          "flex relative gap-2 items-center p-4 border-b last:border-b-0 border-gray-300 bg-gray-500",
+          notification.read === 1 && "bg-white"
+        )}
+      >
+        <Avatar
+          size="large"
+          src="/assets/images/authentication/default-avatar.jpg"
+          alt={userRequest.firstname}
+        />
+        <div>
+          <span className="font-bold">
+            {userRequest?.firstname} {userRequest?.lastname}
+          </span>
+          <span>&nbsp;{notif_message}</span>
+        </div>
+        <div className="absolute right-4 text-caption4 text-gray-600">
+          {convertToIlYa(notification.date_requested)}
+        </div>
       </div>
-      <div className="absolute right-4 text-caption4 text-gray-600">
-        {convertToIlYa(notification.date_requested)}
-      </div>
-    </div>
+    </Link>
   );
 };
 
@@ -165,12 +174,10 @@ export default function Page() {
         </div>
         <div>
           {notifications.map((notification) => (
-            <Link href={`/approval-missions/${notification.id_type_request}`}>
-              <NotificationItem
-                key={notification.id}
-                notification={notification}
-              />
-            </Link>
+            <NotificationItem
+              key={notification.id}
+              notification={notification}
+            />
           ))}
         </div>
       </div>

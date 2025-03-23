@@ -13,6 +13,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import useStore from "@/store/useStore";
 
 interface Tdr {
   id: number;
